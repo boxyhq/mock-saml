@@ -53,6 +53,13 @@ export const createXML = async (
             },
           },
         },
+        'md:NameIDFormat': {
+          '#text': 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+        },
+        'md:SingleSignOnService': {
+          '@Binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+          '@Location': `${metadata.sso_url}`,
+        },
       },
     },
   };
