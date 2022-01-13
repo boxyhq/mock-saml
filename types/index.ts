@@ -1,6 +1,6 @@
 export type ServiceProvider = {
-  sp_acs_url: string;
-  sp_entity_id: string;
+  acs_url: string;
+  entity_id: string;
 };
 
 export type IdentityProvider = {
@@ -15,9 +15,7 @@ export type App = {
   certificate: string;
 } & ServiceProvider;
 
-// export type IdPMetadata = {
-//   sso_url: string;
-//   entity_id: string;
-//   certificate: string;
-//   fingerprint?: string;
-// };
+export type IdPMetadata = {
+  certificate: string;
+  fingerprint?: string;
+} & IdentityProvider;

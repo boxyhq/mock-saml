@@ -1,16 +1,20 @@
-import * as xmlbuilder2 from 'xmlbuilder2';
 import type { IdPMetadata } from '../types';
 
+const baseUrl = 'http://localhost:3000/saml';
+
 export const create = (
-  acsUrl: string,
-  entityId: string,
+  acs_url: string,
+  entity_id: string,
   certificate: string
 ): IdPMetadata => {
-  const xml = xmlbuilder2.create();
+  const params = new URLSearchParams({
+    acs_url,
+    entity_id,
+  }).toString();
 
   return {
-    sso_url: 'string',
-    entity_id: 'string',
-    certificate: 'string',
+    sso_url: `${baseUrl}?${params}`,
+    entity_id: `${baseUrl}?${params}`,
+    certificate: certificate,
   };
 };

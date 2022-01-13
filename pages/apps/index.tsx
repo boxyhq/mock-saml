@@ -2,17 +2,16 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-// const a = new URLSearchParams({
-//   sp_acs_url: 'http://localhost:3000/apps',
-//   sp_entity_id: 'https://saml.boxyhq.com',
-// }).toString();
-
-// console.log(a);
-
 const Apps: NextPage = () => {
   const [formData, setFormData] = useState({
-    sp_acs_url: null,
-    sp_entity_id: null,
+    acs_url: null,
+    entity_id: null,
+  });
+
+  const [metadata, setMetadata] = useState({
+    sso_url: null,
+    entity_id: null,
+    certificate: null,
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +24,11 @@ const Apps: NextPage = () => {
   const createApp = async (e: FormEvent) => {
     e.preventDefault();
 
-    const app = await axios.post('/api/apps', {
+    const {data} = await axios.post('/api/apps', {
       ...formData
     });
+
+    setMetadata(data);
   };
 
   return (
@@ -36,19 +37,25 @@ const Apps: NextPage = () => {
         <div className="mb-4">
           <label className="block text-sm mb-2">
             ACS URL
-            <input type="text" name="sp_acs_url" onChange={handleInputChange} required className="border rounded w-full py-2 px-3" placeholder="ACS URL"  />
+            <input type="text" name="acs_url" onChange={handleInputChange} required className="border rounded w-full py-2 px-3" placeholder="ACS URL"  />
           </label>
         </div>
 
         <div className="mb-4">
           <label className="block text-sm mb-2">
             Entity ID
-            <input type="text" name="sp_entity_id" onChange={handleInputChange} required className="border rounded w-full py-2 px-3" placeholder="Entity ID"  />
+            <input type="text" name="entity_id" onChange={handleInputChange} required className="border rounded w-full py-2 px-3" placeholder="Entity ID"  />
           </label>
         </div>
 
         <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Build IdP Metadata</button>
       </form>
+
+      <ul className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <li className="px-2 py-2">SSO URL: {metadata.sso_url}</li>
+        <li className="px-2 py-2">Entity ID: {metadata.entity_id}</li>
+        <li className="px-2 py-2">Certificate: {metadata.certificate}</li>
+      </ul>
     </div>
   );
 };

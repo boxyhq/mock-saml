@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { apps, metadata } from '../../../services';
+import { metadata } from '../../../services';
 import type { App, IdPMetadata } from '../../../types';
 
 export default async function handler(
@@ -12,26 +12,26 @@ export default async function handler(
 
   async function create(req: NextApiRequest) {
     const {
-      sp_acs_url,
-      sp_entity_id,
+      acs_url,
+      entity_id,
       name = 'My App',
       description = null,
     } = req.body;
 
-    const certificate = 'certificate';
+    const certificate = 'EwZHb29nbGUxGDAWBgNVBAsTD0dv';
 
-    const app = await apps.create({
-      sp_acs_url,
-      sp_entity_id,
-      name,
-      description,
-      certificate,
-    });
+    return res
+      .status(200)
+      .json(metadata.create(acs_url, entity_id, certificate));
 
-    const idPMetadata = metadata.create(sp_acs_url, sp_entity_id, certificate);
+    // const app = await apps.create({
+    //   acs_url,
+    //   entity_id,
+    //   name,
+    //   description,
+    //   certificate,
+    // });
 
-    return res.status(200).json(idPMetadata);
-
-    //return res.status(200).json(app);
+    // return res.status(200).json(app);
   }
 }
