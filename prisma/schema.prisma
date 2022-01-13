@@ -19,7 +19,7 @@ model App {
   name            String
   description     String?
   certificate     String
-  sp_acs_url      String
-  sp_entity_id    String
+  acs_url      String
+  entity_id    String
 }
 

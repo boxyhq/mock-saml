@@ -1,4 +1,6 @@
+import { promises as fs } from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import path from 'path';
 import { metadata } from '../../../services';
 import type { App, IdPMetadata } from '../../../types';
 
@@ -18,20 +20,11 @@ export default async function handler(
       description = null,
     } = req.body;
 
-    const certificate = 'EwZHb29nbGUxGDAWBgNVBAsTD0dv';
+    const certificateFilePath = path.join('data', 'x509cert.txt');
+    const certificate = await fs.readFile(certificateFilePath, 'utf8');
 
     return res
       .status(200)
       .json(metadata.create(acs_url, entity_id, certificate));
-
-    // const app = await apps.create({
-    //   acs_url,
-    //   entity_id,
-    //   name,
-    //   description,
-    //   certificate,
-    // });
-
-    // return res.status(200).json(app);
   }
 }
