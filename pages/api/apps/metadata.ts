@@ -19,9 +19,9 @@ export default async function handler(
 
     const xml = await metadata.createXML(acs_url, entity_id, certificate);
 
-    return res.send(xml);
+    res.setHeader('Content-type', 'text/xml');
+    res.setHeader('Content-Disposition', 'attachment; filename="metadata.xml"');
 
-    // res.setHeader('Content-type', 'text/xml');
-    // res.setHeader('Content-Disposition', 'attachment; filename="text.xml"');
+    return res.send(xml);
   }
 }

@@ -46,10 +46,10 @@ export const createXML = async (
           '@use': 'signing',
           'ds:KeyInfo': {
             '@xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
-          },
-          'ds:X509Data': {
-            'ds:X509Certificate': {
-              '#text': `${formatCert(certificate)}`,
+            'ds:X509Data': {
+              'ds:X509Certificate': {
+                '#text': `${formatCert(certificate)}`,
+              },
             },
           },
         },

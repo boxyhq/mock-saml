@@ -31,6 +31,14 @@ const Apps: NextPage = () => {
     setMetadata(data);
   };
 
+  const downloadMetadata = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const {data} = await axios.post('/api/apps/metadata', {
+      ...formData
+    });
+  }
+
   return (
     <div>
       <form onSubmit={createApp} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -50,6 +58,8 @@ const Apps: NextPage = () => {
 
         <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Build IdP Metadata</button>
       </form>
+
+      <button type="button" className="bg-red-500 text-white py-2 px-3 rounded" onClick={downloadMetadata}>Download Metadata</button>
 
       <ul className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <li className="px-2 py-2"><strong>SSO URL:</strong> <br></br> {metadata.sso_url}</li>
