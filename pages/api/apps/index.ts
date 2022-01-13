@@ -27,4 +27,6 @@ export default async function handler(
       .status(200)
       .json(metadata.create(acs_url, entity_id, certificate));
   }
+
+  async function downloadMetadata(req: NextApiRequest) {}
 }

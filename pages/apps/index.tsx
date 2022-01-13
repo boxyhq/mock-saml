@@ -52,9 +52,9 @@ const Apps: NextPage = () => {
       </form>
 
       <ul className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <li className="px-2 py-2">SSO URL: {metadata.sso_url}</li>
-        <li className="px-2 py-2">Entity ID: {metadata.entity_id}</li>
-        <li className="px-2 py-2">Certificate: {metadata.certificate}</li>
+        <li className="px-2 py-2"><strong>SSO URL:</strong> <br></br> {metadata.sso_url}</li>
+        <li className="px-2 py-2"><strong>Entity ID:</strong> <br></br> {metadata.entity_id}</li>
+        <li className="px-2 py-2"><strong>Certificate:</strong> <br></br> {metadata.certificate}</li>
       </ul>
     </div>
   );
