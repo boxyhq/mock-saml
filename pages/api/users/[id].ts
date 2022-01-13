@@ -10,7 +10,7 @@ type User = {
   email: string;
 };
 
-const getUserById = async (id: number): Promise<User> => {
+const getUserById = async (id: number): Promise<User | null> => {
   return await prisma.user.findUnique({
     where: {
       id,
@@ -20,7 +20,7 @@ const getUserById = async (id: number): Promise<User> => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<User>
+  res: NextApiResponse<User | null>
 ) {
   const { method } = req;
 
