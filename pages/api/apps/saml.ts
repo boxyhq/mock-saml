@@ -1,4 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import xml2js from 'xml2js';
+
+const parseXML = (xml: string): Promise<Record<string, any>> => {
+  return new Promise((resolve, reject) => {
+    xml2js.parseString(xml, (err: Error, result: any) => {
+      resolve(result);
+    });
+  });
+};
+
+const extractSAMLRequestAttribute = async (SAMLRequest: string | string[]) => {
+  // @ts-ignore
+  const result = await parseXML(Buffer.from(SAMLRequest, 'base64').toString());
+  const sp = result['samlp:AuthnRequest']['$'];
+
+  return {
+    ID: sp['ID'],
+    IssueInstant: sp['IssueInstant'],
+    AssertionConsumerServiceURL: sp['AssertionConsumerServiceURL'],
+    ProviderName: sp['ProviderName'],
+  };
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,14 +33,8 @@ export default async function handler(
   async function response(req: NextApiRequest) {
     const { RelayState, SAMLRequest } = req.query;
 
-    // @ts-ignore
-    const samlRequest = Buffer.from(SAMLRequest, 'base64').toString();
+    const attributes = await extractSAMLRequestAttribute(SAMLRequest);
 
-    // @ts-ignore
-    // const a = Buffer.from(SAMLRequest, 'base64');
-    // const b = pako.inflateRaw(a, { to: 'string' });
-    // const samlRequest = Buffer.from(SAMLRequest, 'base64').toString('hex');
-
-    return res.status(200).json({ samlRequest });
+    return res.status(200).json(attributes);
   }
 }

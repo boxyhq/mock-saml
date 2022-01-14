@@ -20,7 +20,7 @@ export const create = (
   };
 };
 
-const formatCert = (certificate: string) => {
+const extractCert = (certificate: string) => {
   return certificate
     .replace('-----BEGIN CERTIFICATE-----', '')
     .replace('-----END CERTIFICATE-----', '')
@@ -48,7 +48,7 @@ export const createXML = async (
             '@xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
             'ds:X509Data': {
               'ds:X509Certificate': {
-                '#text': `${formatCert(certificate)}`,
+                '#text': `${extractCert(certificate)}`,
               },
             },
           },
