@@ -30,3 +30,10 @@ export type AuthNRequest = {
   RelayState: string;
   SAMLRequest: SAMLRequest;
 };
+
+export type User = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+};

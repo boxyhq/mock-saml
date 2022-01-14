@@ -1,7 +1,5 @@
-import { promises as fs } from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import path from 'path';
-import { metadata } from '../../../services';
+import { createCertificate, createIdPMetadataXML } from '../../../utils';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,12 +10,17 @@ export default async function handler(
   }
 
   async function download(req: NextApiRequest) {
-    const { acs_url, entity_id } = req.body;
+    const { acs_url, sp_entity_id } = req.body;
 
-    const certificateFilePath = path.join('data', 'x509cert.txt');
-    const certificate = await fs.readFile(certificateFilePath, 'utf8');
+    const certificate = await createCertificate();
+    const idpEntityId = 'http://localhost:4000/sso';
+    const idpSsoUrl = 'http://localhost:4000/sso';
 
-    const xml = await metadata.createXML(acs_url, entity_id, certificate);
+    const xml = await createIdPMetadataXML({
+      idpEntityId,
+      idpSsoUrl,
+      certificate,
+    });
 
     res.setHeader('Content-type', 'text/xml');
     res.setHeader('Content-Disposition', 'attachment; filename="metadata.xml"');

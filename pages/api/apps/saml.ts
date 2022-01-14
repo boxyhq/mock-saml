@@ -1,39 +1,33 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import xml2js from 'xml2js';
-
-const parseXML = (xml: string): Promise<Record<string, any>> => {
-  return new Promise((resolve, reject) => {
-    xml2js.parseString(xml, (err: Error, result: any) => {
-      resolve(result);
-    });
-  });
-};
-
-const extractSAMLRequestAttribute = async (SAMLRequest: string | string[]) => {
-  // @ts-ignore
-  const result = await parseXML(Buffer.from(SAMLRequest, 'base64').toString());
-  const sp = result['samlp:AuthnRequest']['$'];
-
-  return {
-    ID: sp['ID'],
-    IssueInstant: sp['IssueInstant'],
-    AssertionConsumerServiceURL: sp['AssertionConsumerServiceURL'],
-    ProviderName: sp['ProviderName'],
-  };
-};
+import { User } from '../../../types';
+import {
+  createSAMLResponseXML,
+  extractSAMLRequestAttributes,
+} from '../../../utils';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     return await response(req);
+  }
+
+  if (req.method === 'GET') {
+    const user: User = {
+      id: '1',
+      email: 'kiran@demo.com',
+      firstName: 'Kiran',
+      lastName: 'K',
+    };
+
+    return res.status(200).json(await createSAMLResponseXML(user));
   }
 
   async function response(req: NextApiRequest) {
     const { RelayState, SAMLRequest } = req.query;
 
-    const attributes = await extractSAMLRequestAttribute(SAMLRequest);
+    const attributes = await extractSAMLRequestAttributes(SAMLRequest);
 
     return res.status(200).json(attributes);
   }
