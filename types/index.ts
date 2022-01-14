@@ -19,3 +19,14 @@ export type IdPMetadata = {
   certificate: string;
   fingerprint?: string;
 } & IdentityProvider;
+
+export type SAMLRequest = {
+  entityID: string;
+  callbackUrl: string;
+  signingKey: string;
+};
+
+export type AuthNRequest = {
+  RelayState: string;
+  SAMLRequest: SAMLRequest;
+};
