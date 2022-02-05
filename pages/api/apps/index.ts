@@ -18,12 +18,14 @@ export default async function handler(
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
+  // Get all apps
   async function getAllApps() {
     const appList = await apps.getAll();
 
     return res.json(appList);
   }
 
+  // Create a new app 
   async function createApp() {
     const {
       name,
