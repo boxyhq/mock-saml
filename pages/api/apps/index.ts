@@ -1,7 +1,5 @@
-import { promises as fs } from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import path from 'path';
-import { apps, metadata } from '../../../services';
+import { apps } from '../../../services';
 import type { App, IdPMetadata } from '../../../types';
 
 export default async function handler(
