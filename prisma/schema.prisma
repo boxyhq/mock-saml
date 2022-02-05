@@ -18,8 +18,8 @@ model App {
   id              String  @id @default(uuid())
   name            String
   description     String?
-  certificate     String
-  acs_url      String
-  entity_id    String
+  certificate     String?
+  acs_url         String
+  entity_id       String
 }
 

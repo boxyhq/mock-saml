@@ -12,7 +12,7 @@ export type App = {
   id: string;
   name: string;
   description?: string | null;
-  certificate: string;
+  certificate?: string;
 } & ServiceProvider;
 
 export type IdPMetadata = {

@@ -3,18 +3,31 @@ import type { App } from '../types';
 
 const prisma = new PrismaClient();
 
-export async function create(body: Omit<App, 'id'>): Promise<App> {
+const create = async function(name: string, description: string, acsUrl: string, entityId: string): Promise<App> {
+  const body = {
+    name, 
+    description, 
+    acs_url: acsUrl,
+    entity_id: entityId,
+  }
+
   return await prisma.app.create({ data: body });
 }
 
-export async function getAll(): Promise<App[]> {
+const getAll = async function(): Promise<App[]> {
   return await prisma.app.findMany();
 }
 
-export async function getById(id: string): Promise<App | null> {
+const getById = async function(id: string): Promise<App | null> {
   return await prisma.app.findUnique({
     where: {
       id,
     },
   });
+}
+
+export {
+  create,
+  getAll,
+  getById,
 }
