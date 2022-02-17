@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createCertificate } from '../../../../utils';
+import { createCertificate, createIdPSSOUrl } from '../../../../utils';
 import { IdPMetadata } from '../../../../types';
 import config from '../../../../lib/env'
 
@@ -23,7 +23,7 @@ export default async function handler(
     const metadata = {
       certificate: await createCertificate(),
       fingerprint: '',
-      sso_url: `${config.appUrl}/saml2/app/${appId}`,
+      sso_url: createIdPSSOUrl(appId),
       entity_id: config.entityId,
     }
 

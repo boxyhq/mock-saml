@@ -3,6 +3,8 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import xml2js from 'xml2js';
 import { User } from '../types';
+import config from '../lib/env';
+import * as rambda from 'rambda';
 
 // Parse XML
 const parseXML = (xml: string): Promise<Record<string, any>> => {
@@ -13,17 +15,17 @@ const parseXML = (xml: string): Promise<Record<string, any>> => {
   });
 };
 
-// Extract SAML Request Attributes
-const extractSAMLRequestAttributes = async (SAMLRequest: string | string[]) => {
+// Parse SAMLRequest attributes
+const extractSAMLRequestAttributes = async (samlRequest: string) => {
   // @ts-ignore
-  const result = await parseXML(Buffer.from(SAMLRequest, 'base64').toString());
+  const result = await parseXML(Buffer.from(samlRequest, 'base64').toString());
   const attributes = result['samlp:AuthnRequest']['$'];
 
   return {
-    ID: attributes['ID'],
-    IssueInstant: attributes['IssueInstant'],
-    AssertionConsumerServiceURL: attributes['AssertionConsumerServiceURL'],
-    ProviderName: attributes['ProviderName'],
+    id: attributes['ID'],
+    issueInstant: attributes['IssueInstant'],
+    acsUrl: attributes['AssertionConsumerServiceURL'],
+    providerName: attributes['ProviderName'],
   };
 };
 
@@ -74,6 +76,10 @@ const createSAMLResponseXML = async (user: User): Promise<string> => {
     .replace('user_lastName', 'K');
 };
 
+const createIdPSSOUrl = (appId: string) => {
+  return `${config.appUrl}/saml2/apps/${appId}`;
+}
+
 export {
   parseXML,
   extractSAMLRequestAttributes,
@@ -81,4 +87,5 @@ export {
   createSAMLResponseXML,
   createCertificate,
   extractCert,
+  createIdPSSOUrl,
 };

@@ -27,8 +27,8 @@ export type SAMLRequest = {
 };
 
 export type AuthNRequest = {
-  RelayState: string;
-  SAMLRequest: SAMLRequest;
+  relayState: string;
+  samlRequest: string;
 };
 
 export type User = {
