@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 
 const Apps: NextPage = () => {
   const [formData, setFormData] = useState({
+    name: null,
     acs_url: null,
     entity_id: null,
   });
@@ -41,27 +42,34 @@ const Apps: NextPage = () => {
 
   return (
     <div>
-      <form onSubmit={createApp} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form onSubmit={createApp} className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
         <div className="mb-4">
-          <label className="block text-sm mb-2">
+          <label className="block mb-2 text-sm">
+            App Name
+            <input type="text" name="name" onChange={handleInputChange} required className="w-full px-3 py-2 border rounded" placeholder="App Name"  />
+          </label>
+        </div>
+
+        <div className="mb-4">
+          <label className="block mb-2 text-sm">
             ACS URL
-            <input type="text" name="acs_url" onChange={handleInputChange} required className="border rounded w-full py-2 px-3" placeholder="ACS URL"  />
+            <input type="text" name="acs_url" onChange={handleInputChange} required className="w-full px-3 py-2 border rounded" placeholder="ACS URL"  />
           </label>
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm mb-2">
+          <label className="block mb-2 text-sm">
             Entity ID
-            <input type="text" name="entity_id" onChange={handleInputChange} required className="border rounded w-full py-2 px-3" placeholder="Entity ID"  />
+            <input type="text" name="entity_id" onChange={handleInputChange} required className="w-full px-3 py-2 border rounded" placeholder="Entity ID"  />
           </label>
         </div>
 
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Build IdP Metadata</button>
+        <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded">Build IdP Metadata</button>
       </form>
 
-      <button type="button" className="bg-red-500 text-white py-2 px-3 rounded" onClick={downloadMetadata}>Download Metadata</button>
+      <button type="button" className="px-3 py-2 text-white bg-red-500 rounded" onClick={downloadMetadata}>Download Metadata</button>
 
-      <ul className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <ul className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
         <li className="px-2 py-2"><strong>SSO URL:</strong> <br></br> {metadata.sso_url}</li>
         <li className="px-2 py-2"><strong>Entity ID:</strong> <br></br> {metadata.entity_id}</li>
         <li className="px-2 py-2"><strong>Certificate:</strong> <br></br> {metadata.certificate}</li>

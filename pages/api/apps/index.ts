@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { apps } from '../../../services';
 import type { App, IdPMetadata } from '../../../types';
+import prisma from '../../../lib/prisma';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<App | App[] | IdPMetadata | null>
+  res: NextApiResponse<App | App[]>
 ) {
 
   switch (req.method) {
@@ -18,12 +18,12 @@ export default async function handler(
 
   // Get all apps
   async function getAllApps() {
-    const appList = await apps.getAll();
+    const apps = await prisma.app.findMany();
 
-    return res.json(appList);
+    return res.json(apps);
   }
 
-  // Create a new app 
+  // Create a new app
   async function createApp() {
     const {
       name,
@@ -32,7 +32,14 @@ export default async function handler(
       description = null,
     } = req.body;
 
-    const app = await apps.create(name, description, acs_url, entity_id);
+    const app = await prisma.app.create({
+      data: {
+        name,
+        acs_url,
+        entity_id,
+        description
+      }
+    });
 
     return res.json(app);
   }
