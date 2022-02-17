@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { App, IdPMetadata } from '../../../types';
 import prisma from '../../../lib/prisma';
+import { createCertificate, createIdPMetadataXML } from '../../../utils';
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,12 +33,15 @@ export default async function handler(
       description = null,
     } = req.body;
 
+    const certificate =  await createCertificate();
+
     const app = await prisma.app.create({
       data: {
         name,
         acs_url,
         entity_id,
-        description
+        description,
+        certificate,
       }
     });
 

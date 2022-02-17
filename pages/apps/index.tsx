@@ -1,18 +1,13 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import Router from 'next/router';
 
 const Apps: NextPage = () => {
   const [formData, setFormData] = useState({
     name: null,
     acs_url: null,
     entity_id: null,
-  });
-
-  const [metadata, setMetadata] = useState({
-    sso_url: null,
-    entity_id: null,
-    certificate: null,
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,11 +20,11 @@ const Apps: NextPage = () => {
   const createApp = async (e: FormEvent) => {
     e.preventDefault();
 
-    const {data} = await axios.post('/api/apps', {
+    const { data: app } = await axios.post('/api/apps', {
       ...formData
     });
 
-    setMetadata(data);
+    await Router.push(`/apps/${app.id}`);
   };
 
   return (
