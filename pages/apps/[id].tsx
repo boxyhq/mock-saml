@@ -1,10 +1,11 @@
 import prisma from '../../lib/prisma';
 import { GetServerSideProps } from 'next';
-import React from 'react';
 import { App } from '../../types';
 import axios from 'axios';
 import { IdPMetadata } from '../../types';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
+// TODO: Remove this
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const app = await prisma.app.findUnique({
       where: {
@@ -34,6 +35,8 @@ const ShowApp: React.FC<{app: App, metadata: IdPMetadata}> = ({app, metadata}) =
       <p>sso_url: {metadata.sso_url}</p>
       <p>entity_id: {metadata.entity_id}</p>
       <p>certificate: {metadata.certificate}</p>
+
+      <a href="/api/apps/metadata/download" className="px-3 py-2 text-white bg-red-500 rounded">Download Metadata</a>
     </div>
   );
 };
