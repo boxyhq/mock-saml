@@ -7,11 +7,7 @@ export const getServerSideProps: GetServerSideProps = async ({query, params}) =>
   const relayState = query.RelayState as string;
   const samlRequest = query.SAMLRequest as string;
 
-  console.log({samlRequest});
-
   const attributes = await extractSAMLRequestAttributes(samlRequest);
-
-    console.log(attributes)
 
   return {
     props: {
@@ -23,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async ({query, params}) =>
 
 const ProcessRequest: React.FC<AuthNRequest> = ({relayState, samlRequest}) => {
   return (
-    <div>Processing requjest...</div>
+    <div>Processing request</div>
   );
 }
 
