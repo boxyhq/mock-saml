@@ -6,7 +6,7 @@ export default function Login() {
       <Head>
         <title>Mock SAML IdP - Login</title>
       </Head>
-      <div className="w-[465px] max-w-[90%] mx-auto relative top-20 bg-lightBlue-100 dark:bg-blue-50 p-10 rounded-xl shadow-md shadow-blueGray-50 text-[#145698]">
+      <div className="w-[465px] max-w-[90%] mx-auto relative top-20 bg-blue-50 p-10 rounded-xl shadow-md shadow-blueGray-50 text-[#145698]">
         <h2 className="text-3xl font-bold text-center mb-3">Login</h2>
         <form>
           <div>
