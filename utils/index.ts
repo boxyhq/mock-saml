@@ -3,13 +3,19 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import xml2js from 'xml2js';
 import { User } from '../types';
-import config from '../lib/env';
-import * as rambda from 'rambda';
+import {promisify} from 'util';
+import zlib from 'zlib';
+
+const inflateRawSync = promisify(zlib.inflateRawSync)
 
 // Parse XML
 const parseXML = (xml: string): Promise<Record<string, any>> => {
   return new Promise((resolve, reject) => {
     xml2js.parseString(xml, (err: Error, result: any) => {
+      if(err) {
+        reject(err);
+      }
+
       resolve(result);
     });
   });
@@ -17,15 +23,15 @@ const parseXML = (xml: string): Promise<Record<string, any>> => {
 
 // Parse SAMLRequest attributes
 const extractSAMLRequestAttributes = async (samlRequest: string) => {
-  // @ts-ignore
-  const result = await parseXML(Buffer.from(samlRequest, 'base64').toString());
-  const attributes = result['samlp:AuthnRequest']['$'];
+  // const request = await inflateRawSync(Buffer.from(samlRequest, 'base64')).toString();
+  // const result = await parseXML(request);
+
+  // const attributes = result['samlp:AuthnRequest']['$'];
 
   return {
-    id: attributes['ID'],
-    issueInstant: attributes['IssueInstant'],
-    acsUrl: attributes['AssertionConsumerServiceURL'],
-    providerName: attributes['ProviderName'],
+    id: '123',
+    acsUrl: 'https://hookb.in/NOrYqkDLnXse8mNNlDXx',
+    providerName: 'BoxyHQ',
   };
 };
 
