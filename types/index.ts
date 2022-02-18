@@ -4,8 +4,8 @@ export type ServiceProvider = {
 };
 
 export type IdentityProvider = {
-  sso_url: string;
-  entity_id: string;
+  ssoUrl: string;
+  entityId: string;
 };
 
 export type App = {

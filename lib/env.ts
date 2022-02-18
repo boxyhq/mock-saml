@@ -1,6 +1,9 @@
-const config = {
-  appUrl: process.env.APP_URL || 'http://localhost:4000',
-  entityId: process.env.ENTITY_ID || 'http://saml.example.com',
-}
+const appUrl = process.env.APP_URL || 'http://localhost:4000';
+const entityId = process.env.ENTITY_ID || 'http://saml.example.com';
+const ssoUrl = `${appUrl}/saml/sso`;
 
-export default config;
+export default {
+  appUrl,
+  entityId,
+  ssoUrl,
+};

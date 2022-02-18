@@ -76,10 +76,6 @@ const createSAMLResponseXML = async (user: User): Promise<string> => {
     .replace('user_lastName', 'K');
 };
 
-const createIdPSSOUrl = (appId: string) => {
-  return `${config.appUrl}/saml2/apps/${appId}`;
-}
-
 export {
   parseXML,
   extractSAMLRequestAttributes,
@@ -87,5 +83,4 @@ export {
   createSAMLResponseXML,
   createCertificate,
   extractCert,
-  createIdPSSOUrl,
 };

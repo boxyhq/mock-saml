@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createCertificate, createIdPMetadataXML, createIdPSSOUrl } from '../../../../utils';
+import { createCertificate, createIdPMetadataXML } from '../../../../utils';
 import { IdPMetadata } from '../../../../types';
 import stream from 'stream';
 import { promisify } from 'util';
@@ -19,18 +19,16 @@ export default async function handler(
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
-  // Download metadata for an app
+  // Download metadata
   async function downloadMetadata() {
-    const appId = '0480c44e-f200-4f72-8af0-a5a57611fd2d';
-
     const xml = await createIdPMetadataXML({
       idpEntityId: config.entityId,
-      idpSsoUrl: createIdPSSOUrl(appId),
+      idpSsoUrl: config.ssoUrl,
       certificate: await createCertificate(),
     });
 
     res.setHeader('Content-type', 'text/xml');
-    res.setHeader('Content-Disposition', 'attachment; filename=metadata.xml');
+    res.setHeader('Content-Disposition', 'attachment; filename=mock-saml-metadata.xml');
 
     await pipeline(xml, res);
   }
