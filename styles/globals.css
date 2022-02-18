@@ -30,3 +30,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@layer components {
+  .button {
+    @apply block py-2 px-4 leading-8 bg-primary/90 text-white font-semibold rounded-lg shadow-md hover:bg-primary/95 focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-opacity-100;
+  }
+  .input {
+    @apply bg-[#eff0f8] border-2 border-solid border-[#8b8a8b] leading-10 px-4 py-2 rounded-md focus:border-[#5a5dbb] focus:outline-none;
+  }
+}
