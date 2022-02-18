@@ -9,7 +9,7 @@ export default function Layout({ children }: LayoutProps) {
       <header className="py-5 px-20">
         <h1 className="text-2xl">Mock SAML IdP</h1>
       </header>
-      <main>{children}</main>
+      <main className="h-[calc(100%_-_76px)] overflow-auto">{children}</main>
     </>
   );
 }

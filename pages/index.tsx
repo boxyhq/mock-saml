@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
   return (
-    <>
+    <div className="h-full">
       <Head>
         <title>Mock SAML IdP - Metadata</title>
       </Head>
@@ -41,7 +41,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
           <Link href="/api/saml/metadata/download">Download Metadata</Link>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
