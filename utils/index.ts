@@ -5,6 +5,7 @@ import xml2js from 'xml2js';
 import { User } from '../types';
 import {promisify} from 'util';
 import zlib from 'zlib';
+import xmlbuilder from 'xmlbuilder';
 
 const inflateRawSync = promisify(zlib.inflateRawSync)
 
@@ -67,27 +68,99 @@ const extractCert = (certificate: string) => {
 };
 
 // Create SAMLResponse
-const createSAMLResponse = async (user: User): Promise<string> => {
-  
+const createSAMLResponse = async (): Promise<string> => {
+  const idpIdentityId = 'urn:dev-tyj7qyzz.auth0.com';
+  const audience = 'https://saml.boxyhq.com';
+  const acsUrl = 'http://localhost:3000/sso/acs';
 
-  return "";
+  const user: User = {
+    id: '1',
+    email: 'kiran@boxyhq.com',
+    firstName: 'Kiran',
+    lastName: 'K',
+  }
 
-  // const xmlPath = path.join('data', 'saml-response.xml');
-  // const xml = await fs.readFile(xmlPath, 'utf8');
+  const nodes = {
+    'samlp:Response':{
+      '@xmlns:samlp': 'urn:oasis:names:tc:SAML:2.0:protocol',
+      '@ID': '_dde944f3d9cb96238b0c',
+      'saml:Issuer': {
+        '@xmlns:saml': 'urn:oasis:names:tc:SAML:2.0:assertion',
+        '#text': idpIdentityId,
+      },
+      'samlp:Status': {
+        'samlp:StatusCode': {
+          '@Value': 'urn:oasis:names:tc:SAML:2.0:status:Success'
+        }
+      },
+      'saml:Assertion': {
+        '@xmlns:saml': 'urn:oasis:names:tc:SAML:2.0:assertion',
+        '@Version': '2.0',
+        '@ID': '_bsyl9FgHslMWbBp2tFgM0FBJqWNTd3xd',
+        '@IssueInstant': '2022-02-18T06:24:29.856Z',
+        'saml:Issuer': {
+          '#text': idpIdentityId,
+        },
+        'saml:Subject': {
+          'saml:NameID': {
+            '@Format': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+            '#text': 'google-oauth2|108149256146623609101',
+          },
+          'saml:SubjectConfirmation': {
+            '@Method': 'urn:oasis:names:tc:SAML:2.0:cm:bearer',
+            'saml:SubjectConfirmationData': {
+              '@NotOnOrAfter': '2022-02-18T07:24:29.856Z',
+              '@Recipient': acsUrl,
+              '@InResponseTo': '_e427c05d2462c8c2550e'
+            }
+          }
+        },
+        'saml:Conditions': {
+          '@NotBefore': '2022-02-18T06:24:29.856Z',
+          '@NotOnOrAfter': '2022-02-18T07:24:29.856Z',
+          'saml:AudienceRestriction': {
+            'saml:Audience': {
+              '#text': audience,
+            }
+          }
+        },
+        'saml:AuthnStatement': {
+          '@AuthnInstant': '2022-02-18T06:24:29.856Z',
+          '@SessionIndex': '_YIlFoNFzLMDYxdwf-T_BuimfkGa5qhKg',
+          'saml:AuthnContext': {
+            'saml:AuthnContextClassRef': {
+              '#text': 'urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified'
+            }
+          }
+        },
+        'saml:AttributeStatement': {
+          '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+          'saml:Attribute': {
+            '@Name': 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',
+            '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
+            'saml:AttributeValue': {
+              '@xsi:type': 'xs:string',
+              '#text': user.email,
+            }
+          },
 
-  // return xml
-  //   .replace(
-  //     /idp_entity_id/g,
-  //     'https://accounts.google.com/o/saml2?idpid=C02frd9s1'
-  //   )
-  //   .replace('sp_acs_url', 'some-url')
-  //   .replace(/user_email/g, 'kiran@demo.com')
-  //   .replace('user_firstName', 'Kiran')
-  //   .replace('user_lastName', 'K');
+          // @ts-ignore
+          'saml:Attribute': {
+            '@Name': 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',
+            '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
+            'saml:AttributeValue': {
+              '@xsi:type': 'xs:string',
+              '#text': user.id
+            }
+          },
+        }
+      }
+    }
+  }
+
+  return xmlbuilder.create(nodes).end({ pretty: true});
 };
-
-// 
-// base64 encode
 
 export const createResponseForm = (relayState: string, samlResponse: string, acsUrl: string) => {
   const formElements = [
