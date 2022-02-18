@@ -1,7 +1,4 @@
-import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const prisma = new PrismaClient();
 
 type User = {
   id: number,
