@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark light;
-}
-
 .theme-default {
   --color-primary: 37 194 160;
   --color-secondary: 48 56 70;
