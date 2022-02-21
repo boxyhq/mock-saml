@@ -56,7 +56,7 @@ const createIdPMetadataXML = async ({
 };
 
 const createCertificate = async () => {
-  const certificateFilePath = path.join('data', 'x509cert.txt');
+  const certificateFilePath = path.join('data', 'idp-public-key.txt');
 
   return await fs.readFile(certificateFilePath, 'utf8');
 };
@@ -85,8 +85,43 @@ const createSAMLResponseXML = async (params: {
   authDate.setMinutes(authDate.getMinutes() + 10);
   const notAfter = authDate.toISOString();
 
-  const inResponseTo = '_dde944f3d9cb96238b0c'
+  const inResponseTo = '_1234'
   const responseId = crypto.randomBytes(10).toString('hex');
+
+  const attributeStatement = {
+    '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+    '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+    'saml:Attribute' : [
+      {
+        '@Name': 'id',
+        '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+        'saml:AttributeValue': {
+          '#text': user.id,
+        }
+      },
+      {
+        '@Name': 'email',
+        '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+        'saml:AttributeValue': {
+          '#text': user.email,
+        }
+      },
+      {
+        '@Name': 'firstName',
+        '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+        'saml:AttributeValue': {
+          '#text': user.firstName,
+        }
+      },
+      {
+        '@Name': 'lastName',
+        '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+        'saml:AttributeValue': {
+          '#text': user.lastName,
+        }
+      },
+    ]
+  }
 
   const nodes = {
     'samlp:Response':{
@@ -137,49 +172,17 @@ const createSAMLResponseXML = async (params: {
             }
           }
         },
-        'saml:AttributeStatement': {
-          '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
-          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-          'saml:Attribute': [
-            {
-              '@Name': 'id',
-              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
-              'saml:AttributeValue': {
-                '#text': user.id,
-              }
-            },
-            {
-              '@Name': 'email',
-              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
-              'saml:AttributeValue': {
-                '#text': user.email,
-              }
-            },
-            {
-              '@Name': 'firstName',
-              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
-              'saml:AttributeValue': {
-                '#text': user.firstName,
-              }
-            },
-            {
-              '@Name': 'lastName',
-              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
-              'saml:AttributeValue': {
-                '#text': user.lastName,
-              }
-            },
-          ]
-        }
-      }
+        'saml:AttributeStatement': attributeStatement,
+      },
     }
   }
 
   return xmlbuilder.create(nodes).end({ pretty: true});
 };
 
-// Add DigestValue
-// Add X509Certificate
+const signResponseXML = (xml: string, signingKey: any, publicKey: any): string => {
+  return xml;
+}
 
 // Create the HTML form to submit the response
 export const createResponseForm = (relayState: string, encodedSamlResponse: string, acsUrl: string) => {
