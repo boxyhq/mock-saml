@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { createResponseForm, createSAMLResponseXML } from 'utils';
 import { User } from 'types';
 import config from '../../../lib/env'
+import { signResponseXML } from 'utils/response';
+import { fetchPrivateKey, fetchPublicKey } from 'utils/certificate';
 
 export default async function handler(
   req: NextApiRequest,
@@ -37,9 +39,11 @@ export default async function handler(
       user: user,
     });
 
-    console.log(xml)
+    const signingKey = await fetchPrivateKey();
+    const publicKey = await fetchPublicKey();
+    const xmlSigned = await signResponseXML(xml, signingKey, publicKey);
 
-    const encodedSamlResponse =  Buffer.from(xml).toString('base64');
+    const encodedSamlResponse =  Buffer.from(xmlSigned).toString('base64');
 
     const html = createResponseForm(relayState, encodedSamlResponse, acsUrl);
 

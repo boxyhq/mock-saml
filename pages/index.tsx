@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next";
 import { IdPMetadata } from "../types";
 import config from "../lib/env";
-import { createCertificate } from "../utils";
+import { fetchPublicKey } from "../utils";
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
@@ -10,7 +10,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const metadata: IdPMetadata = {
     ssoUrl: config.ssoUrl,
     entityId: config.entityId,
-    certificate: await createCertificate(),
+    certificate: await fetchPublicKey(),
   };
 
   return {
@@ -32,7 +32,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
         <p className="font-extrabold">Entity ID</p>
         <p className="col-span-2">{metadata.entityId}</p>
         <p className="font-extrabold">Certificate</p>
-        <p className="min-w-0 overflow-auto text-sm col-span-2">
+        <p className="min-w-0 col-span-2 overflow-auto text-sm">
           {metadata.certificate}
         </p>
         <br></br>
