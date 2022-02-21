@@ -74,6 +74,7 @@ const createSAMLResponseXML = async (params: {
   user: User
 }): Promise<string> => {
   const {idpIdentityId, audience, acsUrl, user} = params;
+  const authTimestamp = 
 
   const nodes = {
     'samlp:Response':{
