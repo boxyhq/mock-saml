@@ -67,18 +67,13 @@ const extractCert = (certificate: string) => {
     .trim();
 };
 
-// Create SAMLResponse
-const createSAMLResponse = async (): Promise<string> => {
-  const idpIdentityId = 'urn:dev-tyj7qyzz.auth0.com';
-  const audience = 'https://saml.boxyhq.com';
-  const acsUrl = 'http://localhost:3000/sso/acs';
-
-  const user: User = {
-    id: '1',
-    email: 'kiran@boxyhq.com',
-    firstName: 'Kiran',
-    lastName: 'K',
-  }
+const createSAMLResponseXML = async (params: {
+  idpIdentityId: string,
+  audience: string,
+  acsUrl: string,
+  user: User
+}): Promise<string> => {
+  const {idpIdentityId, audience, acsUrl, user} = params;
 
   const nodes = {
     'samlp:Response':{
@@ -136,24 +131,36 @@ const createSAMLResponse = async (): Promise<string> => {
         'saml:AttributeStatement': {
           '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
           '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-          'saml:Attribute': {
-            '@Name': 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',
-            '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
-            'saml:AttributeValue': {
-              '@xsi:type': 'xs:string',
-              '#text': user.email,
-            }
-          },
-
-          // @ts-ignore
-          'saml:Attribute': {
-            '@Name': 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',
-            '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
-            'saml:AttributeValue': {
-              '@xsi:type': 'xs:string',
-              '#text': user.id
-            }
-          },
+          'saml:Attribute': [
+            {
+              '@Name': 'id',
+              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+              'saml:AttributeValue': {
+                '#text': user.id,
+              }
+            },
+            {
+              '@Name': 'email',
+              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+              'saml:AttributeValue': {
+                '#text': user.email,
+              }
+            },
+            {
+              '@Name': 'firstName',
+              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+              'saml:AttributeValue': {
+                '#text': user.firstName,
+              }
+            },
+            {
+              '@Name': 'lastName',
+              '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+              'saml:AttributeValue': {
+                '#text': user.lastName,
+              }
+            },
+          ]
         }
       }
     }
@@ -162,7 +169,8 @@ const createSAMLResponse = async (): Promise<string> => {
   return xmlbuilder.create(nodes).end({ pretty: true});
 };
 
-export const createResponseForm = (relayState: string, samlResponse: string, acsUrl: string) => {
+// Create the HTML form to submit the response
+export const createResponseForm = (relayState: string, encodedSamlResponse: string, acsUrl: string) => {
   const formElements = [
     '<!DOCTYPE html>',
     '<html>',
@@ -176,7 +184,7 @@ export const createResponseForm = (relayState: string, samlResponse: string, acs
     '</noscript>',
     '<form method="post" action="' + encodeURI(acsUrl) + '">',
     '<input type="hidden" name="RelayState" value="' + relayState + '"/>',
-    '<input type="hidden" name="SAMLResponse" value="' + samlResponse + '"/>',
+    '<input type="hidden" name="SAMLResponse" value="' + encodedSamlResponse + '"/>',
     '<input type="submit" value="Continue" />',
     '</form>',
     '<script>document.forms[0].style.display="none";</script>',
@@ -191,7 +199,7 @@ export {
   parseXML,
   extractSAMLRequestAttributes,
   createIdPMetadataXML,
-  createSAMLResponse,
+  createSAMLResponseXML,
   createCertificate,
   extractCert,
 };
