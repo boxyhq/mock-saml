@@ -147,9 +147,6 @@ const signResponseXML = async (xml: string, signingKey: any, publicKey: any): Pr
   const responseXPath = '/*[local-name(.)="Response" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:protocol"]';
   const issuerXPath = '/*[local-name(.)="Issuer" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:assertion"]';
 
-  publicKey = publicKey.replace(/\\n/gm, '\n');
-  signingKey = signingKey.replace(/\\n/gm, '\n');
-
   console.log({publicKey, signingKey})
 
   sig.signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';

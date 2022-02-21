@@ -42,8 +42,7 @@ export default async function handler(
     const signingKey = await fetchPrivateKey();
     const publicKey = await fetchPublicKey();
     const xmlSigned = await signResponseXML(xml, signingKey, publicKey);
-
-    const encodedSamlResponse =  Buffer.from(xmlSigned).toString('base64');
+    const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');
 
     const html = createResponseForm(relayState, encodedSamlResponse, acsUrl);
 
