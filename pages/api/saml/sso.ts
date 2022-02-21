@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createResponseForm, createSAMLResponseXML } from 'utils';
+import { createResponseForm, createResponseXML } from 'utils';
 import { User } from 'types';
 import config from '../../../lib/env'
 import { signResponseXML } from 'utils/response';
@@ -32,7 +32,7 @@ export default async function handler(
       lastName: 'K',
     };
 
-    const xml = await createSAMLResponseXML({
+    const xml = await createResponseXML({
       idpIdentityId: idpIdentityId,
       audience: audience,
       acsUrl: acsUrl,

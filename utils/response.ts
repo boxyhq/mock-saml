@@ -1,9 +1,10 @@
 import { User } from '../types';
 import xmlbuilder from 'xmlbuilder';
-import crypto from 'crypto';
-import {SignedXml, FileKeyInfo} from 'xml-crypto';
+import crypto, { sign } from 'crypto';
+import { SignedXml, FileKeyInfo } from 'xml-crypto';
+import { fetchPrivateKey, fetchPublicKey, stripCertHeaderAndFooter } from './certificate';
 
-const createSAMLResponseXML = async (params: {
+const createResponseXML = async (params: {
   idpIdentityId: string,
   audience: string,
   acsUrl: string,
@@ -142,24 +143,30 @@ const createResponseForm = (relayState: string, encodedSamlResponse: string, acs
 };
 
 const signResponseXML = async (xml: string, signingKey: any, publicKey: any): Promise<string> => {
-  return '';
+  const sig = new SignedXml();
+  const responseXPath = '/*[local-name(.)="Response" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:protocol"]';
+  const issuerXPath = '/*[local-name(.)="Issuer" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:assertion"]';
 
-  // const sig = new SignedXml();
+  publicKey = publicKey.replace(/\\n/gm, '\n');
+  signingKey = signingKey.replace(/\\n/gm, '\n');
 
-  // sig.signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
-  // sig.keyInfoProvider = new PubKeyInfo(publicKey);
+  console.log({publicKey, signingKey})
 
-  // sig.signingKey = signingKey;
-  // sig.addReference(authnXPath, ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'], 'http://www.w3.org/2001/04/xmlenc#sha256');
-  // sig.computeSignature(xml, {
-  //     location: { reference: authnXPath + issuerXPath, action: 'after' },
-  // });
+  sig.signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
+  sig.keyInfoProvider = new FileKeyInfo(stripCertHeaderAndFooter(publicKey));
+  sig.signingKey = signingKey;
 
-  // return sig.getSignedXml();
+  sig.addReference(responseXPath, ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'], 'http://www.w3.org/2001/04/xmlenc#sha256');
+
+  sig.computeSignature(xml, {
+    location: { reference: responseXPath + issuerXPath, action: 'after' },
+  });
+
+  return sig.getSignedXml();
 }
 
 export {
-  createSAMLResponseXML,
+  createResponseXML,
   createResponseForm,
   signResponseXML
 }
