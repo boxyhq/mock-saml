@@ -1,8 +1,7 @@
 import { User } from '../types';
 import xmlbuilder from 'xmlbuilder';
-import crypto, { sign } from 'crypto';
+import crypto from 'crypto';
 import { SignedXml, FileKeyInfo } from 'xml-crypto';
-import { fetchPrivateKey, fetchPublicKey, stripCertHeaderAndFooter } from './certificate';
 
 const createResponseXML = async (params: {
   idpIdentityId: string,
