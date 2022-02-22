@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
       const { id, audience, acsUrl, providerName } = await extractSAMLRequestAttributes(samlRequest);
       const params = new URLSearchParams({ id, audience, acsUrl, providerName, relayState });
-      res.redirect(307, `/saml/login?${params.toString()}`);
+      res.redirect(302, `/saml/login?${params.toString()}`);
     } catch (err) {
       console.error(err);
       res.status(500).send(`Error parsing SAML request`);
