@@ -7,10 +7,10 @@ import {
   fetchPublicKey,
   signResponseXML,
 } from 'utils';
+import config from 'lib/env';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    console.log(req.body);
     const email = req.body.email;
     if (!email.endsWith('@example.com')) {
       res.status(403).send(`${email} denied access`);
@@ -22,10 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       firstName: id,
       lastName: id,
     };
-    console.log(`🕺🏻`, user);
+    console.log(`🏁`, user);
 
     const xml = await createResponseXML({
-      idpIdentityId: req.body.audience,
+      idpIdentityId: config.entityId,
       audience: req.body.audience,
       acsUrl: req.body.acsUrl,
       user: user,
@@ -34,6 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const signingKey = await fetchPrivateKey();
     const publicKey = await fetchPublicKey();
     const xmlSigned = await signResponseXML(xml, signingKey, publicKey);
+
     const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');
 
     const html = createResponseForm(req.body.relayState, encodedSamlResponse, req.body.acsUrl);
