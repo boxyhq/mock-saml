@@ -13,7 +13,7 @@ const createIdPMetadataXML = async ({
 }): Promise<string> => {
   const xmlPath = path.join('data', 'idp-metadata.xml');
   const xml = await fs.readFile(xmlPath, 'utf8');
-  certificate = stripCertHeaderAndFooter(certificate)
+  certificate = stripCertHeaderAndFooter(certificate);
 
   return xml
     .replace('idp_entity_id', idpEntityId)
@@ -21,6 +21,4 @@ const createIdPMetadataXML = async ({
     .replace(/idp_sso_url/g, idpSsoUrl);
 };
 
-export {
-  createIdPMetadataXML,
-}
+export { createIdPMetadataXML };
