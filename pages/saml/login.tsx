@@ -22,7 +22,10 @@ export default function Login() {
       body: JSON.stringify({ email, id, audience, acsUrl, providerName, relayState }),
     });
     if (response.ok) {
-      document.write(await response.text());
+      const newHtml = await response.text();
+      const newDoc = document.open('text/html', 'replace');
+      newDoc.write(newHtml);
+      newDoc.close();
     } else {
       document.write('Error in getting SAML response');
     }
