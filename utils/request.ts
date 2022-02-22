@@ -8,7 +8,7 @@ const inflateRawAsync = promisify(inflateRaw);
 const parseXML = (xml: string): Promise<Record<string, any>> => {
   return new Promise((resolve, reject) => {
     xml2js.parseString(xml, (err: Error, result: any) => {
-      if(err) {
+      if (err) {
         reject(err);
       }
 
@@ -34,7 +34,4 @@ const extractSAMLRequestAttributes = async (samlRequest: string) => {
   };
 };
 
-
-export {
-  extractSAMLRequestAttributes,
-}
+export { extractSAMLRequestAttributes };

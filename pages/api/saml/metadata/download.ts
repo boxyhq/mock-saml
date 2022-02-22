@@ -3,15 +3,11 @@ import { fetchPublicKey, createIdPMetadataXML } from '../../../../utils';
 import { IdPMetadata } from '../../../../types';
 import stream from 'stream';
 import { promisify } from 'util';
-import config from '../../../../lib/env'
+import config from '../../../../lib/env';
 
 const pipeline = promisify(stream.pipeline);
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<IdPMetadata | string>
-) {
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse<IdPMetadata | string>) {
   switch (req.method) {
     case 'GET':
       return await downloadMetadata();
