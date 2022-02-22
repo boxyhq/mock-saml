@@ -1,15 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createResponseForm, createResponseXML } from 'utils';
+import { createResponseForm, createResponseXML, extractSAMLRequestAttributes } from 'utils';
 import { User } from 'types';
-import config from '../../../lib/env'
+import config from '../../../lib/env';
 import { signResponseXML } from 'utils/response';
 import { fetchPrivateKey, fetchPublicKey } from 'utils/certificate';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<string>
-) {
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse<string>) {
   switch (req.method) {
     case 'GET':
       return await processSAMLRequest();
