@@ -7,7 +7,7 @@ const fetchPublicKey = async (): Promise<string> => {
 
 const fetchPrivateKey = async (): Promise<string> => {
   return await fs.readFile(path.join('data', 'key.pem'), 'ascii');
-}
+};
 
 const stripCertHeaderAndFooter = (cert: string): string => {
   cert = cert.replace(/-+BEGIN CERTIFICATE-+\r?\n?/, '');
@@ -17,8 +17,4 @@ const stripCertHeaderAndFooter = (cert: string): string => {
   return cert;
 };
 
-export {
-  fetchPublicKey,
-  fetchPrivateKey,
-  stripCertHeaderAndFooter,
-}
+export { fetchPublicKey, fetchPrivateKey, stripCertHeaderAndFooter };
