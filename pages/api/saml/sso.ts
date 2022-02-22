@@ -20,10 +20,10 @@ export default async function handler(
   async function processSAMLRequest() {
     const relayState = <string>req.query.RelayState;
     const samlRequest = <string>req.query.SAMLRequest;
+    const { id, audience, acsUrl, providerName } = await extractSAMLRequestAttributes(samlRequest);
 
-    const idpIdentityId = config.entityId;
-    const audience = config.entityId;
-    const acsUrl = 'http://localhost:3000/sso/acs'; // TODO: Fetch acsUrl from SAMLRequest
+    const idpIdentityId = audience;
+    // const audience = config.entityId;
 
     const user: User = {
       id: '1',

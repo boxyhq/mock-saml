@@ -1,10 +1,8 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-import xml2js from 'xml2js';
-import {promisify} from 'util';
-import zlib from 'zlib';
+import xml2js from "xml2js";
+import { promisify } from "util";
+import { inflateRaw } from "zlib";
 
-const inflateRawSync = promisify(zlib.inflateRawSync)
+const inflateRawAsync = promisify(inflateRaw);
 
 // Parse XML
 const parseXML = (xml: string): Promise<Record<string, any>> => {
@@ -21,15 +19,18 @@ const parseXML = (xml: string): Promise<Record<string, any>> => {
 
 // Parse SAMLRequest attributes
 const extractSAMLRequestAttributes = async (samlRequest: string) => {
-  // const request = await inflateRawSync(Buffer.from(samlRequest, 'base64')).toString();
-  // const result = await parseXML(request);
+  const request = (
+    await inflateRawAsync(Buffer.from(samlRequest, "base64"))
+  ).toString();
+  const result = await parseXML(request);
 
-  // const attributes = result['samlp:AuthnRequest']['$'];
-
+  const attributes = result["samlp:AuthnRequest"]["$"];
+  const issuer = result["samlp:AuthnRequest"]["saml:Issuer"];
   return {
-    id: '123',
-    acsUrl: 'https://hookb.in/NOrYqkDLnXse8mNNlDXx',
-    providerName: 'BoxyHQ',
+    id: attributes.ID,
+    acsUrl: attributes.AssertionConsumerServiceURL,
+    providerName: attributes.ProviderName,
+    audience: issuer[0]["_"],
   };
 };
 
