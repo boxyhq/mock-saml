@@ -22,7 +22,7 @@ const createResponseXML = async (params: {
   const notAfter = authDate.toISOString();
 
   const inResponseTo = '_1234';
-  const responseId = crypto.randomBytes(10).toString('hex');
+  // const responseId = crypto.randomBytes(10).toString('hex');
 
   const attributeStatement = {
     '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
@@ -32,6 +32,9 @@ const createResponseXML = async (params: {
         '@Name': 'id',
         '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
         'saml:AttributeValue': {
+          '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+          '@xsi:type': 'xs:string',
           '#text': user.id,
         },
       },
@@ -39,6 +42,9 @@ const createResponseXML = async (params: {
         '@Name': 'email',
         '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
         'saml:AttributeValue': {
+          '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+          '@xsi:type': 'xs:string',
           '#text': user.email,
         },
       },
@@ -46,6 +52,9 @@ const createResponseXML = async (params: {
         '@Name': 'firstName',
         '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
         'saml:AttributeValue': {
+          '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+          '@xsi:type': 'xs:string',
           '#text': user.firstName,
         },
       },
@@ -53,6 +62,9 @@ const createResponseXML = async (params: {
         '@Name': 'lastName',
         '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
         'saml:AttributeValue': {
+          '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+          '@xsi:type': 'xs:string',
           '#text': user.lastName,
         },
       },
@@ -63,23 +75,24 @@ const createResponseXML = async (params: {
     'samlp:Response': {
       '@xmlns:samlp': 'urn:oasis:names:tc:SAML:2.0:protocol',
       '@Version': '2.0',
-      '@ID': responseId,
+      '@ID': crypto.randomBytes(10).toString('hex'),
       '@Destination': acsUrl,
       '@InResponseTo': inResponseTo,
       '@IssueInstant': authTimestamp,
+      'saml:Issuer': {
+        '@xmlns:saml': 'urn:oasis:names:tc:SAML:2.0:assertion',
+        '@Format': 'urn:oasis:names:tc:SAML:2.0:assertion',
+        '#text': idpIdentityId,
+      },
       'samlp:Status': {
         'samlp:StatusCode': {
           '@Value': 'urn:oasis:names:tc:SAML:2.0:status:Success',
         },
       },
-      'saml:Issuer': {
-        '@xmlns:saml': 'urn:oasis:names:tc:SAML:2.0:assertion',
-        '#text': idpIdentityId,
-      },
       'saml:Assertion': {
         '@xmlns:saml': 'urn:oasis:names:tc:SAML:2.0:assertion',
         '@Version': '2.0',
-        '@ID': responseId,
+        '@ID': crypto.randomBytes(10).toString('hex'),
         '@IssueInstant': authTimestamp,
         'saml:Issuer': {
           '#text': idpIdentityId,
@@ -113,7 +126,7 @@ const createResponseXML = async (params: {
     },
   };
 
-  return xmlbuilder.create(nodes).end({ pretty: true });
+  return xmlbuilder.create(nodes, { encoding: 'UTF-8' }).end();
 };
 
 // Create the HTML form to submit the response
@@ -179,7 +192,10 @@ const signResponseXML = async (xml: string, signingKey: any, publicKey: any): Pr
   sig.signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
 
   // @ts-ignore
-  sig.keyInfoProvider = new GetKeyInfo(publicKey, {});
+  sig.keyInfoProvider = new GetKeyInfo(publicKey, {
+    prefix: 'ds',
+  });
+
   sig.signingKey = signingKey;
 
   sig.addReference(
