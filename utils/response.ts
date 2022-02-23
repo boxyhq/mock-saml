@@ -194,7 +194,7 @@ const signResponseXML = async (xml: string, signingKey: any, publicKey: any): Pr
 
   // @ts-ignore
   sig.keyInfoProvider = new GetKeyInfo(publicKey, {
-    prefix: 'ds',
+    prefix: '',
   });
 
   sig.signingKey = signingKey;
