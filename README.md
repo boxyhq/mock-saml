@@ -25,3 +25,5 @@ npm run build
 ```
 npm run start
 ```
+
+Visit [http://localhost:4000/](http://localhost:4000/) to start the Mock SAML.
