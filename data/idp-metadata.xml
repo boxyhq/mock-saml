@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="idp_entity_id" validUntil="2026-06-22T18:39:53.000Z">
-  <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-    <md:KeyDescriptor use="signing">
-      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-        <ds:X509Data>
-          <ds:X509Certificate>idp_certificate</ds:X509Certificate>
-        </ds:X509Data>
-      </ds:KeyInfo>
-    </md:KeyDescriptor>
-    <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
-    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="idp_sso_url"/>
-    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="idp_sso_url"/>
-  </md:IDPSSODescriptor>
-</md:EntityDescriptor>
+<EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="{{idp_entity_id}}" validUntil="2026-06-22T18:39:53.000Z">
+	<IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+		<KeyDescriptor use="signing">
+			<KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<X509Data>
+					<X509Certificate>
+						{{idp_certificate}}
+					</X509Certificate>
+				</X509Data>
+			</KeyInfo>
+		</KeyDescriptor>
+		<NameIDFormat>
+			urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+		</NameIDFormat>
+		<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="{{idp_sso_url}}" />
+		<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="{{idp_sso_url}}" />
+	</IDPSSODescriptor>
+</EntityDescriptor>
