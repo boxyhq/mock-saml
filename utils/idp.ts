@@ -16,9 +16,9 @@ const createIdPMetadataXML = async ({
   certificate = stripCertHeaderAndFooter(certificate);
 
   return xml
-    .replace('idp_entity_id', idpEntityId)
-    .replace('idp_certificate', certificate)
-    .replace(/idp_sso_url/g, idpSsoUrl);
+    .replace('{{idp_entity_id}}', idpEntityId)
+    .replace('{{idp_certificate}}', certificate)
+    .replace(/{{idp_sso_url}}/g, idpSsoUrl);
 };
 
 export { createIdPMetadataXML };
