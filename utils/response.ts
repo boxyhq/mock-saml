@@ -8,9 +8,10 @@ const createResponseXML = async (params: {
   idpIdentityId: string;
   audience: string;
   acsUrl: string;
+  samlReqId: string;
   user: User;
 }): Promise<string> => {
-  const { idpIdentityId, audience, acsUrl, user } = params;
+  const { idpIdentityId, audience, acsUrl, user, samlReqId } = params;
 
   const authDate = new Date();
   const authTimestamp = authDate.toISOString();
@@ -21,7 +22,7 @@ const createResponseXML = async (params: {
   authDate.setMinutes(authDate.getMinutes() + 10);
   const notAfter = authDate.toISOString();
 
-  const inResponseTo = '_1234';
+  const inResponseTo = samlReqId;
   // const responseId = crypto.randomBytes(10).toString('hex');
 
   const attributeStatement = {

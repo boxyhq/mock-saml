@@ -28,6 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       idpIdentityId: config.entityId,
       audience: req.body.audience,
       acsUrl: req.body.acsUrl,
+      samlReqId: req.body.id,
       user: user,
     });
 
