@@ -1,5 +1,5 @@
-import xml2js from 'xml2js';
 import { promisify } from 'util';
+import xml2js from 'xml2js';
 import { inflateRaw } from 'zlib';
 
 const inflateRawAsync = promisify(inflateRaw);

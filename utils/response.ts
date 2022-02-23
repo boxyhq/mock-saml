@@ -1,8 +1,8 @@
-import { User } from '../types';
-import xmlbuilder from 'xmlbuilder';
 import crypto from 'crypto';
-import { SignedXml, FileKeyInfo } from 'xml-crypto';
-import { pki, util, asn1 } from 'node-forge';
+import { SignedXml } from 'xml-crypto';
+import xmlbuilder from 'xmlbuilder';
+import { User } from '../types';
+import { GetKeyInfo } from './certificate';
 
 const createResponseXML = async (params: {
   idpIdentityId: string;
@@ -155,33 +155,6 @@ const createResponseForm = (relayState: string, encodedSamlResponse: string, acs
 
   return formElements.join('');
 };
-
-function getPublicKeyPemFromCertificate(x509Certificate: string) {
-  const certDerBytes = util.decode64(x509Certificate);
-  const obj = asn1.fromDer(certDerBytes);
-  const cert = pki.certificateFromAsn1(obj);
-  return pki.publicKeyToPem(cert.publicKey);
-}
-
-const stripCertHeaderAndFooter = (cert: string): string => {
-  cert = cert.replace(/-+BEGIN CERTIFICATE-+\r?\n?/, '');
-  cert = cert.replace(/-+END CERTIFICATE-+\r?\n?/, '');
-  cert = cert.replace(/\r\n/g, '\n');
-  return cert;
-};
-
-function GetKeyInfo(x509Certificate: string, signatureConfig: any = {}) {
-  x509Certificate = stripCertHeaderAndFooter(x509Certificate);
-
-  this.getKeyInfo = () => {
-    const prefix = signatureConfig.prefix ? `${signatureConfig.prefix}:` : '';
-    return `<${prefix}X509Data><${prefix}X509Certificate>${x509Certificate}</${prefix}X509Certificate></${prefix}X509Data>`;
-  };
-
-  this.getKey = () => {
-    return getPublicKeyPemFromCertificate(x509Certificate).toString();
-  };
-}
 
 const signResponseXML = async (xml: string, signingKey: any, publicKey: any): Promise<string> => {
   const sig = new SignedXml();
