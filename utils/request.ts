@@ -18,8 +18,10 @@ const parseXML = (xml: string): Promise<Record<string, any>> => {
 };
 
 // Parse SAMLRequest attributes
-const extractSAMLRequestAttributes = async (samlRequest: string) => {
-  const request = (await inflateRawAsync(Buffer.from(samlRequest, 'base64'))).toString();
+const extractSAMLRequestAttributes = async (samlRequest: string, isDeflated: boolean) => {
+  const request = isDeflated
+    ? (await inflateRawAsync(Buffer.from(samlRequest, 'base64'))).toString()
+    : Buffer.from(samlRequest, 'base64').toString();
   const result = await parseXML(request);
 
   const attributes = result['samlp:AuthnRequest']['$'];
