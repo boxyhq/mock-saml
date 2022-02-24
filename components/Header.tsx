@@ -17,7 +17,11 @@ export default function Header() {
           <span className='ml-3 text-xl'>Mock SAML</span>
         </a>
         <nav className='flex flex-wrap items-center justify-center text-base md:ml-auto'>
-          <a className='mr-5 hover:text-gray-900' href='https://github.com/boxyhq/jackson'>
+          <a
+            className='mr-5 underline hover:text-gray-900'
+            href='https://github.com/boxyhq/jackson'
+            rel='noopener noreferrer'
+            target='_blank'>
             Integrate SAML with a few lines of code.
           </a>
         </nav>

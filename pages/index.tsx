@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 import config from '../lib/env';
@@ -21,24 +20,56 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
+  const { ssoUrl, entityId, certificate } = metadata;
+
   return (
-    <div className='h-full'>
-      <Head>
-        <title>Mock SAML IdP - Metadata</title>
-      </Head>
-      <div className='w-4/5 lg:w-3/5 mx-auto relative top-20 bg-blue-50 p-10 rounded-xl grid gap-6 grid-cols-3 shadow-lg shadow-blueGray-50 text-[#145698]'>
-        <p className='font-extrabold'>SSO URL</p>
-        <p className='col-span-2'>{metadata.ssoUrl}</p>
-        <p className='font-extrabold'>Entity ID</p>
-        <p className='col-span-2'>{metadata.entityId}</p>
-        <p className='font-extrabold'>Certificate</p>
-        <p className='min-w-0 col-span-2 overflow-auto text-sm'>{metadata.certificate}</p>
-        <br></br>
-        <p>
-          <Link href='/api/saml/metadata/download'>Download Metadata</Link>
-        </p>
+    <section className='text-gray-600 body-font'>
+      <div className='container px-5 py-24 mx-auto'>
+        <div className='flex flex-col w-full mb-12 text-center'>
+          <h1 className='mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font'>
+            Mock SAML Metadata
+          </h1>
+          <p className='mx-auto text-base leading-relaxed lg:w-2/3'>
+            Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke
+            farm-to-table. Franzen you probably haven't heard of them man bun deep.
+          </p>
+        </div>
+        <div className='flex items-end w-full px-8 mx-auto space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
+          <div className='relative mr-4 lg:w-full'>
+            <label className='text-sm leading-7 text-gray-600'>SSO URL</label>
+            <input
+              type='text'
+              value={ssoUrl}
+              className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'
+            />
+          </div>
+          <div className='relative mr-4 lg:w-full'>
+            <label className='text-sm leading-7 text-gray-600'>Entity ID</label>
+            <input
+              type='text'
+              value={entityId}
+              className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'
+            />
+          </div>
+        </div>
+        <div className='flex items-end w-full px-8 mx-auto mt-5 space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
+          <div className='relative lg:w-full'>
+            <label className='text-sm leading-7 text-gray-600'>Certificate</label>
+            <textarea
+              rows='5'
+              value={certificate}
+              className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'></textarea>
+          </div>
+        </div>
+        <div className='flex items-end w-full px-8 mx-auto mt-5 space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
+          <Link href='/api/saml/metadata/download'>
+            <a className='inline-flex px-6 py-2 text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600'>
+              Download Metadata
+            </a>
+          </Link>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
