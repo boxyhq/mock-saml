@@ -29,9 +29,8 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
           <h1 className='mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font'>
             Mock SAML Metadata
           </h1>
-          <p className='mx-auto text-base leading-relaxed lg:w-2/3'>
-            Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke
-            farm-to-table. Franzen you probably haven't heard of them man bun deep.
+          <p className='mx-auto text-base font-medium leading-relaxed lg:w-2/3'>
+            A simple mock SAML 2.0 Identity Provider for development and testing the SAML SSO integration.
           </p>
         </div>
         <div className='flex items-end w-full px-8 mx-auto space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
