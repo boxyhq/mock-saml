@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import Footer from './Footer';
 import Header from './Header';
 
 type LayoutProps = {
@@ -11,7 +10,6 @@ export default function Layout({ children }: LayoutProps) {
     <>
       <Header></Header>
       <main className='h-[calc(100%_-_76px)] overflow-auto'>{children}</main>
-      <Footer></Footer>
     </>
   );
 }
