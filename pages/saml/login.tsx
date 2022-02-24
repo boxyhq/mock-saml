@@ -1,12 +1,21 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Login() {
   const router = useRouter();
   const { id, audience, acsUrl, providerName, relayState } = router.query;
-  const [email, setEmail] = useState('@example.com');
+  const [email, setEmail] = useState('jackson');
+
+  // Set focus to email input on load
+  const emailInp = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (emailInp.current) {
+      emailInp.current.focus();
+      emailInp.current.select();
+    }
+  }, []);
 
   const handleChange = (e: FormEvent<HTMLInputElement>): void => {
     setEmail(e.currentTarget.value);
