@@ -55,16 +55,14 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
           <div className='relative lg:w-full'>
             <label className='text-sm leading-7 text-gray-600'>Certificate</label>
             <textarea
-              rows='5'
+              rows={5}
               defaultValue={certificate}
               className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'></textarea>
           </div>
         </div>
         <div className='flex items-end w-full px-8 mx-auto mt-5 space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
           <Link href='/api/saml/metadata/download'>
-            <a className='inline-flex px-6 py-2 text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600'>
-              Download Metadata
-            </a>
+            <a className='button'>Download Metadata</a>
           </Link>
         </div>
       </div>

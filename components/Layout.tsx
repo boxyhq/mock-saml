@@ -9,7 +9,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header></Header>
-      <main className='h-[calc(100%_-_76px)] overflow-auto'>{children}</main>
+      <main className='h-[calc(100%_-_80px)] overflow-auto'>{children}</main>
     </>
   );
 }
