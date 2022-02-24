@@ -29,9 +29,9 @@ a {
 
 @layer components {
   .button {
-    @apply block px-4 py-2 font-semibold leading-8 text-white rounded-lg shadow-md bg-primary/90 hover:bg-primary/95 focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-opacity-100;
+    @apply block px-4 py-2 font-semibold leading-8 text-white rounded-lg shadow-md bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:ring-opacity-100;
   }
   .input {
-    @apply bg-[#eff0f8] border-2 border-solid border-[#8b8a8b] leading-10 px-4 py-2 rounded-md focus:border-[#5a5dbb] focus:outline-none;
+    @apply border-2 border-solid border-[#8b8a8b] leading-10 px-4 py-2 rounded-md focus:border-[#5a5dbb] focus:outline-none;
   }
 }
