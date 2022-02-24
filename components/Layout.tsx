@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
+import Footer from './Footer';
+import Header from './Header';
 
 type LayoutProps = {
   children: ReactNode;
@@ -6,10 +8,9 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <header className="py-5 px-20">
-        <h1 className="text-3xl font-bold">Mock SAML IdP</h1>
-      </header>
-      <main className="h-[calc(100%_-_76px)] overflow-auto">{children}</main>
+      <Header></Header>
+      <main className='h-[calc(100%_-_76px)] overflow-auto'>{children}</main>
+      <Footer></Footer>
     </>
   );
 }
