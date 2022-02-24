@@ -27,7 +27,8 @@ a {
   .button {
     @apply block px-4 py-2 font-semibold leading-8 text-white rounded-lg shadow-md bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:ring-opacity-100;
   }
+
   .input {
-    @apply border-2 border-solid border-[#8b8a8b] leading-10 px-4 py-2 rounded-md focus:border-[#5a5dbb] focus:outline-none;
+    @apply px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-transparent focus:border-indigo-500;
   }
 }
