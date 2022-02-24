@@ -2,16 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.theme-default {
-  --color-primary: 37 194 160;
-  --color-secondary: 48 56 70;
-}
-
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Manrope', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+    'Helvetica Neue', sans-serif;
   height: 100%;
 }
 #__next {
