@@ -36,28 +36,17 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
         <div className='flex items-end w-full px-8 mx-auto space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
           <div className='relative mr-4 lg:w-full'>
             <label className='text-sm leading-7 text-gray-600'>SSO URL</label>
-            <input
-              type='text'
-              defaultValue={ssoUrl}
-              className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'
-            />
+            <input type='text' defaultValue={ssoUrl} className='w-full input' />
           </div>
           <div className='relative mr-4 lg:w-full'>
             <label className='text-sm leading-7 text-gray-600'>Entity ID</label>
-            <input
-              type='text'
-              defaultValue={entityId}
-              className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'
-            />
+            <input type='text' defaultValue={entityId} className='w-full input' />
           </div>
         </div>
         <div className='flex items-end w-full px-8 mx-auto mt-5 space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
           <div className='relative lg:w-full'>
             <label className='text-sm leading-7 text-gray-600'>Certificate</label>
-            <textarea
-              rows={5}
-              defaultValue={certificate}
-              className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'></textarea>
+            <textarea rows={5} defaultValue={certificate} className='w-full input'></textarea>
           </div>
         </div>
         <div className='flex items-end w-full px-8 mx-auto mt-5 space-y-4 lg:w-2/3 sm:space-x-4 sm:space-y-0 sm:px-0'>
