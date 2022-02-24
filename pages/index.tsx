@@ -39,7 +39,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
             <label className='text-sm leading-7 text-gray-600'>SSO URL</label>
             <input
               type='text'
-              value={ssoUrl}
+              defaultValue={ssoUrl}
               className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'
             />
           </div>
@@ -47,7 +47,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
             <label className='text-sm leading-7 text-gray-600'>Entity ID</label>
             <input
               type='text'
-              value={entityId}
+              defaultValue={entityId}
               className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'
             />
           </div>
@@ -57,7 +57,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
             <label className='text-sm leading-7 text-gray-600'>Certificate</label>
             <textarea
               rows='5'
-              value={certificate}
+              defaultValue={certificate}
               className='w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500'></textarea>
           </div>
         </div>
