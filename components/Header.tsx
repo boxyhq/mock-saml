@@ -36,7 +36,7 @@ export default function Header() {
             href='https://github.com/boxyhq/jackson'
             rel='noopener noreferrer'
             target='_blank'>
-            Integrate SAML with a few lines of code.
+            Integrate SAML with a few lines of code
           </a>
         </nav>
       </div>
