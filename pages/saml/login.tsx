@@ -28,7 +28,7 @@ export default function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, id, audience, acsUrl, providerName, relayState }),
+      body: JSON.stringify({ email: `${email}@example.com`, id, audience, acsUrl, providerName, relayState }),
     });
     if (response.ok) {
       const newHtml = await response.text();
