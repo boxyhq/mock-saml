@@ -17,7 +17,7 @@ export default function Footer() {
           <span className='ml-3 text-xl'>Mock SAML</span>
         </a>
         <p className='mt-4 text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0'>
-          Powered by{' '}
+          Powered by
           <a
             href='https://boxyhq.com/'
             className='ml-1 text-gray-600'
