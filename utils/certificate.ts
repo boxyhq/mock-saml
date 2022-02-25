@@ -26,7 +26,7 @@ const stripCertHeaderAndFooter = (cert: string): string => {
   return cert;
 };
 
-function GetKeyInfo(x509Certificate: string, signatureConfig: any = {}) {
+function GetKeyInfo(this: any, x509Certificate: string, signatureConfig: any = {}) {
   x509Certificate = stripCertHeaderAndFooter(x509Certificate);
 
   this.getKeyInfo = () => {
