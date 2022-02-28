@@ -10,7 +10,7 @@ export default function Layout({ children }: LayoutProps) {
   const title = 'Mock SAML - A free SAML 2.0 Identity Provider for testing SAML SSO integrations.';
   const description = 'A free SAML 2.0 Identity Provider for development and testing SAML SSO integrations.';
   const website = 'https://mocksaml.com/';
-  const ogImage = 'mock-saml-preview-image.png';
+  const ogImage = '/mock-saml-preview-image.png';
 
   return (
     <>
