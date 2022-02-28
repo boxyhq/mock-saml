@@ -1,5 +1,7 @@
 # Mock SAML from BoxyHQ
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 Mock SAML is a SAML 2.0 IdP for development and testing the SAML SSO integration.
 
 Try [Mock SAML](https://mocksaml.com/)
