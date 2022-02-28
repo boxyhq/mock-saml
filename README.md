@@ -12,22 +12,26 @@ git clone https://github.com/boxyhq/mock-saml.git
 cd mock-saml
 ```
 
+Install dependencies
+
 ```
 npm install
 ```
+
+Update `.env` with your own keys.
 
 ```
 cp .env.example .env
 ```
 
+Build the Next.js app.
+
 ```
 npm run build
 ```
 
+Run the Mock SAML server.
+
 ```
 npm run start
 ```
-
-Visit [http://localhost:4000/](http://localhost:4000/) to start the Mock SAML.
-
-## Environment Variables
