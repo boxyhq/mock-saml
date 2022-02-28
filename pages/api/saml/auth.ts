@@ -34,8 +34,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       user: user,
     });
 
-    const signingKey = await fetchPrivateKey();
-    const publicKey = await fetchPublicKey();
+    const signingKey = fetchPrivateKey();
+    const publicKey = fetchPublicKey();
     const xmlSigned = await signResponseXML(xml, signingKey, publicKey);
 
     const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');

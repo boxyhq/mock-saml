@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const xml = await createIdPMetadataXML({
       idpEntityId: config.entityId,
       idpSsoUrl: config.ssoUrl,
-      certificate: await fetchPublicKey(),
+      certificate: fetchPublicKey(),
     });
 
     res.setHeader('Content-type', 'text/xml');

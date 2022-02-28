@@ -9,7 +9,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const metadata: IdPMetadata = {
     ssoUrl: config.ssoUrl,
     entityId: config.entityId,
-    certificate: await fetchPublicKey(),
+    certificate: fetchPublicKey(),
   };
 
   return {
