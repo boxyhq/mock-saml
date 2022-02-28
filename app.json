@@ -1,0 +1,18 @@
+{
+  "name": "Mock SAML",
+  "description": "Mock SAML is a SAML 2.0 IdP for development and testing the SAML SSO integration.",
+  "repository": "https://github.com/boxyhq/mock-saml",
+  "logo": "https://boxyhq.com/img/logo.png",
+  "keywords": ["saml", "saml2", "saml-idp", "mock-saml-idp", "test-saml", "saml-testing", "fake-saml-idp"],
+  "env": {
+    "APP_URL": {
+      "description": "Public root URL of the Mock SAML installation. Replace <HEROKU_APP_NAME> with 'App name' from above.",
+      "value": "https://<HEROKU_APP_NAME>.herokuapp.com"
+    },
+    "ENTITY_ID": {
+      "description": "Identity Provider entity ID.",
+      "value": "https://mocksaml.com/entityid"
+    }
+  },
+  "success_url": "/"
+}
