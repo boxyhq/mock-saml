@@ -1,13 +1,11 @@
-import { promises as fs } from 'fs';
 import { asn1, pki, util } from 'node-forge';
-import path from 'path';
 
-const fetchPublicKey = async (): Promise<string> => {
-  return await fs.readFile(path.join('data', 'public.crt'), 'ascii');
+const fetchPublicKey = (): string => {
+  return Buffer.from(process.env.PUBLIC_KEY!, 'base64').toString('ascii');
 };
 
-const fetchPrivateKey = async (): Promise<string> => {
-  return await fs.readFile(path.join('data', 'key.pem'), 'ascii');
+const fetchPrivateKey = (): string => {
+  return Buffer.from(process.env.PRIVATE_KEY!, 'base64').toString('ascii');
 };
 
 function getPublicKeyPemFromCertificate(x509Certificate: string) {
