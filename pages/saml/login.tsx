@@ -45,7 +45,7 @@ export default function Login() {
       <Head>
         <title>Mock SAML IdP - Login</title>
       </Head>
-      <div className='relative top-20 mx-auto w-[465px] max-w-[90%]  rounded-xl p-10 text-[#145698] shadow-lg shadow-blue-50'>
+      <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-xl p-10 text-[#145698] shadow-lg shadow-indigo-200'>
         <h2 className='mb-3 text-center text-3xl font-bold'>Login</h2>
         <form onSubmit={handleSubmit}>
           <div>
