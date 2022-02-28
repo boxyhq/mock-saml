@@ -2,6 +2,8 @@
 
 Mock SAML is a SAML 2.0 IdP for development and testing the SAML SSO integration.
 
+Try [Mock SAML](https://mocksaml.com/)
+
 ## Install
 
 ```
