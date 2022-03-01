@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { extractSAMLRequestAttributes, validateRequestSignature } from 'utils';
+import { decodeBase64, extractSAMLRequestAttributes, validateRequestSignature } from 'utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<string>) {
   switch (req.method) {
@@ -26,16 +26,13 @@ async function processSAMLRequest(req: NextApiRequest, res: NextApiResponse, isP
   }
 
   try {
-    const verify = await validateRequestSignature(samlRequest);
+    const rawRequest = await decodeBase64(samlRequest, isDeflated);
 
-    if (!verify) {
+    if (!(await validateRequestSignature(rawRequest))) {
       res.status(422).send(`AuthnRequest signature validation failed.`);
     }
 
-    const { id, audience, acsUrl, providerName } = await extractSAMLRequestAttributes(
-      samlRequest,
-      isDeflated
-    );
+    const { id, audience, acsUrl, providerName } = await extractSAMLRequestAttributes(rawRequest);
 
     const params = new URLSearchParams({ id, audience, acsUrl, providerName, relayState });
 

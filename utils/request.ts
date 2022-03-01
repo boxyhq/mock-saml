@@ -17,12 +17,16 @@ const parseXML = (xml: string): Promise<Record<string, any>> => {
   });
 };
 
+// Decode the base64 string
+const decodeBase64 = async (string: string, isDeflated: boolean) => {
+  return isDeflated
+    ? (await inflateRawAsync(Buffer.from(string, 'base64'))).toString()
+    : Buffer.from(string, 'base64').toString();
+};
+
 // Parse SAMLRequest attributes
-const extractSAMLRequestAttributes = async (samlRequest: string, isDeflated: boolean) => {
-  const request = isDeflated
-    ? (await inflateRawAsync(Buffer.from(samlRequest, 'base64'))).toString()
-    : Buffer.from(samlRequest, 'base64').toString();
-  const result = await parseXML(request);
+const extractSAMLRequestAttributes = async (rawRequest: string) => {
+  const result = await parseXML(rawRequest);
 
   const attributes = result['samlp:AuthnRequest']['$'];
   const issuer = result['samlp:AuthnRequest']['saml:Issuer'];
@@ -36,8 +40,8 @@ const extractSAMLRequestAttributes = async (samlRequest: string, isDeflated: boo
 };
 
 // Validate AuthnRequest signature
-const validateRequestSignature = async (samlRequest: string): Promise<boolean> => {
+const validateRequestSignature = async (rawRequest: string): Promise<boolean> => {
   return true;
 };
 
-export { extractSAMLRequestAttributes, validateRequestSignature };
+export { extractSAMLRequestAttributes, validateRequestSignature, decodeBase64 };
