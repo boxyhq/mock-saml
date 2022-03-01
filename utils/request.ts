@@ -1,3 +1,4 @@
+import saml from '@boxyhq/saml20';
 import { promisify } from 'util';
 import xml2js from 'xml2js';
 import { inflateRaw } from 'zlib';
@@ -36,12 +37,26 @@ const extractSAMLRequestAttributes = async (rawRequest: string) => {
     acsUrl: attributes.AssertionConsumerServiceURL,
     providerName: attributes.ProviderName,
     audience: issuer[0]['_'],
+    publicKey:
+      result['samlp:AuthnRequest']['Signature'][0]['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0],
   };
 };
 
 // Validate AuthnRequest signature
-const validateRequestSignature = async (rawRequest: string): Promise<boolean> => {
-  return true;
+const hasValidRequestSignature = async (rawRequest: string, validateOpts: any): Promise<boolean> => {
+  return new Promise((resolve, reject) => {
+    saml.validate(rawRequest, validateOpts, (err: Error) => {
+      console.log({ err });
+
+      if (err) {
+        reject(false);
+        return;
+      }
+
+      resolve(true);
+      return;
+    });
+  });
 };
 
-export { extractSAMLRequestAttributes, validateRequestSignature, decodeBase64 };
+export { extractSAMLRequestAttributes, hasValidRequestSignature, decodeBase64 };
