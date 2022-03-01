@@ -12,6 +12,16 @@
     "ENTITY_ID": {
       "description": "Identity Provider entity ID.",
       "value": "https://mocksaml.com/entityid"
+    },
+    "PUBLIC_KEY": {
+      "description": "Base64 encoded value of public key."
+    },
+    "PRIVATE_KEY": {
+      "description": "Base64 encoded value of private key."
+    },
+    "NEXT_PUBLIC_GTM_ID": {
+      "description": "Google Tag Manager ID.",
+      "required": false
     }
   },
   "success_url": "/"
