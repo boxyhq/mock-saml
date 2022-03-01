@@ -46,10 +46,10 @@ export default function Login() {
         <title>Mock SAML IdP - Login</title>
       </Head>
       <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-xl p-10 text-[#145698] shadow-lg shadow-indigo-200'>
-        <h2 className='mb-3 text-center text-3xl font-bold'>Login</h2>
+        <h2 className='mb-3 text-3xl font-bold text-center'>Login</h2>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor='email' className='mb-2 block'>
+            <label htmlFor='email' className='block mb-2'>
               Email
             </label>
             <input
@@ -63,10 +63,10 @@ export default function Login() {
               className='input w-[65%]'
               title='please provide a mock example.com email address'
             />
-            <span className='ml-2 w-1/4'>@example.com</span>
+            <span className='w-1/4 ml-2'>@example.com</span>
           </div>
           <div className='mt-5'>
-            <label htmlFor='password' className='mb-2 block'>
+            <label htmlFor='password' className='block mb-2'>
               Password <sup>(Prefilled for you)</sup>
             </label>
             <input
@@ -75,10 +75,10 @@ export default function Login() {
               autoComplete='off'
               type='password'
               defaultValue='samlstrongpassword'
-              className='input w-full'
+              className='w-full input'
             />
           </div>
-          <button type='submit' className='button mt-8 w-full'>
+          <button type='submit' className='w-full mt-8 button'>
             Sign In
           </button>
         </form>
