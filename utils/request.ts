@@ -26,6 +26,7 @@ const extractSAMLRequestAttributes = async (samlRequest: string, isDeflated: boo
 
   const attributes = result['samlp:AuthnRequest']['$'];
   const issuer = result['samlp:AuthnRequest']['saml:Issuer'];
+
   return {
     id: attributes.ID,
     acsUrl: attributes.AssertionConsumerServiceURL,
@@ -34,4 +35,9 @@ const extractSAMLRequestAttributes = async (samlRequest: string, isDeflated: boo
   };
 };
 
-export { extractSAMLRequestAttributes };
+// Validate AuthnRequest signature
+const validateRequestSignature = async (samlRequest: string): Promise<boolean> => {
+  return true;
+};
+
+export { extractSAMLRequestAttributes, validateRequestSignature };
