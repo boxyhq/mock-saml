@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import config from 'lib/env';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import type { User } from 'types';
 import {
   createResponseForm,
@@ -14,9 +14,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     const email = req.body.email;
 
-    if (!email.endsWith('@example.com')) {
+    if (!email.endsWith('@example.com') && !email.endsWith('@example.org')) {
       res.status(403).send(`${email} denied access`);
     }
+
     const id = createHash('sha256').update(email).digest('hex');
 
     const user: User = {
