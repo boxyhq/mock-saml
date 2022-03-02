@@ -66,8 +66,9 @@ const hasValidSignature = async (xml: string, certificate: string): Promise<bool
     const signed = new SignedXml();
 
     signed.keyInfoProvider = {
+      file: '',
       getKey: function getKey(keyInfo: any) {
-        return certToPEM(certificate);
+        return Buffer.from(certToPEM(certificate), 'utf8');
       },
       getKeyInfo: function getKeyInfo(key: any) {
         return '<X509Data></X509Data>';
