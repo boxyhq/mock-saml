@@ -1,14 +1,8 @@
 import { createHash } from 'crypto';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import config from 'lib/env';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import type { User } from 'types';
-import {
-  createResponseForm,
-  createResponseXML,
-  fetchPrivateKey,
-  fetchPublicKey,
-  signResponseXML,
-} from 'utils';
+import { createResponseForm, createResponseXML, signResponseXML } from 'utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -34,12 +28,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       user: user,
     });
 
-    const signingKey = fetchPrivateKey();
-    const publicKey = fetchPublicKey();
-    const xmlSigned = await signResponseXML(xml, signingKey, publicKey);
-
+    const xmlSigned = await signResponseXML(xml, config.privateKey, config.publicKey);
     const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');
-
     const html = createResponseForm(req.body.relayState, encodedSamlResponse, req.body.acsUrl);
 
     res.send(html);
