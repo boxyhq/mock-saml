@@ -8,20 +8,30 @@ const fetchPrivateKey = (): string => {
   return Buffer.from(process.env.PRIVATE_KEY!, 'base64').toString('ascii');
 };
 
-function getPublicKeyPemFromCertificate(x509Certificate: string) {
+const getPublicKeyPemFromCertificate = (x509Certificate: string) => {
   const certDerBytes = util.decode64(x509Certificate);
   const obj = asn1.fromDer(certDerBytes);
   const cert = pki.certificateFromAsn1(obj);
 
   return pki.publicKeyToPem(cert.publicKey);
-}
+};
 
 const stripCertHeaderAndFooter = (cert: string): string => {
-  cert = cert.replace(/-+BEGIN PRIVATE KEY-+\r?\n?/, '');
-  cert = cert.replace(/-+END PRIVATE KEY-+\r?\n?/, '');
+  cert = cert.replace(/-+BEGIN CERTIFICATE-+\r?\n?/, '');
+  cert = cert.replace(/-+END CERTIFICATE-+\r?\n?/, '');
   cert = cert.replace(/\r\n/g, '\n');
 
   return cert;
+};
+
+const certToPEM = (certificate: string) => {
+  if (certificate.indexOf('BEGIN CERTIFICATE') === -1 && certificate.indexOf('END CERTIFICATE') === -1) {
+    certificate = certificate.match(/.{1,64}/g)!.join('\n');
+    certificate = '-----BEGIN CERTIFICATE-----\n' + certificate;
+    certificate = certificate + '\n-----END CERTIFICATE-----\n';
+  }
+
+  return certificate;
 };
 
 function GetKeyInfo(this: any, x509Certificate: string, signatureConfig: any = {}) {
@@ -43,4 +53,5 @@ export {
   stripCertHeaderAndFooter,
   getPublicKeyPemFromCertificate,
   GetKeyInfo,
+  certToPEM,
 };

@@ -9,12 +9,13 @@
   },
   "dependencies": {
     "@boxyhq/saml20": "0.2.0",
+    "@xmldom/xmldom": "^0.8.1",
     "next": "12.1.0",
     "node-forge": "1.2.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-gtm-module": "2.0.11",
-    "xml-crypto": "2.1.3",
+    "xml-crypto": "^2.1.3",
     "xml2js": "0.4.23",
     "xmlbuilder": "15.1.1"
   },

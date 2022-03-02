@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { decodeBase64, extractSAMLRequestAttributes, hasValidRequestSignature } from 'utils';
+import { decodeBase64, extractSAMLRequestAttributes, hasValidSignature } from 'utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<string>) {
   switch (req.method) {
@@ -30,12 +30,7 @@ async function processSAMLRequest(req: NextApiRequest, res: NextApiResponse, isP
 
     const { id, audience, acsUrl, providerName, publicKey } = await extractSAMLRequestAttributes(rawRequest);
 
-    const validateOpts = {
-      publicKey: publicKey,
-      audience: 'https://saml.example.com/entityid', // config.entityId,
-    };
-
-    await hasValidRequestSignature(rawRequest, validateOpts);
+    await hasValidSignature(rawRequest, publicKey);
 
     const params = new URLSearchParams({ id, audience, acsUrl, providerName, relayState });
 

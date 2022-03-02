@@ -1,9 +1,9 @@
+import config from 'lib/env';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { fetchPublicKey, createIdPMetadataXML } from '../../../../utils';
-import { IdPMetadata } from '../../../../types';
 import stream from 'stream';
+import { IdPMetadata } from 'types';
 import { promisify } from 'util';
-import config from '../../../../lib/env';
+import { createIdPMetadataXML, stripCertHeaderAndFooter } from 'utils';
 
 const pipeline = promisify(stream.pipeline);
 
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const xml = await createIdPMetadataXML({
       idpEntityId: config.entityId,
       idpSsoUrl: config.ssoUrl,
-      certificate: fetchPublicKey(),
+      certificate: stripCertHeaderAndFooter(config.publicKey),
     });
 
     res.setHeader('Content-type', 'text/xml');
