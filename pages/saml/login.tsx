@@ -64,7 +64,7 @@ export default function Login() {
   return (
     <div className='h-full'>
       <Head>
-        <title>Mock SAML IdP - Login</title>
+        <title>Mock SAML Identity Provider - Login</title>
       </Head>
       <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-md border p-10 text-[#145698]'>
         <h2 className='mb-3 text-center text-3xl font-bold'>Login</h2>
@@ -114,6 +114,11 @@ export default function Login() {
             Sign In
           </button>
         </form>
+      </div>
+      <div className='relative top-20 mx-auto w-[800px] max-w-[90%] rounded-md p-10 text-[#145698]'>
+        This is a simulated login screen, feel free to pick any username but you are restricted to two domains
+        example.com and example.org. But this should allow you to test all combinations of your authentication
+        and user modelling.
       </div>
     </div>
   );
