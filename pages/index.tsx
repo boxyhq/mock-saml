@@ -30,7 +30,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
             Mock SAML Metadata
           </h1>
           <p className='mx-auto text-lg font-medium leading-relaxed lg:w-2/3'>
-            A mock SAML 2.0 Identity Provider for development and testing SAML SSO integrations.
+            A free SAML 2.0 Identity Provider for testing SAML SSO integrations.
           </p>
           <p>
             <b>Please do not use this in production.</b>
