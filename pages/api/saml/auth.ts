@@ -6,32 +6,33 @@ import { createResponseForm, createResponseXML, signResponseXML } from 'utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const email = req.body.email;
+    const { email, audience, acsUrl, id, relayState } = req.body;
 
     if (!email.endsWith('@example.com') && !email.endsWith('@example.org')) {
       res.status(403).send(`${email} denied access`);
     }
 
-    const id = createHash('sha256').update(email).digest('hex');
+    const userId = createHash('sha256').update(email).digest('hex');
+    const userName = email.split('@')[0];
 
     const user: User = {
-      id,
+      id: userId,
       email,
-      firstName: id,
-      lastName: id,
+      firstName: userName,
+      lastName: userName,
     };
 
     const xml = await createResponseXML({
       idpIdentityId: config.entityId,
-      audience: req.body.audience,
-      acsUrl: req.body.acsUrl,
-      samlReqId: req.body.id,
+      audience,
+      acsUrl,
+      samlReqId: id,
       user: user,
     });
 
     const xmlSigned = await signResponseXML(xml, config.privateKey, config.publicKey);
     const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');
-    const html = createResponseForm(req.body.relayState, encodedSamlResponse, req.body.acsUrl);
+    const html = createResponseForm(relayState, encodedSamlResponse, acsUrl);
 
     res.send(html);
   } else {
