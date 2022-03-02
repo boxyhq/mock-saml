@@ -67,11 +67,11 @@ export default function Login() {
         <title>Mock SAML IdP - Login</title>
       </Head>
       <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-md border p-10 text-[#145698]'>
-        <h2 className='mb-3 text-3xl font-bold text-center'>Login</h2>
+        <h2 className='mb-3 text-center text-3xl font-bold'>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className='flex items-end gap-x-1'>
             <div>
-              <label htmlFor='username' className='block mb-2'>
+              <label htmlFor='username' className='mb-2 block'>
                 Email
               </label>
               <input
@@ -90,7 +90,7 @@ export default function Login() {
             <select
               name='domain'
               id='domain'
-              className='w-full select'
+              className='select w-full'
               onChange={handleChange}
               value={state.domain}>
               <option value='example.com'>@example.com</option>
@@ -98,7 +98,7 @@ export default function Login() {
             </select>
           </div>
           <div className='mt-5'>
-            <label htmlFor='password' className='block mb-2'>
+            <label htmlFor='password' className='mb-2 block'>
               Password <sup>(Prefilled for you)</sup>
             </label>
             <input
@@ -107,10 +107,10 @@ export default function Login() {
               autoComplete='off'
               type='password'
               defaultValue='samlstrongpassword'
-              className='w-full input'
+              className='input w-full'
             />
           </div>
-          <button type='submit' className='w-full mt-8 button'>
+          <button type='submit' className='button mt-8 w-full'>
             Sign In
           </button>
         </form>
