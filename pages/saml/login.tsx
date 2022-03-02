@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
-import type { FormEvent } from 'react';
 import { useRouter } from 'next/router';
+import type { FormEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Login() {
   const router = useRouter();
@@ -23,6 +23,7 @@ export default function Login() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const response = await fetch(`/api/saml/auth`, {
       method: 'POST',
       headers: {
@@ -30,9 +31,11 @@ export default function Login() {
       },
       body: JSON.stringify({ email: `${email}@example.com`, id, audience, acsUrl, providerName, relayState }),
     });
+
     if (response.ok) {
       const newHtml = await response.text();
       const newDoc = document.open('text/html', 'replace');
+
       newDoc.write(newHtml);
       newDoc.close();
     } else {
@@ -45,25 +48,30 @@ export default function Login() {
       <Head>
         <title>Mock SAML IdP - Login</title>
       </Head>
-      <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-xl p-10 text-[#145698] shadow-lg shadow-indigo-200'>
+      <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-md border p-10 text-[#145698]'>
         <h2 className='mb-3 text-3xl font-bold text-center'>Login</h2>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor='email' className='block mb-2'>
-              Email
-            </label>
-            <input
-              id='email'
-              ref={emailInp}
-              autoComplete='off'
-              type='text'
-              placeholder='jackson'
-              value={email}
-              onChange={handleChange}
-              className='input w-[65%]'
-              title='please provide a mock example.com email address'
-            />
-            <span className='w-1/4 ml-2'>@example.com</span>
+          <div className='flex items-end gap-x-1'>
+            <div>
+              <label htmlFor='email' className='block mb-2'>
+                Email
+              </label>
+              <input
+                id='email'
+                ref={emailInp}
+                autoComplete='off'
+                type='text'
+                placeholder='jackson'
+                value={email}
+                onChange={handleChange}
+                className='input'
+                title='please provide a mock example.com email address'
+              />
+            </div>
+            <select className='w-full select'>
+              <option value='@example.com'>@example.com</option>
+              <option value='@example.org'>@example.org</option>
+            </select>
           </div>
           <div className='mt-5'>
             <label htmlFor='password' className='block mb-2'>
