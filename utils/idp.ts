@@ -48,7 +48,7 @@ const createIdPMetadataXML = async ({
     },
   };
 
-  return xmlbuilder.create(nodes, { encoding: 'UTF-8', standalone: false }).end();
+  return xmlbuilder.create(nodes, { encoding: 'UTF-8', standalone: false }).end({ pretty: true });
 };
 
 export { createIdPMetadataXML };

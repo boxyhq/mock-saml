@@ -3,13 +3,12 @@ import Link from 'next/link';
 import React from 'react';
 import config from '../lib/env';
 import { IdPMetadata } from '../types';
-import { fetchPublicKey } from '../utils';
 
 export const getStaticProps: GetStaticProps = async () => {
   const metadata: IdPMetadata = {
     ssoUrl: config.ssoUrl,
     entityId: config.entityId,
-    certificate: fetchPublicKey(),
+    certificate: config.publicKey,
   };
 
   return {
