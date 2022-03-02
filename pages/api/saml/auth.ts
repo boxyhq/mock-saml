@@ -8,9 +8,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     const email = req.body.email;
 
-    if (!email.endsWith('@example.com')) {
+    if (!email.endsWith('@example.com') && !email.endsWith('@example.org')) {
       res.status(403).send(`${email} denied access`);
     }
+
     const id = createHash('sha256').update(email).digest('hex');
 
     const user: User = {
