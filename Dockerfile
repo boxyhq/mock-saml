@@ -10,12 +10,15 @@ WORKDIR /home/node/app
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
-USER nextjs
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
 
 RUN npm install --production
 
 COPY --chown=node:nextjs .next .next
 COPY --chown=node:nextjs public public
+
+USER nextjs
 
 EXPOSE 4000
 
