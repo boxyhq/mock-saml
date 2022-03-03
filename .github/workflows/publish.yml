@@ -1,4 +1,4 @@
-name: ci
+name: Build and Publish Docker
 
 on:
   push:
@@ -6,21 +6,52 @@ on:
       - 'docker-publish'
 
 jobs:
-  docker:
+  next-build:
     runs-on: ubuntu-latest
-    env:
-      APP_URL: http://localhost:4000
-      ENTITY_ID: https://saml.example.com/entityid
-      PUBLIC_KEY: ''
-      PRIVATE_KEY: ''
-      NEXT_PUBLIC_GTM_ID: 'GTM-XXXXX'
+    container: node:lts
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          APP_URL: http://localhost:4000
+          ENTITY_ID: https://saml.example.com/entityid
+          PUBLIC_KEY: ''
+          PRIVATE_KEY: ''
+          NEXT_PUBLIC_GTM_ID: 'GTM-XXXXX'
+
+      - name: Upload Next build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            .next
+            public
+          retention-days: 1
+
+  build-and-push-docker-image:
+    needs: next-build
+    runs-on: ubuntu-latest
+
+    # strategy:
+    #   matrix:
+    #     node-version: [16.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download next build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -28,10 +59,23 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: ./Dockerfile
-          push: true
-          tags: user/app:latest
+      - name: Build and push Docker image
+        run: |
+          export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
+          export TAG=$([[ $CURRENT_BRANCH == "main" ]] && echo "latest" || echo $CURRENT_BRANCH)
+          export GITHUB_REF_IMAGE=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
+          export GITHUB_BRANCH_IMAGE=ghcr.io/$GITHUB_REPOSITORY:$TAG
+          docker build -t $GCR_IMAGE -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
+          docker push $GITHUB_REF_IMAGE
+          docker push $GITHUB_BRANCH_IMAGE
+
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ./
+      #     file: ./Dockerfile
+      #     push: true
+      #     tags: kiranboxyhq/mock-saml:latest
+
+      # - name: Image digest
+      #   run: echo ${{ steps.docker_build.outputs.digest }}
