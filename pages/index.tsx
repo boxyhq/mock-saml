@@ -1,10 +1,10 @@
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import React from 'react';
 import config from '../lib/env';
 import { IdPMetadata } from '../types';
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const metadata: IdPMetadata = {
     ssoUrl: config.ssoUrl,
     entityId: config.entityId,
