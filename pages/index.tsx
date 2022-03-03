@@ -23,19 +23,29 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
 
   return (
     <section className='body-font text-gray-600'>
-      <div className='container mx-auto px-5 py-24'>
-        <div className='mb-12 flex w-full flex-col text-center'>
-          <h1 className='title-font mb-4 text-2xl font-medium text-gray-900 sm:text-3xl'>
-            Mock SAML Metadata
-          </h1>
+      <div className='container mx-auto px-5 py-8'>
+        <div className='mb-5 flex w-full flex-col text-center'>
           <p className='mx-auto text-lg font-medium leading-relaxed lg:w-2/3'>
             A free SAML 2.0 Identity Provider for testing SAML SSO integrations.
           </p>
           <p>
             <b>Please do not use this in production.</b>
           </p>
+
+          <h2 className='title-font mt-5 text-2xl font-medium text-gray-900 sm:text-3xl'>
+            Mock SAML Metadata
+          </h2>
         </div>
         <div className='mx-auto flex w-full items-end space-y-4 px-8 sm:space-x-4 sm:space-y-0 sm:px-0 lg:w-2/3'>
+          <Link href='/api/saml/metadata/download'>
+            <a className='button'>Download Metadata</a>
+          </Link>
+          <Link href='/saml/login'>
+            <a className='button'>Test IdP Login</a>
+          </Link>
+        </div>
+
+        <div className='mx-auto mt-5 flex w-full items-end space-y-4 px-8 sm:space-x-4 sm:space-y-0 sm:px-0 lg:w-2/3'>
           <div className='relative mr-4 lg:w-full'>
             <label className='text-sm leading-7 text-gray-600'>SSO URL</label>
             <input readOnly type='text' defaultValue={ssoUrl} className='input w-full' />
@@ -50,11 +60,6 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
             <label className='text-sm leading-7 text-gray-600'>Certificate</label>
             <textarea readOnly rows={5} defaultValue={certificate} className='input w-full'></textarea>
           </div>
-        </div>
-        <div className='mx-auto mt-5 flex w-full items-end space-y-4 px-8 sm:space-x-4 sm:space-y-0 sm:px-0 lg:w-2/3'>
-          <Link href='/api/saml/metadata/download'>
-            <a className='button'>Download Metadata</a>
-          </Link>
         </div>
       </div>
     </section>
