@@ -8,51 +8,76 @@ on:
 jobs:
   next-build:
     runs-on: ubuntu-latest
-    container: node:lts
+
+    env:
+      APP_URL: http://localhost:4000
+      ENTITY_ID: https://saml.example.com/entityid
+      PUBLIC_KEY: ''
+      PRIVATE_KEY: ''
+      NEXT_PUBLIC_GTM_ID: ''
+
+    strategy:
+      matrix:
+        node-version: [16.x]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - run: npm ci
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
 
-      - run: npm run build
-        env:
-          APP_URL: http://localhost:4000
-          ENTITY_ID: https://saml.example.com/entityid
-          PUBLIC_KEY: ''
-          PRIVATE_KEY: ''
-          NEXT_PUBLIC_GTM_ID: ''
-
-      - name: Upload Next build
-        uses: actions/upload-artifact@v2
+      - name: Setup Next.js cache
+        uses: actions/cache@v2
         with:
-          name: build
-          path: |
-            .next
-            public
-          retention-days: 1
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - run: npm install
+      - run: npm run build
 
   build-and-push-docker-image:
     needs: next-build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Check Out Repo
         uses: actions/checkout@v2
 
-      - name: Download next build
-        uses: actions/download-artifact@v2
-        with:
-          name: build
+      # - name: Download mock-saml npm version
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: npmversion
 
-      - name: Login to DockerHub
+      # - name: Get mock-saml npm version
+      #   id: npmversion
+      #   run: echo "::set-output name=npmversion::$(cat npmversion.txt)"
+
+      # - run: echo ${{ steps.npmversion.outputs.npmversion }}
+
+      - name: Get short SHA
+        id: slug
+        run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t kiranboxyhq/mock-saml:1.0 .
-          docker push kiranboxyhq/mock-saml:1.0
+      - name: Build and push
+        # if: github.ref == 'refs/heads/release'
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: ${{ github.repository }}:latest,${{ github.repository }}:${{ steps.slug.outputs.sha7 }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
