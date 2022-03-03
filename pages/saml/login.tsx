@@ -10,20 +10,20 @@ export default function Login() {
   const [state, setState] = useState({
     username: 'jackson',
     domain: 'example.com',
-    redirectUrl: '',
+    acsUrl: 'https://jackson-demo.boxyhq.com/api/oauth/saml',
     audience: 'https://saml.boxyhq.com',
   });
 
-  const redirectUrlInp = useRef<HTMLInputElement>(null);
+  const acsUrlInp = useRef<HTMLInputElement>(null);
   // Set focus to email input on load
   const emailInp = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (acsUrl && emailInp.current) {
       emailInp.current.focus();
       emailInp.current.select();
-    } else if (redirectUrlInp.current) {
-      redirectUrlInp.current.focus();
-      redirectUrlInp.current.select();
+    } else if (acsUrlInp.current) {
+      acsUrlInp.current.focus();
+      acsUrlInp.current.select();
     }
   }, []);
 
@@ -39,7 +39,7 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { username, domain, redirectUrl } = state;
+    const { username, domain } = state;
 
     const response = await fetch(`/api/saml/auth`, {
       method: 'POST',
@@ -50,7 +50,7 @@ export default function Login() {
         email: `${username}@${domain}`,
         id,
         audience: audience || state.audience,
-        acsUrl: acsUrl || redirectUrl,
+        acsUrl: acsUrl || state.acsUrl,
         providerName,
         relayState,
       }),
@@ -78,16 +78,17 @@ export default function Login() {
           {acsUrl ? null : (
             <div>
               <div className='mt-5'>
-                <label htmlFor='redirectUrl' className='mb-2 block'>
-                  Redirect URL
+                <label htmlFor='acsUrl' className='mb-2 block'>
+                  ACS URL <sup>(This is where we'll post the SAML Response)</sup>
                 </label>
                 <input
-                  name='redirectUrl'
-                  id='redirectUrl'
-                  ref={redirectUrlInp}
+                  name='acsUrl'
+                  id='acsUrl'
+                  ref={acsUrlInp}
                   autoComplete='off'
                   type='text'
-                  value={state.redirectUrl}
+                  placeholder='https://jackson-demo.boxyhq.com/api/oauth/saml'
+                  value={state.acsUrl}
                   onChange={handleChange}
                   className='input w-full'
                 />
@@ -124,7 +125,7 @@ export default function Login() {
                 value={state.username}
                 onChange={handleChange}
                 className='input'
-                title='Please provide a mock example.com email address'
+                title='Please provide a mock email address'
               />
             </div>
             <select
@@ -143,7 +144,6 @@ export default function Login() {
             </label>
             <input
               id='password'
-              readOnly={true}
               autoComplete='off'
               type='password'
               defaultValue='samlstrongpassword'
