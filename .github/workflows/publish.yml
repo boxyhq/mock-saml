@@ -8,6 +8,13 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    env:
+      APP_URL: http://localhost:4000
+      ENTITY_ID: https://saml.example.com/entityid
+      PUBLIC_KEY: ''
+      PRIVATE_KEY: ''
+      NEXT_PUBLIC_GTM_ID: 'GTM-XXXXX'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
