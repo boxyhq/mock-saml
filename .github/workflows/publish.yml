@@ -65,6 +65,11 @@ jobs:
           export TAG=$([[ $CURRENT_BRANCH == "main" ]] && echo "latest" || echo $CURRENT_BRANCH)
           export GITHUB_REF_IMAGE=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
           export GITHUB_BRANCH_IMAGE=ghcr.io/$GITHUB_REPOSITORY:$TAG
+          echo "CURRENT_BRANCH - $CURRENT_BRANCH"
+          echo "GITHUB_REF_IMAGE - $GITHUB_REF_IMAGE"
+          echo "GITHUB_BRANCH_IMAGE - $GITHUB_BRANCH_IMAGE"
+          echo "TAG - $TAG"
+          echo "docker images"
           docker build -t $GCR_IMAGE -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
           docker push $GITHUB_REF_IMAGE
           docker push $GITHUB_BRANCH_IMAGE
