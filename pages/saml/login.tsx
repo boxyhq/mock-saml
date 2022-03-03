@@ -79,7 +79,7 @@ export default function Login() {
             <div>
               <div className='mt-5'>
                 <label htmlFor='acsUrl' className='mb-2 block'>
-                  ACS URL <sup>(This is where we'll post the SAML Response)</sup>
+                  ACS URL <sup>(This is where we&apos;ll post the SAML Response)</sup>
                 </label>
                 <input
                   name='acsUrl'
