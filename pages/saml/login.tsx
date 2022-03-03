@@ -10,14 +10,20 @@ export default function Login() {
   const [state, setState] = useState({
     username: 'jackson',
     domain: 'example.com',
+    redirectUrl: '',
+    audience: 'https://saml.boxyhq.com',
   });
 
+  const redirectUrlInp = useRef<HTMLInputElement>(null);
   // Set focus to email input on load
   const emailInp = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (emailInp.current) {
+    if (acsUrl && emailInp.current) {
       emailInp.current.focus();
       emailInp.current.select();
+    } else if (redirectUrlInp.current) {
+      redirectUrlInp.current.focus();
+      redirectUrlInp.current.select();
     }
   }, []);
 
@@ -33,7 +39,7 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { username, domain } = state;
+    const { username, domain, redirectUrl } = state;
 
     const response = await fetch(`/api/saml/auth`, {
       method: 'POST',
@@ -43,8 +49,8 @@ export default function Login() {
       body: JSON.stringify({
         email: `${username}@${domain}`,
         id,
-        audience,
-        acsUrl,
+        audience: audience || state.audience,
+        acsUrl: acsUrl || redirectUrl,
         providerName,
         relayState,
       }),
@@ -69,7 +75,41 @@ export default function Login() {
       <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-md border p-10 text-[#145698]'>
         <h2 className='mb-3 text-center text-3xl font-bold'>Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className='flex items-end gap-x-1'>
+          {acsUrl ? null : (
+            <div>
+              <div className='mt-5'>
+                <label htmlFor='redirectUrl' className='mb-2 block'>
+                  Redirect URL
+                </label>
+                <input
+                  name='redirectUrl'
+                  id='redirectUrl'
+                  ref={redirectUrlInp}
+                  autoComplete='off'
+                  type='text'
+                  value={state.redirectUrl}
+                  onChange={handleChange}
+                  className='input w-full'
+                />
+              </div>
+              <div className='mt-5'>
+                <label htmlFor='audience' className='mb-2 block'>
+                  Audience
+                </label>
+                <input
+                  name='audience'
+                  id='audience'
+                  autoComplete='off'
+                  type='text'
+                  placeholder='https://saml.boxyhq.com'
+                  value={state.audience}
+                  onChange={handleChange}
+                  className='input w-full'
+                />
+              </div>
+            </div>
+          )}
+          <div className='mt-5 flex items-end gap-x-1'>
             <div>
               <label htmlFor='username' className='mb-2 block'>
                 Email
@@ -84,7 +124,7 @@ export default function Login() {
                 value={state.username}
                 onChange={handleChange}
                 className='input'
-                title='please provide a mock example.com email address'
+                title='Please provide a mock example.com email address'
               />
             </div>
             <select
@@ -99,7 +139,7 @@ export default function Login() {
           </div>
           <div className='mt-5'>
             <label htmlFor='password' className='mb-2 block'>
-              Password <sup>(Prefilled for you)</sup>
+              Password <sup>(Any password works)</sup>
             </label>
             <input
               id='password'
