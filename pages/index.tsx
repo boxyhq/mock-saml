@@ -62,6 +62,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
+                aria-hidden
                 strokeWidth='2'>
                 <path
                   strokeLinecap='round'
