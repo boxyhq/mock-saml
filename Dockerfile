@@ -12,13 +12,16 @@ RUN npm install
 FROM base AS builder
 WORKDIR /app
 COPY . .
-COPY --from=deps /app/npm ./npm
-COPY --from=deps /app/node_modules ./node_modules
-RUN npm run build && npm install --production --ignore-scripts --prefer-offline
+# COPY --from=deps /app/npm ./npm
+# COPY --from=deps /app/node_modules ./node_modules
+RUN npm install --production --ignore-scripts --prefer-offline
 
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
+
+# COPY package.json package.json
+# COPY package-lock.json package-lock.json
 
 ENV NODE_OPTIONS="--max-http-header-size=81920"
 ENV NODE_ENV production
