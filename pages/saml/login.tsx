@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 export default function Login() {
   const router = useRouter();
   const { id, audience, acsUrl, providerName, relayState } = router.query;
+  const isRouteReady = router.isReady;
 
   const [state, setState] = useState({
     username: 'jackson',
@@ -25,7 +26,7 @@ export default function Login() {
       acsUrlInp.current.focus();
       acsUrlInp.current.select();
     }
-  }, []);
+  }, [acsUrl]);
 
   const handleChange = (e: FormEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.currentTarget;
@@ -75,41 +76,43 @@ export default function Login() {
       <div className='relative top-20 mx-auto w-[465px] max-w-[90%] rounded-md border p-10 text-[#145698]'>
         <h2 className='mb-3 text-center text-3xl font-bold'>Login</h2>
         <form onSubmit={handleSubmit}>
-          {acsUrl ? null : (
-            <div>
-              <div className='mt-5'>
-                <label htmlFor='acsUrl' className='mb-2 block'>
-                  ACS URL <sup>(This is where we&apos;ll post the SAML Response)</sup>
-                </label>
-                <input
-                  name='acsUrl'
-                  id='acsUrl'
-                  ref={acsUrlInp}
-                  autoComplete='off'
-                  type='text'
-                  placeholder='https://jackson-demo.boxyhq.com/api/oauth/saml'
-                  value={state.acsUrl}
-                  onChange={handleChange}
-                  className='input w-full'
-                />
+          {isRouteReady ? (
+            acsUrl ? null : (
+              <div>
+                <div className='mt-5'>
+                  <label htmlFor='acsUrl' className='mb-2 block'>
+                    ACS URL <sup>(This is where we&apos;ll post the SAML Response)</sup>
+                  </label>
+                  <input
+                    name='acsUrl'
+                    id='acsUrl'
+                    ref={acsUrlInp}
+                    autoComplete='off'
+                    type='text'
+                    placeholder='https://jackson-demo.boxyhq.com/api/oauth/saml'
+                    value={state.acsUrl}
+                    onChange={handleChange}
+                    className='input w-full'
+                  />
+                </div>
+                <div className='mt-5'>
+                  <label htmlFor='audience' className='mb-2 block'>
+                    Audience
+                  </label>
+                  <input
+                    name='audience'
+                    id='audience'
+                    autoComplete='off'
+                    type='text'
+                    placeholder='https://saml.boxyhq.com'
+                    value={state.audience}
+                    onChange={handleChange}
+                    className='input w-full'
+                  />
+                </div>
               </div>
-              <div className='mt-5'>
-                <label htmlFor='audience' className='mb-2 block'>
-                  Audience
-                </label>
-                <input
-                  name='audience'
-                  id='audience'
-                  autoComplete='off'
-                  type='text'
-                  placeholder='https://saml.boxyhq.com'
-                  value={state.audience}
-                  onChange={handleChange}
-                  className='input w-full'
-                />
-              </div>
-            </div>
-          )}
+            )
+          ) : null}
           <div className='mt-5 flex items-end gap-x-1'>
             <div>
               <label htmlFor='username' className='mb-2 block'>
