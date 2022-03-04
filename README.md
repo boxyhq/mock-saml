@@ -7,6 +7,10 @@ Mock SAML is a free SAML 2.0 Identity Provider for testing SAML SSO integrations
 
 Try [Mock SAML](https://mocksaml.com/), our free hosted service.
 
+## Source code visualizer
+
+[CodeSee codebase visualizer](https://app.codesee.io/maps/public/893e0610-9bfc-11ec-980d-9f320f34189e)
+
 ## Install
 
 ```
