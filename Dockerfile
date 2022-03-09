@@ -34,4 +34,6 @@ USER nextjs
 
 EXPOSE 4000
 
+ENV NEXT_TELEMETRY_DISABLED 1
+
 CMD ["npm", "start"]
