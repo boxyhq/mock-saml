@@ -10,13 +10,20 @@ FROM base AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
+ENV NODE_OPTIONS="--max-http-header-size=81920"
+ENV NODE_ENV production
+ENV APP_URL http://localhost:4000
+ENV ENTITY_ID https://saml.example.com/entityid
+ENV PUBLIC_KEY ""
+ENV PRIVATE_KEY ""
+ENV NEXT_PUBLIC_GTM_ID ""
+ENV NEXT_TELEMETRY_DISABLED 1
+
 RUN npm run build && npm install --production --ignore-scripts --prefer-offline
 
 FROM base AS runner
 WORKDIR /app
-
-ENV NODE_OPTIONS="--max-http-header-size=81920"
-ENV NODE_ENV production
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
