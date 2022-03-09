@@ -4,7 +4,7 @@ import React from 'react';
 import config from '../lib/env';
 import { IdPMetadata } from '../types';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const metadata: IdPMetadata = {
     ssoUrl: config.ssoUrl,
     entityId: config.entityId,
@@ -41,17 +41,17 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
         <div className='mx-auto mt-5 flex w-full space-x-6 px-8 lg:w-2/3'>
           <div className='relative flex-1'>
             <label className='text-sm leading-7 text-gray-600'>SSO URL</label>
-            <input readOnly type='text' defaultValue={ssoUrl} className='input w-full' />
+            <input disabled type='text' defaultValue={ssoUrl} className='input w-full' />
           </div>
           <div className='relative flex-1'>
             <label className='text-sm leading-7 text-gray-600'>Entity ID</label>
-            <input readOnly type='text' defaultValue={entityId} className='input w-full' />
+            <input disabled type='text' defaultValue={entityId} className='input w-full' />
           </div>
         </div>
         <div className='mx-auto mt-5 flex w-full px-8 lg:w-2/3'>
           <div className='relative w-full'>
             <label className='text-sm leading-7 text-gray-600'>Certificate</label>
-            <textarea readOnly rows={5} defaultValue={certificate} className='input w-full'></textarea>
+            <textarea disabled rows={5} defaultValue={certificate} className='input w-full'></textarea>
           </div>
         </div>
         <div className='mx-auto mt-5 flex w-full justify-center px-8 lg:w-2/3'>

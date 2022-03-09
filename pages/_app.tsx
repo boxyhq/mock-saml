@@ -1,8 +1,8 @@
-import 'styles/globals.css';
-import type { AppProps } from 'next/app';
 import Layout from 'components/Layout';
-import TagManager from 'react-gtm-module';
+import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
+import TagManager from 'react-gtm-module';
+import 'styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       TagManager.initialize({ gtmId: process.env.NEXT_PUBLIC_GTM_ID });
     }
   }, []);
+
   return (
     <Layout>
       <Component {...pageProps} />
