@@ -10,6 +10,10 @@ FROM base AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
+ENV NEXT_PUBLIC_GTM_ID ""
+ENV NEXT_TELEMETRY_DISABLED 1
+
 RUN npm run build && npm install --production --ignore-scripts --prefer-offline
 
 FROM base AS runner
@@ -29,5 +33,7 @@ COPY --from=builder /app/package.json ./package.json
 USER nextjs
 
 EXPOSE 4000
+
+ENV NEXT_TELEMETRY_DISABLED 1
 
 CMD ["npm", "start"]

@@ -1,11 +1,11 @@
 import { asn1, pki, util } from 'node-forge';
 
 const fetchPublicKey = (): string => {
-  return Buffer.from(process.env.PUBLIC_KEY!, 'base64').toString('ascii');
+  return process.env.PUBLIC_KEY ? Buffer.from(process.env.PUBLIC_KEY!, 'base64').toString('ascii') : '';
 };
 
 const fetchPrivateKey = (): string => {
-  return Buffer.from(process.env.PRIVATE_KEY!, 'base64').toString('ascii');
+  return process.env.PRIVATE_KEY ? Buffer.from(process.env.PRIVATE_KEY!, 'base64').toString('ascii') : '';
 };
 
 const getPublicKeyPemFromCertificate = (x509Certificate: string) => {
