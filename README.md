@@ -13,6 +13,25 @@ Try [Mock SAML](https://mocksaml.com/), our free hosted service.
 
 ## Install
 
+### With Docker
+
+The docker container can be found at [boxyhq/mock-saml](https://hub.docker.com/r/boxyhq/mock-saml).
+
+```bash
+docker run \
+  -p 4000:4000 \
+  -e APP_URL="http://localhost:4000" \
+  -e ENTITY_ID="https://saml.example.com/entityid" \
+  -e PUBLIC_KEY="<PUBLIC_KEY>" \
+  -e PRIVATE_KEY="<PRIVATE_KEY>" \
+  -d boxyhq/mock-saml
+```
+
+Replace `<PUBLIC_KEY>` with Base64 encoded value of public key.
+Replace `<PRIVATE_KEY>` with Base64 encoded value of private key.
+
+### Without Docker
+
 ```
 git clone https://github.com/boxyhq/mock-saml.git
 ```
