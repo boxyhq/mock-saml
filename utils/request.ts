@@ -1,7 +1,4 @@
-import { DOMParser as Dom } from '@xmldom/xmldom';
 import { promisify } from 'util';
-import saml from '@boxyhq/saml20';
-import { SignedXml, xpath as select } from 'xml-crypto';
 import xml2js from 'xml2js';
 import { inflateRaw } from 'zlib';
 

@@ -11,8 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@boxyhq/saml20": "file:/Users/deepak/workspace/saml20-maintained",
-    "@xmldom/xmldom": "0.8.2",
+    "@boxyhq/saml20": "1.0.0-beta-1",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",
