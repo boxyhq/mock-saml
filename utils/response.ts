@@ -1,8 +1,10 @@
 import crypto from 'crypto';
-import { SignedXml } from 'xml-crypto';
 import xmlbuilder from 'xmlbuilder';
 import { User } from '../types';
-import { GetKeyInfo } from './certificate';
+import saml from '@boxyhq/saml20';
+
+const responseXPath =
+  '/*[local-name(.)="Response" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:protocol"]';
 
 const createResponseXML = async (params: {
   idpIdentityId: string;
@@ -131,32 +133,7 @@ const createResponseXML = async (params: {
 };
 
 const signResponseXML = async (xml: string, signingKey: any, publicKey: any): Promise<string> => {
-  const sig = new SignedXml();
-  const responseXPath =
-    '/*[local-name(.)="Response" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:protocol"]';
-  const issuerXPath =
-    '/*[local-name(.)="Issuer" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:assertion"]';
-
-  sig.signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
-
-  // @ts-ignore
-  sig.keyInfoProvider = new GetKeyInfo(publicKey, {
-    prefix: '',
-  });
-
-  sig.signingKey = signingKey;
-
-  sig.addReference(
-    responseXPath,
-    ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
-    'http://www.w3.org/2001/04/xmlenc#sha256'
-  );
-
-  sig.computeSignature(xml, {
-    location: { reference: responseXPath + issuerXPath, action: 'after' },
-  });
-
-  return sig.getSignedXml();
+  return await saml.sign(xml, signingKey, publicKey, responseXPath);
 };
 
 export { createResponseXML, signResponseXML };
