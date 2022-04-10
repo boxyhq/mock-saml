@@ -17,17 +17,4 @@ const getPublicKeyPemFromCertificate = (x509Certificate: string) => {
   return pki.publicKeyToPem(cert.publicKey);
 };
 
-function GetKeyInfo(this: any, x509Certificate: string, signatureConfig: any = {}) {
-  x509Certificate = saml.stripCertHeaderAndFooter(x509Certificate);
-
-  this.getKeyInfo = () => {
-    const prefix = signatureConfig.prefix ? `${signatureConfig.prefix}:` : '';
-    return `<${prefix}X509Data><${prefix}X509Certificate>${x509Certificate}</${prefix}X509Certificate></${prefix}X509Data>`;
-  };
-
-  this.getKey = () => {
-    return getPublicKeyPemFromCertificate(x509Certificate).toString();
-  };
-}
-
-export { fetchPublicKey, fetchPrivateKey, getPublicKeyPemFromCertificate, GetKeyInfo };
+export { fetchPublicKey, fetchPrivateKey, getPublicKeyPemFromCertificate };
