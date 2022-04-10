@@ -9,12 +9,4 @@ const fetchPrivateKey = (): string => {
   return process.env.PRIVATE_KEY ? Buffer.from(process.env.PRIVATE_KEY!, 'base64').toString('ascii') : '';
 };
 
-const getPublicKeyPemFromCertificate = (x509Certificate: string) => {
-  const certDerBytes = util.decode64(x509Certificate);
-  const obj = asn1.fromDer(certDerBytes);
-  const cert = pki.certificateFromAsn1(obj);
-
-  return pki.publicKeyToPem(cert.publicKey);
-};
-
-export { fetchPublicKey, fetchPrivateKey, getPublicKeyPemFromCertificate };
+export { fetchPublicKey, fetchPrivateKey };
