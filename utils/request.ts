@@ -1,6 +1,6 @@
 import { DOMParser as Dom } from '@xmldom/xmldom';
 import { promisify } from 'util';
-import { certToPEM } from 'utils';
+import saml from '@boxyhq/saml20';
 import { SignedXml, xpath as select } from 'xml-crypto';
 import xml2js from 'xml2js';
 import { inflateRaw } from 'zlib';
@@ -68,7 +68,7 @@ const hasValidSignature = async (xml: string, certificate: string): Promise<bool
     signed.keyInfoProvider = {
       file: '',
       getKey: function getKey(keyInfo: any) {
-        return Buffer.from(certToPEM(certificate), 'utf8');
+        return Buffer.from(saml.certToPEM(certificate), 'utf8');
       },
       getKeyInfo: function getKeyInfo(key: any) {
         return '<X509Data></X509Data>';

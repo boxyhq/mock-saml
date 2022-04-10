@@ -1,5 +1,5 @@
 import xmlbuilder from 'xmlbuilder';
-import { stripCertHeaderAndFooter } from './certificate';
+import saml from '@boxyhq/saml20';
 
 const createIdPMetadataXML = async ({
   idpEntityId,
@@ -10,7 +10,7 @@ const createIdPMetadataXML = async ({
   idpSsoUrl: string;
   certificate: string;
 }): Promise<string> => {
-  certificate = stripCertHeaderAndFooter(certificate);
+  certificate = saml.stripCertHeaderAndFooter(certificate);
 
   const nodes = {
     EntityDescriptor: {

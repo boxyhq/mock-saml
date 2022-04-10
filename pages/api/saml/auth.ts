@@ -2,7 +2,8 @@ import { createHash } from 'crypto';
 import config from 'lib/env';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { User } from 'types';
-import { createResponseForm, createResponseXML, signResponseXML } from 'utils';
+import { createResponseXML, signResponseXML } from 'utils';
+import saml from '@boxyhq/saml20';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -32,7 +33,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const xmlSigned = await signResponseXML(xml, config.privateKey, config.publicKey);
     const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');
-    const html = createResponseForm(relayState, encodedSamlResponse, acsUrl);
+    const html = saml.createPostForm(acsUrl, relayState, {
+      name: 'SAMLResponse',
+      value: encodedSamlResponse,
+    });
 
     res.send(html);
   } else {

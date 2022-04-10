@@ -1,4 +1,5 @@
 import { asn1, pki, util } from 'node-forge';
+import saml from '@boxyhq/saml20';
 
 const fetchPublicKey = (): string => {
   return process.env.PUBLIC_KEY ? Buffer.from(process.env.PUBLIC_KEY!, 'base64').toString('ascii') : '';
@@ -16,26 +17,8 @@ const getPublicKeyPemFromCertificate = (x509Certificate: string) => {
   return pki.publicKeyToPem(cert.publicKey);
 };
 
-const stripCertHeaderAndFooter = (cert: string): string => {
-  cert = cert.replace(/-+BEGIN CERTIFICATE-+\r?\n?/, '');
-  cert = cert.replace(/-+END CERTIFICATE-+\r?\n?/, '');
-  cert = cert.replace(/\r\n/g, '\n');
-
-  return cert;
-};
-
-const certToPEM = (certificate: string) => {
-  if (certificate.indexOf('BEGIN CERTIFICATE') === -1 && certificate.indexOf('END CERTIFICATE') === -1) {
-    certificate = certificate.match(/.{1,64}/g)!.join('\n');
-    certificate = '-----BEGIN CERTIFICATE-----\n' + certificate;
-    certificate = certificate + '\n-----END CERTIFICATE-----\n';
-  }
-
-  return certificate;
-};
-
 function GetKeyInfo(this: any, x509Certificate: string, signatureConfig: any = {}) {
-  x509Certificate = stripCertHeaderAndFooter(x509Certificate);
+  x509Certificate = saml.stripCertHeaderAndFooter(x509Certificate);
 
   this.getKeyInfo = () => {
     const prefix = signatureConfig.prefix ? `${signatureConfig.prefix}:` : '';
@@ -47,11 +30,4 @@ function GetKeyInfo(this: any, x509Certificate: string, signatureConfig: any = {
   };
 }
 
-export {
-  fetchPublicKey,
-  fetchPrivateKey,
-  stripCertHeaderAndFooter,
-  getPublicKeyPemFromCertificate,
-  GetKeyInfo,
-  certToPEM,
-};
+export { fetchPublicKey, fetchPrivateKey, getPublicKeyPemFromCertificate, GetKeyInfo };
