@@ -3,7 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import stream from 'stream';
 import { IdPMetadata } from 'types';
 import { promisify } from 'util';
-import { createIdPMetadataXML, stripCertHeaderAndFooter } from 'utils';
+import { createIdPMetadataXML } from 'utils';
+import saml from '@boxyhq/saml20';
 
 const pipeline = promisify(stream.pipeline);
 
@@ -20,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const xml = await createIdPMetadataXML({
       idpEntityId: config.entityId,
       idpSsoUrl: config.ssoUrl,
-      certificate: stripCertHeaderAndFooter(config.publicKey),
+      certificate: saml.stripCertHeaderAndFooter(config.publicKey),
     });
 
     res.setHeader('Content-type', 'text/xml');

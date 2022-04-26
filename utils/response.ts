@@ -1,8 +1,10 @@
 import crypto from 'crypto';
-import { SignedXml } from 'xml-crypto';
 import xmlbuilder from 'xmlbuilder';
 import { User } from '../types';
-import { GetKeyInfo } from './certificate';
+import saml from '@boxyhq/saml20';
+
+const responseXPath =
+  '/*[local-name(.)="Response" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:protocol"]';
 
 const createResponseXML = async (params: {
   idpIdentityId: string;
@@ -130,59 +132,8 @@ const createResponseXML = async (params: {
   return xmlbuilder.create(nodes, { encoding: 'UTF-8' }).end();
 };
 
-// Create the HTML form to submit the response
-const createResponseForm = (relayState: string, encodedSamlResponse: string, acsUrl: string) => {
-  const formElements = [
-    '<!DOCTYPE html>',
-    '<html>',
-    '<head>',
-    '<meta charset="utf-8">',
-    '<meta http-equiv="x-ua-compatible" content="ie=edge">',
-    '</head>',
-    '<body onload="document.forms[0].submit()">',
-    '<noscript>',
-    '<p>Note: Since your browser does not support JavaScript, you must press the Continue button once to proceed.</p>',
-    '</noscript>',
-    '<form method="post" action="' + encodeURI(acsUrl) + '">',
-    '<input type="hidden" name="RelayState" value="' + relayState + '"/>',
-    '<input type="hidden" name="SAMLResponse" value="' + encodedSamlResponse + '"/>',
-    '<input type="submit" value="Continue" />',
-    '</form>',
-    '<script>document.forms[0].style.display="none";</script>',
-    '</body>',
-    '</html>',
-  ];
-
-  return formElements.join('');
-};
-
 const signResponseXML = async (xml: string, signingKey: any, publicKey: any): Promise<string> => {
-  const sig = new SignedXml();
-  const responseXPath =
-    '/*[local-name(.)="Response" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:protocol"]';
-  const issuerXPath =
-    '/*[local-name(.)="Issuer" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:assertion"]';
-
-  sig.signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
-
-  // @ts-ignore
-  sig.keyInfoProvider = new GetKeyInfo(publicKey, {
-    prefix: '',
-  });
-
-  sig.signingKey = signingKey;
-
-  sig.addReference(
-    responseXPath,
-    ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#'],
-    'http://www.w3.org/2001/04/xmlenc#sha256'
-  );
-
-  sig.computeSignature(xml, {
-    location: { reference: responseXPath + issuerXPath, action: 'after' },
-  });
-
-  return sig.getSignedXml();
+  return await saml.sign(xml, signingKey, publicKey, responseXPath);
 };
 
-export { createResponseXML, createResponseForm, signResponseXML };
+export { createResponseXML, signResponseXML };

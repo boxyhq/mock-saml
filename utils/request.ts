@@ -1,7 +1,4 @@
-import { DOMParser as Dom } from '@xmldom/xmldom';
 import { promisify } from 'util';
-import { certToPEM } from 'utils';
-import { SignedXml, xpath as select } from 'xml-crypto';
 import xml2js from 'xml2js';
 import { inflateRaw } from 'zlib';
 
@@ -44,43 +41,4 @@ const extractSAMLRequestAttributes = async (rawRequest: string) => {
   };
 };
 
-// Validate signature
-const hasValidSignature = async (xml: string, certificate: string): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
-    const doc = new Dom().parseFromString(xml);
-
-    const signature =
-      select(
-        doc,
-        "/*/*/*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']"
-      )[0] ||
-      select(
-        doc,
-        "/*/*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']"
-      )[0] ||
-      select(
-        doc,
-        "/*/*/*/*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']"
-      )[0];
-
-    const signed = new SignedXml();
-
-    signed.keyInfoProvider = {
-      file: '',
-      getKey: function getKey(keyInfo: any) {
-        return Buffer.from(certToPEM(certificate), 'utf8');
-      },
-      getKeyInfo: function getKeyInfo(key: any) {
-        return '<X509Data></X509Data>';
-      },
-    };
-
-    signed.loadSignature(signature.toString());
-
-    const response = signed.checkSignature(xml);
-
-    return !response ? reject(false) : resolve(true);
-  });
-};
-
-export { extractSAMLRequestAttributes, hasValidSignature, decodeBase64 };
+export { extractSAMLRequestAttributes, decodeBase64 };

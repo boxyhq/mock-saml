@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { decodeBase64, extractSAMLRequestAttributes, hasValidSignature } from 'utils';
+import { decodeBase64, extractSAMLRequestAttributes } from 'utils';
+import saml from '@boxyhq/saml20';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<string>) {
   switch (req.method) {
@@ -30,7 +31,10 @@ async function processSAMLRequest(req: NextApiRequest, res: NextApiResponse, isP
 
     const { id, audience, acsUrl, providerName, publicKey } = await extractSAMLRequestAttributes(rawRequest);
 
-    await hasValidSignature(rawRequest, publicKey);
+    const { valid } = await saml.hasValidSignature(rawRequest, publicKey, null);
+    if (!valid) {
+      throw new Error('Invalid signature');
+    }
 
     const params = new URLSearchParams({ id, audience, acsUrl, providerName, relayState });
 
