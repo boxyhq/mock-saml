@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@boxyhq/saml20": "1.0.0-beta-1",
+    "@boxyhq/saml20": "1.0.0",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",
