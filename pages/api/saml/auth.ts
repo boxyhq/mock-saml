@@ -33,10 +33,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const xmlSigned = await signResponseXML(xml, config.privateKey, config.publicKey);
     const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');
-    const html = saml.createPostForm(acsUrl, relayState, {
-      name: 'SAMLResponse',
-      value: encodedSamlResponse,
-    });
+    const html = saml.createPostForm(acsUrl, [
+      {
+        name: 'RelayState',
+        value: relayState,
+      },
+      {
+        name: 'SAMLResponse',
+        value: encodedSamlResponse,
+      },
+    ]);
 
     res.send(html);
   } else {
