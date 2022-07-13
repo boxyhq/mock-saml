@@ -28,6 +28,13 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
           <p className='mx-auto text-lg font-medium leading-relaxed lg:w-2/3'>
             A free SAML 2.0 Identity Provider for testing SAML SSO integrations.
             <sup className='text-xl text-orange-600'>*</sup>
+            <a
+              className='leading-5 underline hover:text-gray-900'
+              href='https://github.com/boxyhq/mock-saml'
+              rel='noopener noreferrer'
+              target='_blank'>
+              Open-source and free
+            </a>
           </p>
           <div className='mx-auto mt-4 flex w-full justify-center px-8 lg:w-2/3'>
             <Link href='/saml/login'>
