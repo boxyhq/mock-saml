@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@boxyhq/saml20": "1.0.1",
+    "daisyui": "^2.19.0",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",
