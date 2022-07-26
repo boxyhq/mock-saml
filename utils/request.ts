@@ -7,7 +7,7 @@ const inflateRawAsync = promisify(inflateRaw);
 // Parse XML
 const parseXML = (xml: string): Promise<Record<string, any>> => {
   return new Promise((resolve, reject) => {
-    xml2js.parseString(xml, (err: Error, result: any) => {
+    xml2js.parseString(xml, (err: Error | null, result: any) => {
       if (err) {
         reject(err);
       }
