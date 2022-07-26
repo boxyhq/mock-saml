@@ -1,4 +1,4 @@
-const colors = require("tailwindcss/colors");
+const colors = require('tailwindcss/colors');
 
 function withOpacityValue(variable) {
   return ({ opacityValue }) => {
@@ -10,18 +10,15 @@ function withOpacityValue(variable) {
 }
 
 module.exports = {
-  darkMode: "class",
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  darkMode: 'class',
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     colors: {
       ...colors,
-      primary: withOpacityValue("--color-primary"),
-      secondary: withOpacityValue("--color-secondary"),
+      primary: withOpacityValue('--color-primary'),
+      secondary: withOpacityValue('--color-secondary'),
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require('daisyui')],
 };
