@@ -25,19 +25,23 @@ a {
 }
 
 @layer components {
-  .button {
-    @apply block rounded-md bg-indigo-500 px-4 py-2 leading-8 text-white shadow-md hover:bg-indigo-600 focus:bg-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:ring-opacity-100;
-  }
-
-  .button-secondary {
-    @apply button border-2 border-indigo-800 bg-white text-indigo-500 hover:bg-white hover:shadow-lg focus:bg-white;
+  .alert {
+    @apply rounded;
   }
 
   .input {
-    @apply rounded-md border border-gray-300 bg-opacity-50 px-3 py-1 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-300 disabled:bg-gray-100;
+    @apply rounded;
+  }
+
+  .textarea {
+    @apply rounded;
   }
 
   .select {
-    @apply rounded-md border border-gray-300 bg-opacity-50 px-3 py-2.5 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-300 disabled:bg-gray-100;
+    @apply rounded;
+  }
+
+  .btn {
+    @apply rounded;
   }
 }

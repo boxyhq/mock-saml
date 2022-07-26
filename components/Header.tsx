@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className='body-font text-gray-600'>
-      <div className='container mx-auto flex flex-col flex-wrap items-center p-5 md:flex-row'>
+    <header className='body-font border-b text-gray-600'>
+      <div className='container mx-auto flex flex-col flex-wrap items-center justify-between space-y-3 py-3 md:flex-row'>
         <Link href='/'>
           <a className='title-font flex items-center font-medium text-gray-900 md:mb-0'>
             <svg
@@ -20,25 +20,23 @@ export default function Header() {
             <span className='ml-3 text-2xl'>Mock SAML</span>
           </a>
         </Link>
-        <nav className='mt-2 flex flex-col flex-wrap items-center text-base md:ml-auto md:mt-0 md:items-end'>
-          <span className='ml-2 text-sm text-gray-500 '>
-            Made with <span className='text-[#e25555]'>&#9829;</span>
+        <div className='flex flex-col items-center md:flex-row'>
+          <span className='mr-5'>
             <a
-              href='https://boxyhq.com/'
-              className='ml-1 text-gray-600'
+              className='btn btn-outline btn-sm'
+              href='https://github.com/boxyhq/jackson'
               rel='noopener noreferrer'
               target='_blank'>
+              Integrate SAML with a few lines of code
+            </a>
+          </span>
+          <span>
+            Made with <span className='text-red-500'>&#9829;</span>{' '}
+            <a href='https://boxyhq.com/' rel='noopener noreferrer' target='_blank'>
               <strong>BoxyHQ</strong>
             </a>
           </span>
-          <a
-            className='leading-5 underline hover:text-gray-900'
-            href='https://github.com/boxyhq/jackson'
-            rel='noopener noreferrer'
-            target='_blank'>
-            Integrate SAML with a few lines of code
-          </a>
-        </nav>
+        </div>
       </div>
     </header>
   );
