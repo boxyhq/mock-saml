@@ -74,7 +74,7 @@ export default function Login() {
       <div className='flex min-h-full items-center justify-center'>
         <div className='flex w-full max-w-xl flex-col px-3'>
           <div className='space-y-2'>
-            <div className='border-2 p-5'>
+            <div className='border-2 p-4'>
               <h2 className='mb-5 text-center text-2xl font-bold text-gray-900'>SAML SSO Login</h2>
               <form onSubmit={handleSubmit}>
                 <div className='grid grid-cols-2 gap-y-1 gap-x-5'>

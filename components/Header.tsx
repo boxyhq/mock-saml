@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className='body-font border-b text-gray-600'>
-      <div className='container mx-auto flex flex-col flex-wrap items-center justify-between space-y-3 py-3 md:flex-row'>
+    <header className='body-font border-b px-2 text-gray-600'>
+      <div className='container mx-auto flex flex-col flex-wrap items-center justify-between space-y-2 py-3 md:flex-row'>
         <Link href='/'>
           <a className='title-font flex items-center font-medium text-gray-900 md:mb-0'>
             <svg
@@ -20,8 +20,8 @@ export default function Header() {
             <span className='ml-3 text-2xl'>Mock SAML</span>
           </a>
         </Link>
-        <div className='flex flex-col items-center md:flex-row'>
-          <span className='mr-5'>
+        <div className='flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-2'>
+          <span>
             <a
               className='btn btn-outline btn-sm'
               href='https://github.com/boxyhq/jackson'
