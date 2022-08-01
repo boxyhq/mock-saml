@@ -28,7 +28,7 @@
     "@types/react-gtm-module": "2.0.1",
     "@types/xml-crypto": "1.4.2",
     "@types/xml2js": "0.4.11",
-    "autoprefixer": "10.4.7",
+    "autoprefixer": "10.4.8",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.2",
     "postcss": "8.4.14",
