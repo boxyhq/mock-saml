@@ -30,7 +30,7 @@
     "@types/xml2js": "0.4.11",
     "autoprefixer": "10.4.7",
     "eslint": "8.21.0",
-    "eslint-config-next": "12.2.2",
+    "eslint-config-next": "12.2.3",
     "postcss": "8.4.14",
     "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "0.1.12",
