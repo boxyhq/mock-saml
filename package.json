@@ -13,7 +13,7 @@
   "dependencies": {
     "@boxyhq/saml20": "1.0.4",
     "daisyui": "2.20.0",
-    "next": "12.2.3",
+    "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-gtm-module": "2.0.11",
