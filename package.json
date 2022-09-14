@@ -22,7 +22,7 @@
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
-    "@types/node": "18.7.15",
+    "@types/node": "18.7.17",
     "@types/node-forge": "1.0.4",
     "@types/react": "18.0.19",
     "@types/react-gtm-module": "2.0.1",
