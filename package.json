@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "18.7.18",
-    "@types/node-forge": "1.0.4",
+    "@types/node-forge": "1.0.5",
     "@types/react": "18.0.20",
     "@types/react-gtm-module": "2.0.1",
     "@types/xml-crypto": "1.4.2",
