@@ -6,6 +6,9 @@ import saml from '@boxyhq/saml20';
 const responseXPath =
   '/*[local-name(.)="Response" and namespace-uri(.)="urn:oasis:names:tc:SAML:2.0:protocol"]';
 
+const randomId = () => {
+  return '_' + crypto.randomBytes(10).toString('hex');
+};
 const createResponseXML = async (params: {
   idpIdentityId: string;
   audience: string;
@@ -78,7 +81,7 @@ const createResponseXML = async (params: {
     'samlp:Response': {
       '@xmlns:samlp': 'urn:oasis:names:tc:SAML:2.0:protocol',
       '@Version': '2.0',
-      '@ID': crypto.randomBytes(10).toString('hex'),
+      '@ID': randomId(),
       '@Destination': acsUrl,
       '@InResponseTo': inResponseTo,
       '@IssueInstant': authTimestamp,
@@ -95,7 +98,7 @@ const createResponseXML = async (params: {
       'saml:Assertion': {
         '@xmlns:saml': 'urn:oasis:names:tc:SAML:2.0:assertion',
         '@Version': '2.0',
-        '@ID': crypto.randomBytes(10).toString('hex'),
+        '@ID': randomId(),
         '@IssueInstant': authTimestamp,
         'saml:Issuer': {
           '#text': idpIdentityId,
