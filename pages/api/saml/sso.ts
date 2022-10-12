@@ -42,6 +42,6 @@ async function processSAMLRequest(req: NextApiRequest, res: NextApiResponse, isP
   } catch (err) {
     console.error(err);
 
-    res.status(500).send(`Error parsing SAML request`);
+    res.status(500).send(`${err}`);
   }
 }
