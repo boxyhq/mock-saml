@@ -31,13 +31,20 @@ const extractSAMLRequestAttributes = async (rawRequest: string) => {
   const attributes = result['samlp:AuthnRequest']['$'];
   const issuer = result['samlp:AuthnRequest']['saml:Issuer'];
 
+  const publicKey = result['samlp:AuthnRequest']['Signature']
+    ? result['samlp:AuthnRequest']['Signature']['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0]
+    : null;
+
+  if (!publicKey) {
+    throw new Error('Missing signature');
+  }
+
   return {
     id: attributes.ID,
     acsUrl: attributes.AssertionConsumerServiceURL,
     providerName: attributes.ProviderName,
     audience: issuer[0]['_'],
-    publicKey:
-      result['samlp:AuthnRequest']['Signature'][0]['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0],
+    publicKey,
   };
 };
 
