@@ -32,7 +32,7 @@ const extractSAMLRequestAttributes = async (rawRequest: string) => {
   const issuer = result['samlp:AuthnRequest']['saml:Issuer'];
 
   const publicKey = result['samlp:AuthnRequest']['Signature']
-    ? result['samlp:AuthnRequest']['Signature']['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0]
+    ? result['samlp:AuthnRequest']['Signature'][0]['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0]
     : null;
 
   if (!publicKey) {
