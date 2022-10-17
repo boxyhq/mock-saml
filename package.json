@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@boxyhq/saml20": "1.0.7",
+    "@boxyhq/saml20": "1.0.8",
     "daisyui": "2.31.0",
     "next": "12.3.1",
     "react": "18.2.0",
