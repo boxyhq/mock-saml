@@ -43,5 +43,6 @@ a {
 
   .btn {
     @apply rounded;
+    text-transform: none;
   }
 }
