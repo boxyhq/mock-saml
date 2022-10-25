@@ -13,25 +13,32 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
         <h1 className='text-center text-xl font-extrabold text-gray-900 md:text-2xl'>
           A free SAML 2.0 Identity Provider for testing SAML SSO integrations.
         </h1>
-        <div className='flex flex-col justify-between md:flex-row'>
-          <Link href='/api/saml/metadata/download'>
-            <a className='btn btn-active btn-primary'>
-              <svg
-                className='mr-1 inline-block h-6 w-6'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                aria-hidden
-                strokeWidth='2'>
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4'
-                />
-              </svg>
-              Download Metadata
-            </a>
-          </Link>
+        <div className='flex flex-col justify-between space-y-5 md:flex-row md:space-y-0'>
+          <div className='flex flex-col space-y-5 md:flex-row md:space-x-5 md:space-y-0'>
+            <Link href='/api/saml/metadata/download'>
+              <a className='btn btn-active btn-primary'>
+                <svg
+                  className='mr-1 inline-block h-6 w-6'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                  aria-hidden
+                  strokeWidth='2'>
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4'
+                  />
+                </svg>
+                Download Metadata
+              </a>
+            </Link>
+            <Link href='/api/saml/metadata'>
+              <a className='btn btn-outline btn-primary' target='_blank'>
+                Metadata URL
+              </a>
+            </Link>
+          </div>
           <Link href='/saml/login'>
             <a className='btn btn-outline btn-primary'>Test IdP Login</a>
           </Link>
