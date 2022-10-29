@@ -12,11 +12,12 @@ const createIdPMetadataXML = async ({
 }): Promise<string> => {
   certificate = saml.stripCertHeaderAndFooter(certificate);
 
+  const today = new Date();
   const nodes = {
     EntityDescriptor: {
       '@xmlns:md': 'urn:oasis:names:tc:SAML:2.0:metadata',
       '@entityID': idpEntityId,
-      '@validUntil': '2026-06-22T18:39:53.000Z',
+      '@validUntil': new Date(today.setFullYear(today.getFullYear() + 10)).toISOString(),
       IDPSSODescriptor: {
         '@WantAuthnRequestsSigned': false,
         '@protocolSupportEnumeration': 'urn:oasis:names:tc:SAML:2.0:protocol',
