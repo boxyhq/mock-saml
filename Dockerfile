@@ -13,8 +13,7 @@ COPY --from=deps /app/node_modules ./node_modules
 
 ENV NEXT_PUBLIC_GTM_ID ""
 ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN npm run build && npm install --production --ignore-scripts --prefer-offline
+RUN npm run build && npm install --omit-dev
 
 FROM base AS runner
 WORKDIR /app
@@ -30,6 +29,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/.env /app/.env
+COPY --from=builder /app/next.config.js /app/next.config.js
 
 USER nextjs
 

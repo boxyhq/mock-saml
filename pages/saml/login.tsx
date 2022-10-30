@@ -46,7 +46,7 @@ function Login({clientMetadata}: InferGetServerSidePropsType<typeof getServerSid
 
     const { username, domain } = state;
 
-    const response = await fetch(`/api/saml/auth`, {
+    const response = await fetch(`/mock-saml/api/saml/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
