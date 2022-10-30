@@ -19,8 +19,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user: User = {
       id: userId,
       email,
-      firstName: userName,
-      lastName: userName,
+      firstname: userName,
+      lastname: userName,
+      username:  userName,
     };
 
     const xml = await createResponseXML({
