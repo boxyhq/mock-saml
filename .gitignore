@@ -35,6 +35,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-.env
+# .env
 key.pem
 public.crt
