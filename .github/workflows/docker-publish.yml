@@ -2,23 +2,33 @@ name: Build and Publish Docker
 
 on:
   push:
-    branches:
-      - '*'
     tags:
-      - 'beta-v*'
-  pull_request:
-    types: [opened, synchronize, reopened]
+      - '*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Repository branch or tag'
+        required: true
 
 jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set Tag on Push
+        if: github.event_name == 'push'
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Set Tag on Workflow Dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "RELEASE_VERSION=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+        
       - name: Check Out Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: ${{env.RELEASE_VERSION}}
 
       - run: |
           npm install -g json
@@ -41,14 +51,13 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and push
-        if: github.ref == 'refs/heads/release'
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ github.repository }}:latest,${{ github.repository }}:${{ steps.slug.outputs.sha7 }},${{ github.repository }}:${{ steps.npmversion.outputs.npmversion }}
+          tags: ${{ github.repository }}:latest,${{ github.repository }}:${{ steps.slug.outputs.sha7 }},${{ github.repository }}:${{ env.RELEASE_VERSION }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
