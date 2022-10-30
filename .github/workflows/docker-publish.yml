@@ -12,6 +12,9 @@ on:
         description: 'Repository branch or tag'
         required: true
 
+env:
+  IMAGE_NAME: 'mock-saml'
+
 jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
@@ -50,6 +53,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Set image id
+        run: |
+          IMAGE_ID=${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -57,7 +64,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ github.repository }}:latest,${{ github.repository }}:${{ steps.slug.outputs.sha7 }},${{ github.repository }}:${{ env.RELEASE_VERSION }}
+          tags: ${{ env.IMAGE_ID }}:latest,${{ env.IMAGE_ID }}:${{ steps.slug.outputs.sha7 }},${{ env.IMAGE_ID }}:${{ env.RELEASE_VERSION }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
