@@ -4,5 +4,4 @@ npm-debug.log
 .github
 .vscode
 *Dockerfile*
-.env
 .env.example
