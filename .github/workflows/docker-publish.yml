@@ -56,6 +56,7 @@ jobs:
       - name: Set image id
         run: |
           IMAGE_ID=${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
 
       - name: Build and push
         id: docker_build
