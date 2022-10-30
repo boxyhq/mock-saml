@@ -8,6 +8,12 @@ export type IdentityProvider = {
   entityId: string;
 };
 
+export type ClientMetadata = {
+  acsUrl: string;
+  audience: string;
+  username: string;
+};
+
 export type App = {
   id: string;
   name: string;

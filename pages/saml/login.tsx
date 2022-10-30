@@ -1,17 +1,22 @@
+import { GetServerSideProps } from 'next';
+import { ClientMetadata } from '../../types';
+import { InferGetServerSidePropsType } from 'next'
+
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import type { FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import config from 'lib/env';
 
-export default function Login() {
+function Login({clientMetadata}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const { id, audience, acsUrl, providerName, relayState } = router.query;
 
   const [state, setState] = useState({
-    username: 'jackson',
+    username: clientMetadata.username,
     domain: 'example.com',
-    acsUrl: 'https://jackson-demo.boxyhq.com/api/oauth/saml',
-    audience: 'https://saml.boxyhq.com',
+    acsUrl: clientMetadata.acsUrl,
+    audience: clientMetadata.audience,
   });
 
   const acsUrlInp = useRef<HTMLInputElement>(null);
@@ -91,7 +96,7 @@ export default function Login() {
                           id='acsUrl'
                           ref={acsUrlInp}
                           autoComplete='off'
-                          placeholder='https://jackson-demo.boxyhq.com/api/oauth/saml'
+                          placeholder={clientMetadata.acsUrl}
                           value={state.acsUrl}
                           onChange={handleChange}
                         />
@@ -109,7 +114,7 @@ export default function Login() {
                           name='audience'
                           id='audience'
                           autoComplete='off'
-                          placeholder='https://saml.boxyhq.com'
+                          placeholder={clientMetadata.audience}
                           value={state.audience}
                           onChange={handleChange}
                         />
@@ -126,14 +131,14 @@ export default function Login() {
                       ref={emailInp}
                       autoComplete='off'
                       type='text'
-                      placeholder='jackson'
+                      placeholder={clientMetadata.username}
                       value={state.username}
                       onChange={handleChange}
                       className='input input-bordered'
                       title='Please provide a mock email address'
                     />
                   </div>
-                  <div className='form-control'>
+                  {/* <div className='form-control'>
                     <label className='label'>
                       <span className='label-text font-bold'>Domain</span>
                     </label>
@@ -146,7 +151,7 @@ export default function Login() {
                       <option value='example.com'>@example.com</option>
                       <option value='example.org'>@example.org</option>
                     </select>
-                  </div>
+                  </div> */}
                   <div className='form-control col-span-2'>
                     <label className='label'>
                       <span className='label-text font-bold'>Password</span>
@@ -181,3 +186,19 @@ export default function Login() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const clientMetadata: ClientMetadata = {
+    acsUrl: config.acsUrl,
+    audience: config.audience,
+    username: config.username,
+  }
+
+  return {
+    props: {
+      clientMetadata 
+    }
+  };
+};
+
+export default Login

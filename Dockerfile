@@ -29,10 +29,11 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/.env /app/.env
 
 USER nextjs
 
-EXPOSE 4000
+EXPOSE 8080
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
