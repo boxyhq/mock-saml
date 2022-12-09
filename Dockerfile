@@ -1,4 +1,5 @@
-FROM --platform=$BUILDPLATFORM node:16.18.1-alpine3.16 AS base
+ARG NODEJS_IMAGE=node:16.18.1-alpine3.16
+FROM --platform=$BUILDPLATFORM $NODEJS_IMAGE AS base
 
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
@@ -18,7 +19,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npm run build
 
-FROM node:16.18.1-alpine3.16 AS runner
+FROM $NODEJS_IMAGE AS runner
 WORKDIR /app
 
 ENV NODE_OPTIONS="--max-http-header-size=81920"
