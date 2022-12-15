@@ -4,7 +4,10 @@ export default function Header() {
   return (
     <header className='body-font border-b px-2 text-gray-600'>
       <div className='container mx-auto flex flex-col flex-wrap items-center justify-between space-y-2 py-3 md:flex-row'>
-        <Link href='/' className='title-font flex items-center font-medium text-gray-900 md:mb-0'>
+        <Link
+          href='https://github.com/boxyhq/mock-saml'
+          target='_blank'
+          className='title-font flex items-center font-medium text-gray-900 md:mb-0'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
