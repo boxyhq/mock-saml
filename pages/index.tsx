@@ -15,7 +15,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
         </h1>
         <div className='flex flex-col justify-between space-y-5 md:flex-row md:space-y-0'>
           <div className='flex flex-col space-y-5 md:flex-row md:space-x-5 md:space-y-0'>
-            <Link href='/api/saml/metadata/download' className='btn-primary btn-active btn'>
+            <Link href='/api/saml/metadata?download=true' className='btn-primary btn-active btn'>
               <svg
                 className='mr-1 inline-block h-6 w-6'
                 fill='none'
