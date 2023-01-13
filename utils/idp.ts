@@ -19,7 +19,7 @@ const createIdPMetadataXML = async ({
       '@entityID': idpEntityId,
       '@validUntil': new Date(today.setFullYear(today.getFullYear() + 10)).toISOString(),
       'md:IDPSSODescriptor': {
-        '@WantAuthnRequestsSigned': false,
+        '@WantAuthnRequestsSigned': true,
         '@protocolSupportEnumeration': 'urn:oasis:names:tc:SAML:2.0:protocol',
         'md:KeyDescriptor': {
           '@use': 'signing',
