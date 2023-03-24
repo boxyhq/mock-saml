@@ -7,13 +7,20 @@ const inflateRawAsync = promisify(inflateRaw);
 // Parse XML
 const parseXML = (xml: string): Promise<Record<string, any>> => {
   return new Promise((resolve, reject) => {
-    xml2js.parseString(xml, (err: Error | null, result: any) => {
-      if (err) {
-        reject(err);
-      }
+    xml2js.parseString(
+      xml,
+      {
+        tagNameProcessors: [xml2js.processors.stripPrefix],
+        strict: true,
+      },
+      (err: Error | null, result: any) => {
+        if (err) {
+          reject(err);
+        }
 
-      resolve(result);
-    });
+        resolve(result);
+      }
+    );
   });
 };
 
@@ -28,11 +35,11 @@ const decodeBase64 = async (string: string, isDeflated: boolean) => {
 const extractSAMLRequestAttributes = async (rawRequest: string) => {
   const result = await parseXML(rawRequest);
 
-  const attributes = result['samlp:AuthnRequest']['$'];
-  const issuer = result['samlp:AuthnRequest']['saml:Issuer'];
+  const attributes = result['AuthnRequest']['$'];
+  const issuer = result['AuthnRequest']['Issuer'];
 
-  const publicKey = result['samlp:AuthnRequest']['Signature']
-    ? result['samlp:AuthnRequest']['Signature'][0]['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0]
+  const publicKey = result['AuthnRequest']['Signature']
+    ? result['AuthnRequest']['Signature'][0]['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0]
     : null;
 
   if (!publicKey) {
