@@ -32,7 +32,7 @@ const decodeBase64 = async (string: string, isDeflated: boolean) => {
 };
 
 // Parse SAMLRequest attributes
-const extractSAMLRequestAttributes = async (rawRequest: string) => {
+const extractSAMLRequestAttributes = async (rawRequest: string, isPost = true) => {
   const result = await parseXML(rawRequest);
 
   const attributes = result['AuthnRequest']['$'];
@@ -42,7 +42,7 @@ const extractSAMLRequestAttributes = async (rawRequest: string) => {
     ? result['AuthnRequest']['Signature'][0]['KeyInfo'][0]['X509Data'][0]['X509Certificate'][0]
     : null;
 
-  if (!publicKey) {
+  if (!publicKey && isPost) {
     throw new Error('Missing signature');
   }
 
