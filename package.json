@@ -18,7 +18,7 @@
     "react-dom": "18.2.0",
     "react-gtm-module": "2.0.11",
     "xml-crypto": "3.0.1",
-    "xml2js": "0.4.23",
+    "xml2js": "0.5.0",
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
