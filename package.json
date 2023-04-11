@@ -29,7 +29,7 @@
     "@types/xml-crypto": "1.4.2",
     "@types/xml2js": "0.4.11",
     "autoprefixer": "10.4.14",
-    "eslint": "8.36.0",
+    "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "postcss": "8.4.21",
     "prettier": "2.8.7",
