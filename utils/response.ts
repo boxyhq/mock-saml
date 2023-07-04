@@ -97,7 +97,7 @@ const createResponseXML = async (params: {
       '@IssueInstant': authTimestamp,
       'saml:Issuer': {
         '@xmlns:saml': 'urn:oasis:names:tc:SAML:2.0:assertion',
-        '@Format': 'urn:oasis:names:tc:SAML:2.0:assertion',
+        '@Format': 'urn:oasis:names:tc:SAML:2.0:nameid-format:entity',
         '#text': idpIdentityId,
       },
       'samlp:Status': {

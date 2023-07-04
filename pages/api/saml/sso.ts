@@ -23,17 +23,25 @@ async function processSAMLRequest(req: NextApiRequest, res: NextApiResponse, isP
   } else {
     relayState = req.query.RelayState;
     samlRequest = req.query.SAMLRequest;
+    // sigAlg = req.query.SigAlg;
+    // signature = req.query.Signature;
+
     isDeflated = true;
   }
 
   try {
     const rawRequest = await decodeBase64(samlRequest, isDeflated);
 
-    const { id, audience, acsUrl, providerName, publicKey } = await extractSAMLRequestAttributes(rawRequest);
+    const { id, audience, acsUrl, providerName, publicKey } = await extractSAMLRequestAttributes(
+      rawRequest,
+      isPost
+    );
 
-    const { valid } = await saml.hasValidSignature(rawRequest, publicKey, null);
-    if (!valid) {
-      throw new Error('Invalid signature');
+    if (isPost) {
+      const { valid } = await saml.hasValidSignature(rawRequest, publicKey, null);
+      if (!valid) {
+        throw new Error('Invalid signature');
+      }
     }
 
     const params = new URLSearchParams({ id, audience, acsUrl, providerName, relayState });

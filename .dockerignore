@@ -1,7 +1,12 @@
+Dockerfile
+.dockerignore
 node_modules
 npm-debug.log
+README.md
+.next
 .git
 .github
 .vscode
 *Dockerfile*
+.env
 .env.example
