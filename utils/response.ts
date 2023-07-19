@@ -108,6 +108,14 @@ const createResponseXML = async (params: {
             '@Format': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
             '#text': user.email,
           },
+          'saml:SubjectConfirmation': {
+            '@Method': 'urn:oasis:names:tc:SAML:2.0:cm:bearer',
+            'saml:SubjectConfirmationData': {
+              '@InResponseTo': inResponseTo,
+              '@NotOnOrAfter': notAfter,
+              '@Recipient': acsUrl,
+            },
+          },
         },
         'saml:Conditions': {
           '@NotBefore': notBefore,
