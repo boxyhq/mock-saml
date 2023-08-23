@@ -21,7 +21,7 @@
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
-    "@types/node": "20.5.2",
+    "@types/node": "20.5.3",
     "@types/react": "18.2.21",
     "@types/react-gtm-module": "2.0.1",
     "@types/xml2js": "0.4.11",
