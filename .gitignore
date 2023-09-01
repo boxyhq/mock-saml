@@ -36,5 +36,7 @@ yarn-error.log*
 *.tsbuildinfo
 
 .env
+.tool-versions
 key.pem
 public.crt
+
