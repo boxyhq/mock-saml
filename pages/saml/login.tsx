@@ -13,6 +13,8 @@ export default function Login() {
     acsUrl: 'https://jackson-demo.boxyhq.com/api/oauth/saml',
     audience: 'https://saml.boxyhq.com',
     uid: 'mock-10001',
+    firstName: 'Jackson',
+    lastName: 'Doe',
   });
 
   const acsUrlInp = useRef<HTMLInputElement>(null);
@@ -40,7 +42,7 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { username, domain, uid } = state;
+    const { username, firstName, lastName, domain, uid } = state;
 
     const response = await fetch(`/api/saml/auth`, {
       method: 'POST',
@@ -49,7 +51,9 @@ export default function Login() {
       },
       body: JSON.stringify({
         email: `${username}@${domain}`,
-        uid: uid,
+        uid,
+        firstName,
+        lastName,
         id,
         audience: audience || state.audience,
         acsUrl: acsUrl || state.acsUrl,
@@ -128,7 +132,6 @@ export default function Login() {
                       ref={emailInp}
                       autoComplete='off'
                       type='text'
-                      placeholder='jackson'
                       value={state.username}
                       onChange={handleChange}
                       className='input input-bordered'
@@ -149,17 +152,51 @@ export default function Login() {
                       <option value='immersivelabs.org'>@immersivelabs.org</option>
                     </select>
                   </div>
-                  <div className='form-control col-span-2'>
+                  <div className='form-control'>
+                    <label className='label'>
+                      <span className='label-text font-bold'>First Name</span>
+                    </label>
+                    <input
+                      name='firstName'
+                      id='firstName'
+                      ref={emailInp}
+                      autoComplete='off'
+                      type='text'
+                      value={state.firstName}
+                      onChange={handleChange}
+                      className='input input-bordered'
+                      title='Please provide a mock first name'
+                    />
+                  </div>
+                  <div className='form-control'>
+                    <label className='label'>
+                      <span className='label-text font-bold'>Last Name</span>
+                    </label>
+                    <input
+                      name='lastName'
+                      id='lastName'
+                      ref={emailInp}
+                      autoComplete='off'
+                      type='text'
+                      value={state.lastName}
+                      onChange={handleChange}
+                      className='input input-bordered'
+                      title='Please provide a mock last name'
+                    />
+                  </div>
+                  <div className='form-control'>
                     <label className='label'>
                       <span className='label-text font-bold'>Uid</span>
                     </label>
                     <input
+                      name='uid'
                       id='uid'
                       autoComplete='off'
                       type='text'
                       value={state.uid}
                       onChange={handleChange}
                       className='input input-bordered'
+                      title='Please provide a mock email address'
                     />
                   </div>
                   <button className='btn btn-primary col-span-2 block'>Sign In</button>

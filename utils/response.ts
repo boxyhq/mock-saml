@@ -71,9 +71,15 @@ const createResponseXML = async (params: {
           '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
           '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
           '@xsi:type': 'xs:string',
-          '#text': user.firstName,
+          '#text': user.lastName,
         },
       },
+
+      // "urn:mace:dir:attribute-def:organisation-id": "organisation.saml_organisation_mapping.value"
+      // "urn:mace:dir:attribute-def:team-title": "team.title"
+
+
+
     ],
   };
 
