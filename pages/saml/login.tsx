@@ -9,7 +9,7 @@ export default function Login() {
 
   const [state, setState] = useState({
     username: 'jackson',
-    domain: 'example.com',
+    domain: 'immersivelabs.com',
     acsUrl: 'https://jackson-demo.boxyhq.com/api/oauth/saml',
     audience: 'https://saml.boxyhq.com',
   });
@@ -143,8 +143,8 @@ export default function Login() {
                       className='select select-bordered'
                       onChange={handleChange}
                       value={state.domain}>
-                      <option value='example.com'>@example.com</option>
-                      <option value='example.org'>@example.org</option>
+                      <option value='immersivelabs.com'>@immersivelabs.com</option>
+                      <option value='immersivelabs.org'>@immersivelabs.org</option>
                     </select>
                   </div>
                   <div className='form-control col-span-2'>
