@@ -12,6 +12,7 @@ export default function Login() {
     domain: 'immersivelabs.com',
     acsUrl: 'https://jackson-demo.boxyhq.com/api/oauth/saml',
     audience: 'https://saml.boxyhq.com',
+    uid: 'mock-10001',
   });
 
   const acsUrlInp = useRef<HTMLInputElement>(null);
@@ -39,7 +40,7 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { username, domain } = state;
+    const { username, domain, uid } = state;
 
     const response = await fetch(`/api/saml/auth`, {
       method: 'POST',
@@ -48,6 +49,7 @@ export default function Login() {
       },
       body: JSON.stringify({
         email: `${username}@${domain}`,
+        uid: uid,
         id,
         audience: audience || state.audience,
         acsUrl: acsUrl || state.acsUrl,
@@ -149,18 +151,16 @@ export default function Login() {
                   </div>
                   <div className='form-control col-span-2'>
                     <label className='label'>
-                      <span className='label-text font-bold'>Password</span>
+                      <span className='label-text font-bold'>Uid</span>
                     </label>
                     <input
-                      id='password'
+                      id='uid'
                       autoComplete='off'
-                      type='password'
-                      defaultValue='samlstrongpassword'
+                      type='text'
+                      value={state.uid}
+                      onChange={handleChange}
                       className='input input-bordered'
                     />
-                    <label className='label'>
-                      <span className='label-text-alt'>Any password works</span>
-                    </label>
                   </div>
                   <button className='btn btn-primary col-span-2 block'>Sign In</button>
                 </div>
