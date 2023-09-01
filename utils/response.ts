@@ -30,6 +30,15 @@ const createResponseXML = async (params: {
   const inResponseTo = samlReqId;
   // const responseId = crypto.randomBytes(10).toString('hex');
 
+  const teamsAttributeValue = user.teams.map((team_name) => (
+    {
+      '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+      '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+      '@xsi:type': 'xs:string',
+      '#text': team_name,
+    }
+  ))
+
   const attributeStatement = {
     '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
     '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
@@ -74,12 +83,11 @@ const createResponseXML = async (params: {
           '#text': user.lastName,
         },
       },
-
-      // "urn:mace:dir:attribute-def:organisation-id": "organisation.saml_organisation_mapping.value"
-      // "urn:mace:dir:attribute-def:team-title": "team.title"
-
-
-
+      {
+        '@Name': 'urn:mace:dir:attribute-def:team-title',
+        '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified',
+        'saml:AttributeValue': teamsAttributeValue,
+      },
     ],
   };
 

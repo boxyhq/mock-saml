@@ -15,6 +15,7 @@ export default function Login() {
     uid: 'mock-10001',
     firstName: 'Jackson',
     lastName: 'Doe',
+    teams: '',
   });
 
   const acsUrlInp = useRef<HTMLInputElement>(null);
@@ -42,7 +43,7 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { username, firstName, lastName, domain, uid } = state;
+    const { username, firstName, lastName, domain, uid, teams } = state;
 
     const response = await fetch(`/api/saml/auth`, {
       method: 'POST',
@@ -55,6 +56,7 @@ export default function Login() {
         firstName,
         lastName,
         id,
+        teams,
         audience: audience || state.audience,
         acsUrl: acsUrl || state.acsUrl,
         providerName,
@@ -198,6 +200,27 @@ export default function Login() {
                       className='input input-bordered'
                       title='Please provide a mock email address'
                     />
+                  </div>
+                  <div className='col-span-2'>
+                    <div className='form-control'>
+                      <label className='label'>
+                        <span className='label-text font-bold'>Teams</span>
+                      </label>
+                      <input
+                        name='teams'
+                        id='teams'
+                        autoComplete='off'
+                        placeholder='team1,team2'
+                        type='text'
+                        value={state.teams}
+                        onChange={handleChange}
+                        className='input input-bordered'
+                        title='Please provide a list of teams'
+                      />
+                    </div>
+                    <label className='label'>
+                      <span className='label-text-alt'>Teams are optional, split them by comma</span>
+                    </label>
                   </div>
                   <button className='btn btn-primary col-span-2 block'>Sign In</button>
                 </div>
