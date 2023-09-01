@@ -21,6 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       email,
       firstName: userName,
       lastName: userName,
+      uid: userName
     };
 
     const xml = await createResponseXML({
