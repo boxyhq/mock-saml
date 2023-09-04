@@ -16,6 +16,7 @@ export default function Login() {
     firstName: 'Jackson',
     lastName: 'Doe',
     teams: '',
+    organisationId: null
   });
 
   const acsUrlInp = useRef<HTMLInputElement>(null);
@@ -43,7 +44,7 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { username, firstName, lastName, domain, uid, teams } = state;
+    const { username, firstName, lastName, domain, uid, teams, organisationId } = state;
 
     const response = await fetch(`/api/saml/auth`, {
       method: 'POST',
@@ -57,6 +58,7 @@ export default function Login() {
         lastName,
         id,
         teams,
+        organisationId,
         audience: audience || state.audience,
         acsUrl: acsUrl || state.acsUrl,
         providerName,
@@ -220,6 +222,26 @@ export default function Login() {
                     </div>
                     <label className='label'>
                       <span className='label-text-alt'>Teams are optional, split them by comma</span>
+                    </label>
+                  </div>
+                  <div className='col-span-2'>
+                    <div className='form-control'>
+                      <label className='label'>
+                        <span className='label-text font-bold'>Organisation ID</span>
+                      </label>
+                      <input
+                        name='organisationId'
+                        id='organisationId'
+                        autoComplete='off'
+                        type='text'
+                        value={state.organisationId}
+                        onChange={handleChange}
+                        className='input input-bordered'
+                        title='Please provide an organisationId'
+                      />
+                    </div>
+                    <label className='label'>
+                      <span className='label-text-alt'>urn:mace:dir:attribute-def:organisation-id (ex: 12)</span>
                     </label>
                   </div>
                   <button className='btn btn-primary col-span-2 block'>Sign In</button>

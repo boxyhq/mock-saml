@@ -7,7 +7,7 @@ import saml from '@boxyhq/saml20';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { email, uid, firstName, lastName, teams, audience, acsUrl, id, relayState } = req.body;
+    const { email, uid, firstName, lastName, teams, organisationId, audience, acsUrl, id, relayState } = req.body;
 
     if (!email.endsWith('@immersivelabs.com') && !email.endsWith('@immersivelabs.org')) {
       res.status(403).send(`${email} denied access`);
@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       firstName,
       lastName,
       uid,
+      organisationId,
       teams: teams.split(',')
     };
 

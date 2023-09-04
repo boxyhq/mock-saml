@@ -88,6 +88,16 @@ const createResponseXML = async (params: {
         '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified',
         'saml:AttributeValue': teamsAttributeValue,
       },
+      {
+        '@Name': 'urn:mace:dir:attribute-def:organisation-id',
+        '@NameFormat': 'urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified',
+        'saml:AttributeValue': {
+          '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+          '@xsi:type': 'xs:string',
+          '#text': user.organisationId,
+        },
+      },
     ],
   };
 

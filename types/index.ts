@@ -38,4 +38,5 @@ export type User = {
   lastName: string;
   uid: string;
   teams: [string];
+  organisationId: string;
 };
