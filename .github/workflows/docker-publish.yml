@@ -23,7 +23,7 @@ jobs:
       - run: |
           npm install -g json
           MOCK_SAML_VERSION=$(echo $(cat ./package.json) | json version)
-          echo "::set-output name=npmversion::$(echo ${MOCK_SAML_VERSION})"
+          echo "NPMVERSION=$(echo ${MOCK_SAML_VERSION})" >> $GITHUB_OUTPUT
         id: npmversion
 
       - name: Get short SHA
@@ -31,7 +31,7 @@ jobs:
         run: echo "SHA7=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
 
       - run: echo ${{ steps.slug.outputs.SHA7 }}
-      - run: echo ${{ steps.npmversion.outputs.npmversion }}
+      - run: echo ${{ steps.slug.outputs.NPMVERSION }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -55,7 +55,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.ref == 'refs/heads/release' }}
-          tags: ${{ github.repository }}:latest,${{ github.repository }}:${{ steps.slug.outputs.SHA7 }},${{ github.repository }}:${{ steps.npmversion.outputs.npmversion }}
+          tags: ${{ github.repository }}:latest,${{ github.repository }}:${{ steps.slug.outputs.SHA7 }},${{ github.repository }}:${{ steps.slug.outputs.NPMVERSION }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
