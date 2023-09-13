@@ -8,7 +8,7 @@ export default function Login() {
   const { id, audience, acsUrl, providerName, relayState } = router.query;
 
   const [state, setState] = useState({
-    username: 'jackson',
+    username: 'jackson.doe',
     domain: 'immersivelabs.com',
     acsUrl: 'https://jackson-demo.boxyhq.com/api/oauth/saml',
     audience: 'https://saml.boxyhq.com',
@@ -16,7 +16,7 @@ export default function Login() {
     firstName: 'Jackson',
     lastName: 'Doe',
     teams: '',
-    organisationId: null
+    organisationId: ''
   });
 
   const acsUrlInp = useRef<HTMLInputElement>(null);
@@ -126,93 +126,108 @@ export default function Login() {
                       </div>
                     </div>
                   ) : null}
-                  <div className='form-control'>
-                    <label className='label'>
-                      <span className='label-text font-bold'>Email</span>
-                    </label>
-                    <input
-                      name='username'
-                      id='username'
-                      ref={emailInp}
-                      autoComplete='off'
-                      type='text'
-                      value={state.username}
-                      onChange={handleChange}
-                      className='input input-bordered'
-                      title='Please provide a mock email address'
-                    />
+                  <div className='col-span-2'>
+                    <div className='form-control'>
+                      <label className='label'>
+                        <span className='label-text font-bold'>Email</span>
+                        <span className='label-text-alt'>urn:mace:dir:attribute-def:email</span>
+                      </label>
+                      <div className='grid grid-cols-2 gap-y-1 gap-x-5'>
+                        <input
+                          name='username'
+                          id='username'
+                          ref={emailInp}
+                          autoComplete='off'
+                          type='text'
+                          value={state.username}
+                          onChange={handleChange}
+                          className='input input-bordered'
+                          title='Please provide a mock email address'
+                        />
+                        <select
+                          name='domain'
+                          id='domain'
+                          className='select select-bordered'
+                          onChange={handleChange}
+                          value={state.domain}>
+                          <option value='immersivelabs.com'>@immersivelabs.com</option>
+                          <option value='immersivelabs.org'>@immersivelabs.org</option>
+                        </select>
+                      </div>
+                      <label className='label'>
+
+                      </label>
+                    </div>
                   </div>
-                  <div className='form-control'>
-                    <label className='label'>
-                      <span className='label-text font-bold'>Domain</span>
-                    </label>
-                    <select
-                      name='domain'
-                      id='domain'
-                      className='select select-bordered'
-                      onChange={handleChange}
-                      value={state.domain}>
-                      <option value='immersivelabs.com'>@immersivelabs.com</option>
-                      <option value='immersivelabs.org'>@immersivelabs.org</option>
-                    </select>
+                  <div className='col-span-2'>
+                    <div className='form-control'>
+                      <label className='label'>
+                        <span className='label-text font-bold'>First Name</span>
+                        <span className='label-text-alt'>urn:mace:dir:attribute-def:first-name</span>
+                      </label>
+                      <input
+                        name='firstName'
+                        id='firstName'
+                        ref={emailInp}
+                        autoComplete='off'
+                        type='text'
+                        value={state.firstName}
+                        onChange={handleChange}
+                        className='input input-bordered'
+                        title='Please provide a mock first name'
+                      />
+                    </div>
                   </div>
-                  <div className='form-control'>
-                    <label className='label'>
-                      <span className='label-text font-bold'>First Name</span>
-                    </label>
-                    <input
-                      name='firstName'
-                      id='firstName'
-                      ref={emailInp}
-                      autoComplete='off'
-                      type='text'
-                      value={state.firstName}
-                      onChange={handleChange}
-                      className='input input-bordered'
-                      title='Please provide a mock first name'
-                    />
+                  <div className='col-span-2'>
+                    <div className='form-control'>
+                      <label className='label'>
+                        <span className='label-text font-bold'>Last Name</span>
+                        <span className='label-text-alt'>urn:mace:dir:attribute-def:last-name</span>
+                      </label>
+                      <input
+                        name='lastName'
+                        id='lastName'
+                        ref={emailInp}
+                        autoComplete='off'
+                        type='text'
+                        value={state.lastName}
+                        onChange={handleChange}
+                        className='input input-bordered'
+                        title='Please provide a mock last name'
+                      />
+                    </div>
                   </div>
-                  <div className='form-control'>
-                    <label className='label'>
-                      <span className='label-text font-bold'>Last Name</span>
-                    </label>
-                    <input
-                      name='lastName'
-                      id='lastName'
-                      ref={emailInp}
-                      autoComplete='off'
-                      type='text'
-                      value={state.lastName}
-                      onChange={handleChange}
-                      className='input input-bordered'
-                      title='Please provide a mock last name'
-                    />
-                  </div>
-                  <div className='form-control'>
-                    <label className='label'>
-                      <span className='label-text font-bold'>Uid</span>
-                    </label>
-                    <input
-                      name='uid'
-                      id='uid'
-                      autoComplete='off'
-                      type='text'
-                      value={state.uid}
-                      onChange={handleChange}
-                      className='input input-bordered'
-                      title='Please provide a mock email address'
-                    />
+                  <div className='col-span-2'>
+                    <div className='form-control'>
+                      <label className='label'>
+                        <span className='label-text font-bold'>Uid</span>
+                        <span className='label-text-alt'>urn:mace:dir:attribute-def:uid</span>
+                      </label>
+                      <input
+                        name='uid'
+                        id='uid'
+                        autoComplete='off'
+                        type='text'
+                        value={state.uid}
+                        onChange={handleChange}
+                        className='input input-bordered'
+                        title='Please provide a mock email address'
+                      />
+                      <label className='label'>
+                        <span className='label-text-alt'>Mandatory. Ex: <i>564255</i> or <i>jackson.doe@immersivelabs.com</i></span>
+                      </label>
+                    </div>
                   </div>
                   <div className='col-span-2'>
                     <div className='form-control'>
                       <label className='label'>
                         <span className='label-text font-bold'>Teams</span>
+                        <span className='label-text-alt'>urn:mace:dir:attribute-def:team-title</span>
                       </label>
                       <input
                         name='teams'
                         id='teams'
                         autoComplete='off'
-                        placeholder='team1,team2'
                         type='text'
                         value={state.teams}
                         onChange={handleChange}
@@ -221,13 +236,14 @@ export default function Login() {
                       />
                     </div>
                     <label className='label'>
-                      <span className='label-text-alt'>Teams are optional, split them by comma</span>
+                      <span className='label-text-alt'>Optional. Ex: <i>customer_success,sales</i></span>
                     </label>
                   </div>
                   <div className='col-span-2'>
                     <div className='form-control'>
                       <label className='label'>
                         <span className='label-text font-bold'>Organisation ID</span>
+                        <span className='label-text-alt'>urn:mace:dir:attribute-def:organisation-id</span>
                       </label>
                       <input
                         name='organisationId'
@@ -241,7 +257,7 @@ export default function Login() {
                       />
                     </div>
                     <label className='label'>
-                      <span className='label-text-alt'>urn:mace:dir:attribute-def:organisation-id (ex: 12)</span>
+                      <span className='label-text-alt'>Optional. Ex: <i>immersive-labs</i></span>
                     </label>
                   </div>
                   <button className='btn btn-primary col-span-2 block'>Sign In</button>
@@ -252,7 +268,7 @@ export default function Login() {
               <div>
                 <span className='text-sm text-white'>
                   This is a simulated login screen, feel free to pick any username but you are restricted to
-                  two domains example.com and example.org. But this should allow you to test all combinations
+                  two domains immersivelabs.com and immersivelabs.org. But this should allow you to test all combinations
                   of your authentication and user modelling.
                 </span>
               </div>
