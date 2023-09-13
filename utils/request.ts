@@ -50,7 +50,7 @@ const extractSAMLRequestAttributes = async (rawRequest: string, isPost = true) =
     id: attributes.ID,
     acsUrl: attributes.AssertionConsumerServiceURL,
     providerName: attributes.ProviderName,
-    audience: issuer[0]['_'],
+    audience: issuer[0]['_'] ?? issuer[0],
     publicKey,
   };
 };
