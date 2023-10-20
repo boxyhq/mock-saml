@@ -10,7 +10,7 @@ export default function Login() {
   const [state, setState] = useState({
     username: 'jackson',
     domain: 'example.com',
-    acsUrl: 'https://jackson-demo.boxyhq.com/api/oauth/saml',
+    acsUrl: 'https://sso.eu.boxyhq.com/api/oauth/saml',
     audience: 'https://saml.boxyhq.com',
   });
 
@@ -91,7 +91,7 @@ export default function Login() {
                           id='acsUrl'
                           ref={acsUrlInp}
                           autoComplete='off'
-                          placeholder='https://jackson-demo.boxyhq.com/api/oauth/saml'
+                          placeholder='https://sso.eu.boxyhq.com/api/oauth/saml'
                           value={state.acsUrl}
                           onChange={handleChange}
                         />
