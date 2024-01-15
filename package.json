@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "20.11.2",
-    "@types/react": "18.2.47",
+    "@types/react": "18.2.48",
     "@types/react-gtm-module": "2.0.3",
     "@types/xml2js": "0.4.14",
     "@typescript-eslint/parser": "6.18.1",
