@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function Login() {
   const router = useRouter();
-  const { id, audience, acsUrl, providerName, relayState, org } = router.query;
+  const { id, audience, acsUrl, providerName, relayState, namespace } = router.query;
 
-  const authUrl = org ? `/api/org/${org}/saml/auth` : '/api/saml/auth';
+  const authUrl = namespace ? `/api/namespace/${namespace}/saml/auth` : '/api/saml/auth';
   const [state, setState] = useState({
     username: 'jackson',
     domain: 'example.com',

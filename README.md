@@ -5,7 +5,7 @@
 
 Mock SAML is a free SAML 2.0 Identity Provider for testing SAML SSO integrations.
 
-Try [Mock SAML](https://mocksaml.com/), our free hosted service.
+Try [Mock SAML](https://mocksaml.com/), our free hosted service. Whilst we use the root domain for our own testing you can create your own unique namespace by navigating to https://mocksaml.com/namespace/<any name of your choice>.
 
 ## Install
 

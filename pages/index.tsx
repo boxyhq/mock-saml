@@ -6,12 +6,13 @@ import { IdPMetadata } from '../types';
 import { getEntityId } from 'lib/entity-id';
 
 const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, params }) => {
-  const org = params.org;
+  const namespace = params.namespace;
 
   const { ssoUrl, entityId, certificate } = metadata;
-  const orgEntityId = getEntityId(entityId, org);
-  const metadataDownloadUrl = '/api' + (org ? `/org/${org}` : '') + '/saml/metadata?download=true';
-  const metadataUrl = '/api' + (org ? `/org/${org}` : '') + '/saml/metadata';
+  const namespaceEntityId = getEntityId(entityId, namespace);
+  const metadataDownloadUrl =
+    '/api' + (namespace ? `/namespace/${namespace}` : '') + '/saml/metadata?download=true';
+  const metadataUrl = '/api' + (namespace ? `/namespace/${namespace}` : '') + '/saml/metadata';
   return (
     <div className='flex items-center justify-center md:py-10'>
       <div className='flex w-full max-w-4xl flex-col space-y-5 px-2'>
@@ -57,7 +58,7 @@ const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, para
               <label className='label'>
                 <span className='label-text font-bold'>Entity ID</span>
               </label>
-              <input type='text' defaultValue={orgEntityId} className='input-bordered input' disabled />
+              <input type='text' defaultValue={namespaceEntityId} className='input-bordered input' disabled />
             </div>
             <div className='form-control col-span-2 w-full'>
               <label className='label'>

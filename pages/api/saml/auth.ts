@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     const xml = await createResponseXML({
-      idpIdentityId: getEntityId(config.entityId, req.query.org as any),
+      idpIdentityId: getEntityId(config.entityId, req.query.namespace as any),
       audience,
       acsUrl,
       samlReqId: id,

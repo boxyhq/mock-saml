@@ -1,5 +1,5 @@
-const getEntityId = (entityId: string, org: string | undefined) => {
-  return org ? `${entityId}/${org}` : entityId;
+const getEntityId = (entityId: string, namespace: string | undefined) => {
+  return namespace ? `${entityId}/${namespace}` : entityId;
 };
 
 export { getEntityId };

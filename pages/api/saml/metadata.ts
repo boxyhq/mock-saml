@@ -22,10 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   async function MetadataUrl() {
     const { download } = req.query as { download: any };
 
-    const filename = 'mock-saml-metadata' + (req.query.org ? `-${req.query.org}` : '') + '.xml';
+    const filename = 'mock-saml-metadata' + (req.query.namespace ? `-${req.query.namespace}` : '') + '.xml';
 
     const xml = await createIdPMetadataXML({
-      idpEntityId: getEntityId(config.entityId, req.query.org as any),
+      idpEntityId: getEntityId(config.entityId, req.query.namespace as any),
       idpSsoUrl: config.ssoUrl,
       certificate: saml.stripCertHeaderAndFooter(config.publicKey),
     });
