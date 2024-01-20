@@ -3,9 +3,13 @@ import Link from 'next/link';
 import React from 'react';
 import config from '../lib/env';
 import { IdPMetadata } from '../types';
+import { getEntityId } from 'lib/entity-id';
 
-const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
+const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, params }) => {
+  const org = params.org;
+
   const { ssoUrl, entityId, certificate } = metadata;
+  const orgEntityId = getEntityId(entityId, org);
 
   return (
     <div className='flex items-center justify-center md:py-10'>
@@ -52,7 +56,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
               <label className='label'>
                 <span className='label-text font-bold'>Entity ID</span>
               </label>
-              <input type='text' defaultValue={entityId} className='input-bordered input' disabled />
+              <input type='text' defaultValue={orgEntityId} className='input-bordered input' disabled />
             </div>
             <div className='form-control col-span-2 w-full'>
               <label className='label'>
@@ -75,7 +79,7 @@ const Home: React.FC<{ metadata: IdPMetadata }> = ({ metadata }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const metadata: IdPMetadata = {
     ssoUrl: config.ssoUrl,
     entityId: config.entityId,
@@ -85,6 +89,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       metadata,
+      params: params ? params : {},
     },
   };
 };
