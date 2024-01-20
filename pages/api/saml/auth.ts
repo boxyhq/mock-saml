@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type { User } from 'types';
 import { createResponseXML, signResponseXML } from 'utils';
 import saml from '@boxyhq/saml20';
+import { getEntityId } from 'lib/entity-id';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -24,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     const xml = await createResponseXML({
-      idpIdentityId: config.entityId,
+      idpIdentityId: getEntityId(config.entityId, req.query.namespace as any),
       audience,
       acsUrl,
       samlReqId: id,
