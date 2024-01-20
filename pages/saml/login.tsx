@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function Login() {
   const router = useRouter();
-  const { id, audience, acsUrl, providerName, relayState } = router.query;
+  const { id, audience, acsUrl, providerName, relayState, org } = router.query;
 
+  const authUrl = org ? `/api/org/${org}/saml/auth` : '/api/saml/auth';
   const [state, setState] = useState({
     username: 'jackson',
     domain: 'example.com',
@@ -41,7 +42,7 @@ export default function Login() {
 
     const { username, domain } = state;
 
-    const response = await fetch(`/api/saml/auth`, {
+    const response = await fetch(authUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
