@@ -22,6 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   async function MetadataUrl() {
     const { download } = req.query as { download: any };
 
+    const filename = 'mock-saml-metadata' + (req.query.org ? `-${req.query.org}` : '') + '.xml';
+
     const xml = await createIdPMetadataXML({
       idpEntityId: getEntityId(config.entityId, req.query.org as any),
       idpSsoUrl: config.ssoUrl,
@@ -31,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.setHeader('Content-type', 'text/xml');
 
     if (download || download === '') {
-      res.setHeader('Content-Disposition', 'attachment; filename=mock-saml-metadata.xml');
+      res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
 
       await pipeline(xml, res);
       return;

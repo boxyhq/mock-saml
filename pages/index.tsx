@@ -10,7 +10,8 @@ const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, para
 
   const { ssoUrl, entityId, certificate } = metadata;
   const orgEntityId = getEntityId(entityId, org);
-
+  const metadataDownloadUrl = '/api' + (org ? `/org/${org}` : '') + '/saml/metadata?download=true';
+  const metadataUrl = '/api' + (org ? `/org/${org}` : '') + '/saml/metadata';
   return (
     <div className='flex items-center justify-center md:py-10'>
       <div className='flex w-full max-w-4xl flex-col space-y-5 px-2'>
@@ -19,7 +20,7 @@ const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, para
         </h1>
         <div className='flex flex-col justify-between space-y-5 md:flex-row md:space-y-0'>
           <div className='flex flex-col space-y-5 md:flex-row md:space-x-5 md:space-y-0'>
-            <Link href='/api/saml/metadata?download=true' className='btn-primary btn-active btn'>
+            <Link href={metadataDownloadUrl} className='btn-primary btn-active btn'>
               <svg
                 className='mr-1 inline-block h-6 w-6'
                 fill='none'
@@ -35,7 +36,7 @@ const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, para
               </svg>
               Download Metadata
             </Link>
-            <Link href='/api/saml/metadata' className='btn-outline btn-primary btn' target='_blank'>
+            <Link href={metadataUrl} className='btn-outline btn-primary btn' target='_blank'>
               Metadata URL
             </Link>
           </div>
