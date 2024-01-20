@@ -14,7 +14,7 @@ const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, para
     '/api' + (namespace ? `/namespace/${namespace}` : '') + '/saml/metadata?download=true';
   const metadataUrl = '/api' + (namespace ? `/namespace/${namespace}` : '') + '/saml/metadata';
   return (
-    <div className='flex items-center justify-center md:py-10'>
+    <div className='flex items-center justify-center'>
       <div className='flex w-full max-w-4xl flex-col space-y-5 px-2'>
         <h1 className='text-center text-xl font-extrabold text-gray-900 md:text-2xl'>
           A free SAML 2.0 Identity Provider for testing SAML SSO integrations.
