@@ -6,7 +6,7 @@ import type { IdPMetadata } from 'types';
 import { createIdPMetadataXML } from 'utils';
 import stream from 'stream';
 import { promisify } from 'util';
-import { getEntityId } from 'lib/entity-id';
+import { getEntityId, getSSOUrl } from 'lib/entity-id';
 
 const pipeline = promisify(stream.pipeline);
 
@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const xml = await createIdPMetadataXML({
       idpEntityId: getEntityId(config.entityId, req.query.namespace as any),
-      idpSsoUrl: config.ssoUrl,
+      idpSsoUrl: getSSOUrl(config.appUrl, req.query.namespace as any),
       certificate: saml.stripCertHeaderAndFooter(config.publicKey),
     });
 

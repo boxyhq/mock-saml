@@ -46,7 +46,9 @@ async function processSAMLRequest(req: NextApiRequest, res: NextApiResponse, isP
 
     const params = new URLSearchParams({ id, audience, acsUrl, providerName, relayState });
 
-    res.redirect(302, `/saml/login?${params.toString()}`);
+    const loginUrl = (req.query.namespace ? `/namespace/${req.query.namespace}` : '') + '/saml/login';
+
+    res.redirect(302, `${loginUrl}?${params.toString()}`);
   } catch (err) {
     console.error(err);
 
