@@ -3,16 +3,18 @@ import Link from 'next/link';
 import React from 'react';
 import config from '../lib/env';
 import { IdPMetadata } from '../types';
-import { getEntityId } from 'lib/entity-id';
+import { getEntityId, getSSOUrl } from 'lib/entity-id';
 
 const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, params }) => {
   const namespace = params.namespace;
 
-  const { ssoUrl, entityId, certificate } = metadata;
+  const { ssoUrl: appUrl, entityId, certificate } = metadata;
   const namespaceEntityId = getEntityId(entityId, namespace);
   const metadataDownloadUrl =
     '/api' + (namespace ? `/namespace/${namespace}` : '') + '/saml/metadata?download=true';
   const metadataUrl = '/api' + (namespace ? `/namespace/${namespace}` : '') + '/saml/metadata';
+  const loginUrl = (namespace ? `/namespace/${namespace}` : '') + '/saml/login';
+  const ssoUrl = getSSOUrl(appUrl, namespace);
   return (
     <div className='flex items-center justify-center'>
       <div className='flex w-full max-w-4xl flex-col space-y-5 px-2'>
@@ -41,7 +43,7 @@ const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, para
               Metadata URL
             </Link>
           </div>
-          <Link href='/saml/login' className='btn-outline btn-primary btn'>
+          <Link href={loginUrl} className='btn-outline btn-primary btn'>
             Test IdP Login
           </Link>
         </div>
@@ -83,7 +85,7 @@ const Home: React.FC<{ metadata: IdPMetadata; params: any }> = ({ metadata, para
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const metadata: IdPMetadata = {
-    ssoUrl: config.ssoUrl,
+    ssoUrl: config.appUrl,
     entityId: config.entityId,
     certificate: config.publicKey,
   };
