@@ -3,15 +3,7 @@
   "description": "Mock SAML is a free SAML 2.0 Identity Provider for testing SAML SSO integrations.",
   "repository": "https://github.com/boxyhq/mock-saml",
   "logo": "https://boxyhq.com/img/logo.png",
-  "keywords": [
-    "saml",
-    "saml2",
-    "saml-idp",
-    "mock-saml-idp",
-    "test-saml",
-    "saml-testing",
-    "fake-saml-idp"
-  ],
+  "keywords": ["saml", "saml2", "saml-idp", "mock-saml-idp", "test-saml", "saml-testing", "fake-saml-idp"],
   "env": {
     "APP_URL": {
       "description": "Public root URL of the Mock SAML installation. Replace <HEROKU_APP_NAME> with 'App name' from above.",
