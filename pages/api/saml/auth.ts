@@ -2,7 +2,6 @@ import { createHash } from 'crypto';
 import config from 'lib/env';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { User } from 'types';
-import { createResponseXML, signResponseXML } from 'utils';
 import saml from '@boxyhq/saml20';
 import { getEntityId } from 'lib/entity-id';
 
@@ -24,15 +23,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       lastName: userName,
     };
 
-    const xml = await createResponseXML({
-      idpIdentityId: getEntityId(config.entityId, req.query.namespace as any),
+    const xmlSigned = await saml.createSAMLResponse({
+      issuer: getEntityId(config.entityId, req.query.namespace as any),
       audience,
       acsUrl,
-      samlReqId: id,
-      user: user,
+      requestId: id,
+      claims: {
+        email: user.email,
+        raw: user,
+      },
+      privateKey: config.privateKey,
+      publicKey: config.publicKey,
     });
 
-    const xmlSigned = await signResponseXML(xml, config.privateKey, config.publicKey);
     const encodedSamlResponse = Buffer.from(xmlSigned).toString('base64');
     const html = saml.createPostForm(acsUrl, [
       {
