@@ -23,7 +23,7 @@
     "xmlbuilder": "15.1.1"
   },
   "devDependencies": {
-    "@types/node": "20.11.16",
+    "@types/node": "20.11.17",
     "@types/react": "18.2.55",
     "@types/react-gtm-module": "2.0.3",
     "@typescript-eslint/parser": "6.21.0",
