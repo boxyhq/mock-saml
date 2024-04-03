@@ -25,6 +25,7 @@ docker run \
   -d boxyhq/mock-saml
 ```
 
+Refer to [env.example](https://github.com/boxyhq/mock-saml/blob/main/.env.example#L5C3-L5C97) for instructions on how to create the key pair.
 Replace `<PUBLIC_KEY>` with Base64 encoded value of public key.
 Replace `<PRIVATE_KEY>` with Base64 encoded value of private key.
 
