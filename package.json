@@ -22,7 +22,7 @@
     "react-gtm-module": "2.0.11"
   },
   "devDependencies": {
-    "@types/node": "20.12.2",
+    "@types/node": "20.12.3",
     "@types/react": "18.2.74",
     "@types/react-gtm-module": "2.0.3",
     "@typescript-eslint/parser": "7.5.0",
