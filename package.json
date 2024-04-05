@@ -11,7 +11,8 @@
     "lint": "next lint",
     "check-format": "prettier --check .",
     "format": "prettier --write .",
-    "release": "git checkout release && git merge origin/main && release-it && git checkout main && git merge origin/release && git push origin main"
+    "release": "git checkout release && git merge origin/main && release-it && git checkout main && git merge origin/release && git push origin main",
+    "version": "echo $(cat package.json) | json version"
   },
   "dependencies": {
     "@boxyhq/saml20": "1.4.14",
@@ -29,6 +30,7 @@
     "autoprefixer": "10.4.19",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.4",
+    "json": "11.0.0",
     "postcss": "8.4.38",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.13",
