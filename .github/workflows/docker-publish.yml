@@ -25,8 +25,9 @@ jobs:
 
       - run: |
           npm install
+          npm install -g json
 
-          MOCK_SAML_VERSION=$(echo $(cat ./package.json) | ./node_modules/json/lib/json.js version)
+          MOCK_SAML_VERSION=$(echo $(cat ./package.json) | json version)
           echo "NPMVERSION=$(echo ${MOCK_SAML_VERSION})" >> $GITHUB_OUTPUT
         id: npmversion
 
