@@ -17,13 +17,13 @@
     "@boxyhq/saml20": "1.5.0",
     "daisyui": "4.10.2",
     "next": "14.2.3",
-    "react": "18.3.0",
+    "react": "18.3.1",
     "react-dom": "18.2.0",
     "react-gtm-module": "2.0.11"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
-    "@types/react": "18.3.0",
+    "@types/react": "18.3.1",
     "@types/react-gtm-module": "2.0.3",
     "@typescript-eslint/parser": "7.7.1",
     "autoprefixer": "10.4.19",
