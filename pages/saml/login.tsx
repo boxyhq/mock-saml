@@ -11,8 +11,8 @@ export default function Login() {
   const [state, setState] = useState({
     username: 'jackson',
     domain: 'example.com',
-    acsUrl: 'https://sso.eu.boxyhq.com/api/oauth/saml',
-    audience: 'https://saml.boxyhq.com',
+    acsUrl: 'https://login.handoverai-development.com/login/callback?connection=local-saml-test',
+    audience: 'https://www.handoverai.com/api',
   });
 
   const acsUrlInp = useRef<HTMLInputElement>(null);

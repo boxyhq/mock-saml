@@ -17,8 +17,8 @@ The docker container can be found at [boxyhq/mock-saml](https://hub.docker.com/r
 
 ```bash
 docker run \
-  -p 4000:4000 \
-  -e APP_URL="http://localhost:4000" \
+  -p 5175:5175 \
+  -e APP_URL="http://localhost:5175" \
   -e ENTITY_ID="https://saml.example.com/entityid" \
   -e PUBLIC_KEY="<PUBLIC_KEY>" \
   -e PRIVATE_KEY="<PRIVATE_KEY>" \
