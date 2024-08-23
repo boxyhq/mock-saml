@@ -9,6 +9,11 @@ updates:
     directory: '/' # Location of package manifests
     schedule:
       interval: 'daily'
+    groups:
+      next:
+        patterns:
+          - 'next'
+          - 'eslint-config-next'
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
