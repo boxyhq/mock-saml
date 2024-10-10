@@ -25,7 +25,7 @@
     "@types/node": "22.7.4",
     "@types/react": "18.3.11",
     "@types/react-gtm-module": "2.0.3",
-    "@typescript-eslint/parser": "8.8.0",
+    "@typescript-eslint/parser": "8.8.1",
     "autoprefixer": "10.4.20",
     "eslint": "8.57.1",
     "eslint-config-next": "14.2.14",
