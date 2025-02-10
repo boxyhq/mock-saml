@@ -31,7 +31,7 @@
     "eslint-config-next": "15.1.6",
     "json": "11.0.0",
     "postcss": "8.5.1",
-    "prettier": "3.4.2",
+    "prettier": "3.5.0",
     "prettier-plugin-tailwindcss": "0.6.11",
     "release-it": "18.1.2",
     "tailwindcss": "3.4.17",
