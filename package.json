@@ -17,7 +17,7 @@
     "@boxyhq/saml20": "1.10.1",
     "daisyui": "4.12.24",
     "next": "15.2.4",
-    "react": "19.0.0",
+    "react": "19.1.0",
     "react-dom": "19.0.0",
     "react-gtm-module": "2.0.11"
   },
