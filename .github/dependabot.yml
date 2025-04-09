@@ -14,6 +14,10 @@ updates:
         patterns:
           - 'next'
           - 'eslint-config-next'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
