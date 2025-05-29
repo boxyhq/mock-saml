@@ -33,8 +33,8 @@ export default function Header() {
           </span>
           <span>
             Made with <span className='text-red-500'>&#9829;</span>{' '}
-            <a href='https://boxyhq.com/' rel='noopener noreferrer' target='_blank'>
-              <strong>BoxyHQ</strong>
+            <a href='https://ory.sh' rel='noopener noreferrer' target='_blank'>
+              <strong>Ory</strong>
             </a>
           </span>
         </div>

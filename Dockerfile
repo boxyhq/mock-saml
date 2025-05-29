@@ -1,4 +1,4 @@
-ARG NODEJS_IMAGE=node:20.17-alpine3.19
+ARG NODEJS_IMAGE=node:22.16-alpine3.21
 FROM --platform=$BUILDPLATFORM $NODEJS_IMAGE AS base
 
 FROM base AS deps
@@ -41,6 +41,6 @@ USER nextjs
 
 EXPOSE 4000
 
-ENV PORT=4000 
+ENV PORT=4000
 
 CMD ["node", "server.js"]
